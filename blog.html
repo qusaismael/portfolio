@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qusai Ismael - Blog</title>
+    <meta name="viewport" content="initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
+    <meta name="theme-color" content="#de5e91" />
+    <meta name="msapplication-navbutton-color" content="#de5e91" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style>
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 400;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaRegular.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 500;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaMedium.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 700;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaBold.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 400;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 500;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 700;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuByfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Display';
+        font-weight: 700;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuByfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader05"></div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+        </svg>
+    </div>
+
+    <div class="header-enhanced" id="header-enhanced">
+        <div class="header-enhanced-inner">
+            <div class="header-logo">
+                <a href="index.html">
+                    <span class="logo-text">Q</span>
+                </a>
+            </div>
+            <div class="header-center">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="header-info">
+                <p class="header-location">Based in Jordan</p>
+                <p class="header-time" id="header-time">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <img src="pfp.jpeg" alt="Qusai Ismael Profile Picture" class="profile-picture">
+                <div class="profile-info">
+                    <h1>Qusai Ismael</h1>
+                    <p class="subtitle">Security & Privacy Engineer by day | AI & Software Development by night.</p>
+                </div>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="sites.html">My Sites</a>
+                <a href="recommendations.html">Recommendations</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+        </header>
+        
+        <main class="main-content">
+            <section id="blog">
+                <h2>Blog Posts from Medium<span class="accent-dot">.</span></h2>
+                <div id="medium-posts" class="blog-grid"></div>
+
+                <!-- Medium Profile Button -->
+                <div class="medium-button-container">
+                    <a href="https://medium.com/@qusaismael" target="_blank" class="medium-button">
+                        <span>View More on Medium</span>
+                        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+            <div id="post-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div id="modal-body"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer-enhanced">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2 class="footer-title">qusai.pro</h2>
+                <p class="footer-copyright">© 2025 All rights reserved.</p>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Available for work</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        
+        function updateTime() {
+            const now = new Date();
+            const jordanTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Amman"}));
+            const timeString = jordanTime.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: "Asia/Amman"
+            });
+            const element = document.getElementById('header-time');
+            if (element) {
+                element.textContent = timeString + ' GMT+3';
+            }
+        }
+        
+        // Update time every second
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html> 
