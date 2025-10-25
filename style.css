@@ -198,6 +198,7 @@ a:hover {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center center;
     border: 3px solid var(--primary-color);
     box-shadow: 0 8px 25px var(--shadow-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -220,8 +221,11 @@ a:hover {
     }
     
     .profile-picture {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: center top;
+        padding: 2px;
     }
     
     .profile-info .subtitle {
@@ -1638,7 +1642,7 @@ section .writing-list li {
     }
     
     .container {
-        padding-top: 4.5rem;
+        padding-top: 6rem;
     }
     
     .cursor-dot, .cursor-outline {
@@ -1646,7 +1650,7 @@ section .writing-list li {
     }
     
     .header {
-        padding: 1.5rem 0;
+        padding: 2.5rem 0 1.5rem 0;
         margin-bottom: 1.5rem;
     }
     
@@ -1657,7 +1661,7 @@ section .writing-list li {
     
     /* Ensure menu doesn't cover profile picture */
     .profile-section {
-        margin-top: 0.5rem;
+        margin-top: 1.5rem;
     }
 }
 
@@ -2363,8 +2367,11 @@ nav a:hover {
     }
     
     .profile-picture {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        object-position: center 20%;
+        padding: 2px;
     }
     
     .header nav {
