@@ -243,6 +243,14 @@ a:hover {
     position: relative;
     padding-bottom: 8px;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header nav a svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
 }
 .header nav a::after {
     content: '';
@@ -257,6 +265,10 @@ a:hover {
 .header nav a:hover {
     color: var(--accent-color);
     text-decoration: none;
+}
+
+.header nav a:hover svg {
+    transform: translateY(-2px);
 }
 .header nav a:hover::after {
     width: 100%;
@@ -333,6 +345,7 @@ a:hover {
         min-height: 48px;
         display: flex;
         align-items: center;
+        gap: 0.75rem;
         border-radius: 8px;
         background: var(--card-background);
         border: 1px solid var(--border-color);
