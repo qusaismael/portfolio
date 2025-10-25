@@ -89,6 +89,12 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+}
 h1, h2, h3, h4, h5, h6 {
     color: var(--heading-color);
     margin-top: 0;
@@ -112,6 +118,28 @@ h2 {
     margin-bottom: 2rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--light-gray);
+}
+
+/* Mobile typography optimization */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+        letter-spacing: -1px;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+    }
+    
+    body {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
 }
 a {
     color: var(--primary-color);
@@ -151,6 +179,12 @@ a:hover {
     max-width: 600px;
 }
 
+@media screen and (max-width: 768px) {
+    .header .subtitle {
+        font-size: 1rem;
+    }
+}
+
 /* Profile Picture Styles */
 .profile-section {
     display: flex;
@@ -182,12 +216,16 @@ a:hover {
     .profile-section {
         flex-direction: column;
         text-align: center;
-        gap: 1.5rem;
+        gap: 1rem;
     }
     
     .profile-picture {
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
+    }
+    
+    .profile-info .subtitle {
+        font-size: 0.95rem;
     }
 }
 .header nav {
@@ -218,6 +256,87 @@ a:hover {
 }
 .header nav a:hover::after {
     width: 100%;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .header nav {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--background-color);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        z-index: 999;
+        box-shadow: 0 4px 12px var(--shadow-color);
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
+    
+    .header nav.active {
+        display: flex;
+    }
+    
+    .header nav a {
+        margin-right: 0;
+        font-size: 1rem;
+        padding: 0.875rem 1rem;
+        text-align: left;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+    }
+    
+    .header nav a:hover {
+        background: var(--hover-background);
+    }
 }
 .main-content {
     padding: 0;
@@ -393,6 +512,21 @@ section:last-of-type {
     flex-shrink: 0;
     transition: all 0.3s ease;
 }
+
+@media screen and (max-width: 768px) {
+    .social-links {
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .social-links a {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+        flex: 0 1 calc(50% - 0.5rem);
+        justify-content: center;
+        min-height: 48px; /* Comfortable touch target */
+    }
+}
 .footer {
     padding: 4rem 0 2rem;
     text-align: center;
@@ -557,6 +691,12 @@ body {
     border-bottom: 1px solid var(--border-color);
     padding: 1.5rem 0;
 }
+
+@media screen and (max-width: 768px) {
+    .header-enhanced {
+        padding: 0.875rem 0;
+    }
+}
 .header-enhanced-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -631,6 +771,22 @@ body:hover .cursor-outline {
     visibility: hidden;
     transform: translateY(15px);
     transition: all 200ms linear;
+}
+
+@media screen and (max-width: 768px) {
+    .progress-wrap {
+        right: 20px;
+        bottom: 20px;
+        height: 40px;
+        width: 40px;
+    }
+    
+    .progress-wrap::after {
+        line-height: 40px;
+        height: 40px;
+        width: 40px;
+        font-size: 20px;
+    }
 }
 .progress-wrap.active-progress {
     opacity: 1;
@@ -1061,7 +1217,7 @@ section .writing-list li {
     .timeline-right {
         width: 100%;
         left: 0;
-        padding-left: 80px;
+        padding-left: 70px;
         padding-right: 0;
     }
 
@@ -1085,6 +1241,55 @@ section .writing-list li {
         right: auto;
         left: auto;
     }
+    
+    .timeline-title {
+        font-size: 1.25rem;
+    }
+    
+    .timeline-description {
+        font-size: 0.95rem;
+    }
+    
+    .timeline-icon {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .timeline-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .timeline-entry-container,
+    .timeline-left,
+    .timeline-right {
+        padding-left: 60px;
+    }
+    
+    .timeline-line, .timeline-fill {
+        left: 18px;
+    }
+    
+    .timeline-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .timeline-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .tags {
+        gap: 0.4rem;
+    }
+    
+    .tags span {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
 }
 
 /* Cleanup old timeline styles if they exist */
@@ -1098,6 +1303,13 @@ section .writing-list li {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+    .project-grid-enhanced {
+        grid-template-columns: 1fr;
+        margin-top: 2rem;
+    }
 }
 
 .project-card-enhanced {
@@ -1125,6 +1337,12 @@ section .writing-list li {
     justify-content: center;
     border-bottom: 1px solid var(--border-color);
     overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .project-image {
+        height: 200px;
+    }
 }
 
 .project-image-placeholder {
@@ -1158,6 +1376,12 @@ section .writing-list li {
     padding: 2rem;
 }
 
+@media screen and (max-width: 768px) {
+    .project-content {
+        padding: 1.5rem;
+    }
+}
+
 .project-header {
     display: flex;
     justify-content: space-between;
@@ -1172,6 +1396,12 @@ section .writing-list li {
     color: var(--heading-color);
     margin: 0;
     line-height: 1.3;
+}
+
+@media screen and (max-width: 768px) {
+    .project-header h3 {
+        font-size: 1.25rem;
+    }
 }
 
 .project-arrow {
@@ -1209,6 +1439,12 @@ section .writing-list li {
     margin-top: auto;
     width: 100%;
     box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+    .footer-enhanced {
+        padding: 3rem 1.5rem 1.5rem;
+    }
 }
 
 .footer-content {
@@ -1266,14 +1502,19 @@ section .writing-list li {
 @media screen and (max-width: 768px) {
     .header-enhanced-inner {
         padding: 0 1rem;
+        justify-content: space-between;
+    }
+    
+    .header-logo .logo-text {
+        font-size: 1.4rem;
+    }
+    
+    .header-center {
+        display: none; /* Hide theme toggle on mobile for cleaner look */
     }
     
     .header-info {
-        align-items: flex-end;
-    }
-    
-    .header-location, .header-time {
-        font-size: 0.8rem;
+        display: none; /* Hide time/location on mobile for space */
     }
     
     .project-grid-enhanced {
@@ -1297,11 +1538,26 @@ section .writing-list li {
     }
     
     .container {
-        padding-top: 5rem;
+        padding-top: 4.5rem;
     }
     
     .cursor-dot, .cursor-outline {
         display: none;
+    }
+    
+    .header {
+        padding: 1.5rem 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    section {
+        padding: 1rem 0 3rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    /* Ensure menu doesn't cover profile picture */
+    .profile-section {
+        margin-top: 0.5rem;
     }
 }
 
@@ -1668,6 +1924,15 @@ section .writing-list li {
     .gpg-actions {
         flex-direction: column;
     }
+    
+    .gpg-section {
+        padding: 1.5rem;
+    }
+    
+    .gpg-key {
+        font-size: 0.75rem;
+        padding: 0.75rem;
+    }
 }
 
 /* Status Indicator Styles */
@@ -1805,6 +2070,21 @@ section .writing-list li {
     position: relative;
 }
 
+@media screen and (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        padding: 1.5rem;
+        max-width: 95%;
+        width: 95%;
+    }
+    
+    .close-modal {
+        right: 0.75rem;
+        top: 0.75rem;
+        font-size: 1.75rem;
+    }
+}
+
 .close-modal {
     position: absolute;
     right: 1rem;
@@ -1863,6 +2143,22 @@ nav a {
 
 nav a:hover {
     color: var(--primary-color);
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    nav a {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.7rem;
+        min-height: 44px; /* Better touch target */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* Medium Button Styles */
@@ -1935,5 +2231,72 @@ nav a:hover {
     
     .medium-button-container {
         margin-top: 2rem;
+    }
+    
+    .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .blog-post {
+        padding: 1.25rem;
+    }
+    
+    .email-link {
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+}
+
+/* Very small phones optimization */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        padding: 0.75rem;
+    }
+    
+    .profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .header nav {
+        gap: 0.5rem;
+    }
+    
+    .header nav a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .social-links a {
+        flex: 1 1 100%;
+    }
+    
+    .project-content {
+        padding: 1.25rem;
+    }
+    
+    .project-image {
+        height: 180px;
+    }
+    
+    .gpg-info p code {
+        font-size: 0.65rem;
+    }
+    
+    .footer-enhanced {
+        padding: 2rem 1rem 1rem;
+    }
+    
+    .footer-title {
+        font-size: 1.25rem;
     }
 }
