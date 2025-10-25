@@ -1209,74 +1209,144 @@ section .writing-list li {
     font-family: var(--font-sans);
 }
 
-/* Responsive adjustments */
+/* Mobile-Optimized Timeline */
 @media screen and (max-width: 900px) {
-    .timeline-line, .timeline-fill {
-        left: 24px;
+    .experience-timeline {
+        padding: 0;
+        margin: 0;
     }
-    .timeline-entry-container,
+    
+    /* Hide the timeline line on mobile for cleaner look */
+    .timeline-line, .timeline-fill {
+        display: none;
+    }
+    
+    .timeline-entry-container {
+        padding: 0;
+        margin: 0 0 1.5rem 0;
+        width: 100%;
+        position: relative;
+    }
+    
     .timeline-left,
     .timeline-right {
         width: 100%;
         left: 0;
-        padding-left: 70px;
-        padding-right: 0;
+        padding: 0;
     }
-
+    
+    /* Reposition icon to top-left of card */
+    .timeline-icon {
+        position: absolute;
+        top: 1.25rem;
+        left: 1.25rem;
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        border: 3px solid var(--card-background);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 1;
+    }
+    
     .timeline-left .timeline-icon,
     .timeline-right .timeline-icon {
-        left: 0;
-    }
-
-    .timeline-left .timeline-content,
-    .timeline-right .timeline-content {
-        text-align: left;
-    }
-
-    .timeline-time {
-        position: relative;
-        top: auto;
-        transform: none;
-        text-align: left !important;
-        margin: 0 0 10px 0;
-        padding: 0;
-        right: auto;
-        left: auto;
-    }
-    
-    .timeline-title {
-        font-size: 1.25rem;
-    }
-    
-    .timeline-description {
-        font-size: 0.95rem;
-    }
-    
-    .timeline-icon {
-        width: 35px;
-        height: 35px;
+        left: 1.25rem;
+        top: 1.25rem;
     }
     
     .timeline-icon svg {
         width: 20px;
         height: 20px;
+        color: var(--background-color);
+        stroke: var(--background-color);
+    }
+    
+    /* Redesign content cards */
+    .timeline-content {
+        padding: 1.5rem 1.25rem 1.5rem 5rem;
+        margin: 0;
+        border-radius: 12px;
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 8px var(--shadow-color);
+    }
+    
+    .timeline-left .timeline-content,
+    .timeline-right .timeline-content {
+        text-align: left;
+        padding: 1.5rem 1.25rem 1.5rem 5rem;
+    }
+    
+    /* Company and date badge at top */
+    .timeline-time {
+        position: static;
+        display: inline-block;
+        background: rgba(var(--primary-color-rgb), 0.1);
+        border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+        border-radius: 6px;
+        padding: 0.35rem 0.75rem;
+        margin: 0 0 0.75rem 0;
+        font-size: 0.8rem;
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+    
+    .timeline-time .timeline-company {
+        display: inline;
+        color: var(--primary-color);
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .timeline-time .timeline-date {
+        display: inline;
+        font-size: 0.8rem;
+        margin-left: 0.35rem;
+        opacity: 0.8;
+    }
+    
+    /* Title styling */
+    .timeline-title {
+        font-size: 1.15rem;
+        margin-bottom: 0.65rem;
+        line-height: 1.3;
+        color: var(--heading-color);
+    }
+    
+    /* Description */
+    .timeline-description {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--text-color);
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+    
+    /* Tags */
+    .timeline-content .tags {
+        margin-top: 1rem;
+        gap: 0.5rem;
     }
 }
 
+/* Extra small phones */
 @media screen and (max-width: 480px) {
-    .timeline-entry-container,
-    .timeline-left,
-    .timeline-right {
-        padding-left: 60px;
-    }
-    
-    .timeline-line, .timeline-fill {
-        left: 18px;
+    .timeline-entry-container {
+        margin: 0 0 1.25rem 0;
     }
     
     .timeline-icon {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
+        top: 1rem;
+        left: 1rem;
+    }
+    
+    .timeline-left .timeline-icon,
+    .timeline-right .timeline-icon {
+        left: 1rem;
+        top: 1rem;
     }
     
     .timeline-icon svg {
@@ -1284,13 +1354,41 @@ section .writing-list li {
         height: 18px;
     }
     
+    .timeline-content {
+        padding: 1.25rem 1rem 1.25rem 4.25rem;
+    }
+    
+    .timeline-left .timeline-content,
+    .timeline-right .timeline-content {
+        padding: 1.25rem 1rem 1.25rem 4.25rem;
+    }
+    
+    .timeline-title {
+        font-size: 1.05rem;
+    }
+    
+    .timeline-description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    
+    .timeline-time {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.65rem;
+    }
+    
+    .timeline-time .timeline-company,
+    .timeline-time .timeline-date {
+        font-size: 0.75rem;
+    }
+    
     .tags {
         gap: 0.4rem;
     }
     
     .tags span {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.6rem;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.55rem;
     }
 }
 
