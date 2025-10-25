@@ -1612,7 +1612,7 @@ section .writing-list li {
 
 /* Container adjustment for fixed header */
 .container {
-    padding-top: 6rem;
+    padding-top: 5rem;
 }
 
 /* Responsive Design */
@@ -1663,7 +1663,7 @@ section .writing-list li {
     }
     
     .header {
-        padding: 2.5rem 0 1.5rem 0;
+        padding: 2rem 0 1.5rem 0;
         margin-bottom: 1.5rem;
     }
     
