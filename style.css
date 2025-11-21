@@ -946,6 +946,21 @@ section .writing-list li {
   #contact { animation-delay: 0.6s; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: auto !important;
+    }
+}
+
 /* --- Portfolio Page Specific Styles --- */
 .portfolio-header {
     text-align: center;
@@ -2279,6 +2294,81 @@ nav a:hover {
         align-items: center;
         justify-content: center;
     }
+}
+
+.keyboard-hint {
+    font-size: 0.8em;
+    opacity: 0.6;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.keyboard-hint:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.keyboard-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.keyboard-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--primary-color);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.keyboard-shortcut-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.keyboard-shortcut-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.key-badge {
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.1rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--heading-color);
 }
 
 /* Medium Button Styles */

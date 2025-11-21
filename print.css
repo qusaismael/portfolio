@@ -1,0 +1,78 @@
+/* Print Styles */
+@media print {
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .header-enhanced, 
+    .theme-toggle,
+    .mobile-menu-toggle,
+    .progress-wrap,
+    .cursor-dot,
+    .cursor-outline,
+    #preloader,
+    .project-arrow,
+    .footer-enhanced,
+    .nav-links,
+    #theme-toggle,
+    nav {
+        display: none !important;
+    }
+
+    .container {
+        padding-top: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    h1, h2, h3 {
+        color: black !important;
+        page-break-after: avoid;
+    }
+
+    p, li {
+        color: #333 !important;
+        opacity: 1 !important;
+    }
+
+    a {
+        text-decoration: none !important;
+        color: black !important;
+    }
+
+    /* Ensure links are visible in print but not distracting */
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+
+    /* Hide decorative elements */
+    .accent-dot,
+    .status-indicator,
+    .ripple {
+        display: none !important;
+    }
+
+    /* Improve layout for print */
+    .project-grid-enhanced {
+        display: block !important;
+    }
+
+    .project-card-enhanced {
+        page-break-inside: avoid;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        margin-bottom: 20px !important;
+        background: transparent !important;
+    }
+
+    .project-image {
+        display: none !important; /* Save ink */
+    }
+
+    .timeline-entry-container {
+        page-break-inside: avoid;
+    }
+}

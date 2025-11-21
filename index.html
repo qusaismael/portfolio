@@ -22,6 +22,27 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Qusai Ismael - Cybersecurity Student & Developer" />
     <meta name="twitter:description" content="Hi, I'm Qusai — Cybersecurity Student and AI & Software Development Enthusiast building privacy-focused open-source tools." />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Qusai Ismael",
+      "url": "https://qusai.pro",
+      "image": "https://qusai.pro/pfp.jpeg",
+      "sameAs": [
+        "https://github.com/qusaismael",
+        "https://www.linkedin.com/in/qusaismaeel/",
+        "https://x.com/qusaismael",
+        "https://medium.com/@qusaismael"
+      ],
+      "jobTitle": "Cybersecurity Student & Software Developer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Open Source"
+      },
+      "description": "Cybersecurity Student, AI & Software Development Enthusiast building privacy-focused open-source tools."
+    }
+    </script>
     <style>
     @font-face {
         font-family: 'Recoleta';
@@ -68,6 +89,7 @@
     </style>
     
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="print.css" media="print">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
@@ -487,7 +509,9 @@
         <div class="footer-content">
             <div class="footer-left">
                 <h2 class="footer-title">qusai.pro</h2>
-                <p class="footer-copyright">© 2025 All rights reserved. <span style="font-size: 0.8em; opacity: 0.6; margin-left: 8px;" title="Press 'h' for Home, 'p' for Portfolio, 's' for Sites, 'b' for Blog">[?]</span></p>
+                <p class="footer-copyright">© 2025 All rights reserved. 
+                    <span class="keyboard-hint" onclick="toggleKeyboardHelp()" title="Click for keyboard shortcuts">[?]</span>
+                </p>
                 <div class="status-indicator">
                     <div class="status-dot"></div>
                     <span class="status-text">Available for work</span>
@@ -527,11 +551,58 @@
       setInterval(updateTime, 1000);
       
       // GPG Key copy function
-      function copyGpgKey() {
-        const gpgKey = document.querySelector('.gpg-info p code').textContent;
-        navigator.clipboard.writeText(gpgKey).then(function() {
-          alert('GPG key copied to clipboard!');
-        });
+      async function copyGpgKey() {
+        const keyElement = document.querySelector('.gpg-info code');
+        const gpgKey = keyElement ? keyElement.textContent.trim() : "1F62 8725 80D8 4EDA 5000  6997 4133 1629 AA80 3597";
+        const btn = document.querySelector('.gpg-action[onclick*="copyGpgKey"]');
+
+        const showFeedback = (text, isError = false) => {
+            if (!btn) return;
+            const originalText = btn.dataset.originalText || btn.textContent;
+            if (!btn.dataset.originalText) {
+                btn.dataset.originalText = originalText;
+            }
+            btn.textContent = text;
+            btn.style.backgroundColor = isError ? 'var(--accent-color)' : 'var(--primary-color)';
+            btn.style.color = 'var(--background-color)';
+
+            setTimeout(() => {
+                btn.textContent = btn.dataset.originalText || originalText;
+                btn.style.backgroundColor = '';
+                btn.style.color = '';
+            }, 2000);
+        };
+
+        const fallbackCopy = () => {
+            const textArea = document.createElement('textarea');
+            textArea.value = gpgKey;
+            textArea.setAttribute('readonly', '');
+            textArea.style.position = 'absolute';
+            textArea.style.left = '-9999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        };
+
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(gpgKey);
+            } else {
+                fallbackCopy();
+            }
+            showFeedback('Copied!');
+        } catch (err) {
+            console.error('Failed to copy with Clipboard API:', err);
+            try {
+                fallbackCopy();
+                showFeedback('Copied!');
+            } catch (fallbackError) {
+                console.error('Fallback copy failed:', fallbackError);
+                showFeedback('Copy failed', true);
+                alert('Failed to copy key. Please select and copy manually.');
+            }
+        }
       }
       
 
