@@ -1,5 +1,5 @@
 :root {
-    /* Old Money Color Palette - Dark Mode (default) */
+
     --primary-color: #F5F5DC; /* Elegant beige for accents */
     --secondary-color: #3C1810; /* Deep chocolate brown */
     --background-color: #1A0F0A; /* Very dark chocolate brown, almost black */
@@ -10,7 +10,6 @@
     --border-color: #5D3A2B; /* Medium chocolate brown border */
     --shadow-color: rgba(26, 15, 10, 0.9); /* Deep chocolate shadow */
     
-    /* Old Money specific colors */
     --accent-color: #D2B48C; /* Tan/champagne gold */
     --muted-text: #C8B99C; /* Muted beige text */
     --hover-background: rgba(245, 245, 220, 0.08); /* Subtle beige hover */
@@ -18,7 +17,7 @@
     --timeline-dot: #F5F5DC; /* Beige timeline dots */
     
     /* Common properties */
-    --border-radius: 8px; /* More conservative, old money style */
+    --border-radius: 8px; 
     --shadow: 0 8px 32px var(--shadow-color);
     --font-sans: 'Recoleta', 'Georgia', 'Times New Roman', serif; /* Recoleta with fallbacks */
     --font-display: 'Recoleta', 'Georgia', 'Times New Roman', serif;
@@ -26,7 +25,7 @@
     --primary-color-rgb: 245, 245, 220;
 }
 
-/* Light Mode Colors - Old Money */
+
 [data-theme="light"] {
     --primary-color: #2D1611; /* Darker chocolate for better contrast */
     --secondary-color: #F5F5DC; /* Light beige */
@@ -65,6 +64,11 @@
     }
 }
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&family=Roboto+Mono:wght@400;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-sans);
     line-height: 1.8;
