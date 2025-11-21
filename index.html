@@ -12,12 +12,12 @@
     <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <title>Qusai Ismael</title>
     <meta name="description" content="Hi, I'm Qusai — Cybersecurity Student, AI & Software Development Enthusiast with experience building privacy-focused open-source tools and security solutions." />
-    <link rel="canonical" href="https://qusaismael.me/" />
+    <link rel="canonical" href="https://qusai.pro/" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Qusai Ismael - Cybersecurity Student & Developer" />
     <meta property="og:description" content="Hi, I'm Qusai — Cybersecurity Student and AI & Software Development Enthusiast building privacy-focused open-source tools and security solutions." />
-    <meta property="og:url" content="https://qusaismael.me/" />
+    <meta property="og:url" content="https://qusai.pro/" />
     <meta property="og:site_name" content="Qusai Ismael" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Qusai Ismael - Cybersecurity Student & Developer" />
@@ -177,7 +177,7 @@
                 <h2>Get In Touch<span class="accent-dot">.</span></h2>
                 <p>Feel free to send a message, we are both humans. ❤️</p>
                 <div class="social-links">
-                    <a href="mailto:qusai@qusai.pro" class="email-link">
+                    <a href="#" onclick="location.href='mailto:' + 'qusai' + '@' + 'qusai.pro'; return false;" class="email-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -214,7 +214,8 @@
                     </div>
                     <div class="gpg-actions">
                         <a href="https://keys.openpgp.org/search?q=qusai@qusai.pro" target="_blank" rel="noopener" class="gpg-action">Download from Keyserver</a>
-                        <a href="mailto:qusai@qusai.pro?subject=Encrypted%20Message" class="gpg-action">Send Encrypted Email</a>
+                        <button class="gpg-action" onclick="copyGpgKey()">Copy Key</button>
+                        <a href="#" onclick="location.href='mailto:' + 'qusai' + '@' + 'qusai.pro' + '?subject=Encrypted%20Message'; return false;" class="gpg-action">Send Encrypted Email</a>
                     </div>
                 </div>
             </section>
@@ -486,7 +487,7 @@
         <div class="footer-content">
             <div class="footer-left">
                 <h2 class="footer-title">qusai.pro</h2>
-                <p class="footer-copyright">© 2025 All rights reserved.</p>
+                <p class="footer-copyright">© 2025 All rights reserved. <span style="font-size: 0.8em; opacity: 0.6; margin-left: 8px;" title="Press 'h' for Home, 'p' for Portfolio, 's' for Sites, 'b' for Blog">[?]</span></p>
                 <div class="status-indicator">
                     <div class="status-dot"></div>
                     <span class="status-text">Available for work</span>
@@ -527,7 +528,7 @@
       
       // GPG Key copy function
       function copyGpgKey() {
-        const gpgKey = document.querySelector('.gpg-key code').textContent;
+        const gpgKey = document.querySelector('.gpg-info p code').textContent;
         navigator.clipboard.writeText(gpgKey).then(function() {
           alert('GPG key copied to clipboard!');
         });

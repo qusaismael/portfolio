@@ -1413,10 +1413,6 @@ section .writing-list li {
     }
 }
 
-/* Cleanup old timeline styles if they exist */
-.timeline, .timeline-entry, .timeline-dot, .timeline-content, .timeline-date, .timeline-title, .timeline-company, .timeline-description, .timeline-tags {
-    /*This is a placeholder to ensure old styles are removed if find/replace fails*/
-}
 
 /* Enhanced Project Cards */
 .project-grid-enhanced {
@@ -2014,6 +2010,9 @@ section .writing-list li {
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
 }
 
 .gpg-action:hover {
