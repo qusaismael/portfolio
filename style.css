@@ -1404,10 +1404,31 @@ section .writing-list li {
         margin-bottom: 1rem;
     }
     
+    .timeline-description p {
+        margin: 0 0 0.5rem 0;
+    }
+    
+    .timeline-description ul {
+        margin: 0.4rem 0 0.75rem 0;
+        padding-left: 1rem;
+    }
+    
+    .timeline-description ul li {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+        padding-left: 0.5rem;
+    }
+    
     /* Tags */
     .timeline-content .tags {
         margin-top: 1rem;
         gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .timeline-content .tags span {
+        font-size: 0.75rem;
+        white-space: nowrap;
     }
 }
 
@@ -1451,6 +1472,17 @@ section .writing-list li {
     .timeline-description {
         font-size: 0.85rem;
         line-height: 1.5;
+    }
+    
+    .timeline-description ul {
+        padding-left: 0.75rem;
+        margin: 0.35rem 0 0.6rem 0;
+    }
+    
+    .timeline-description ul li {
+        font-size: 0.8rem;
+        margin-bottom: 0.35rem;
+        line-height: 1.45;
     }
     
     .timeline-time {
