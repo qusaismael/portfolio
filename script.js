@@ -101,6 +101,27 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+function updateTime() {
+    const now = new Date();
+    const jordanTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Amman"}));
+    const timeString = jordanTime.toLocaleTimeString('en-US', { 
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: "Asia/Amman"
+    });
+    const element = document.getElementById('header-time');
+    if (element) {
+        element.textContent = timeString + ' GMT+3';
+    }
+}
+
+// Initialize time display
+document.addEventListener('DOMContentLoaded', () => {
+    updateTime();
+    setInterval(updateTime, 1000);
+});
+
 // Console Easter Egg
 console.log(
     "%c Hello, Fellow Dev! %c\n\nIf you're looking at this, you probably like code too.\nFeel free to check out the source on GitHub: https://github.com/qusaismael/qusaismael.github.io\n\nStay secure! 🔒",
