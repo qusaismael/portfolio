@@ -1163,6 +1163,7 @@ section .writing-list li {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.timeline-left .timeline-content,
 .timeline-right .timeline-content {
     text-align: left;
 }
@@ -1202,6 +1203,50 @@ section .writing-list li {
     font-size: 1rem;
     line-height: 1.7;
     opacity: 0.9;
+}
+
+.timeline-description p {
+    margin: 0 0 0.75rem 0;
+}
+
+.timeline-description p:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-description p strong {
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+.timeline-description ul {
+    margin: 0.5rem 0 1rem 0;
+    padding-left: 1.25rem;
+    list-style: none;
+}
+
+.timeline-description ul li {
+    position: relative;
+    padding-left: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.timeline-description ul li::before {
+    content: "•";
+    position: absolute;
+    left: -0.5rem;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.timeline-description ul li strong {
+    color: var(--heading-color);
+    font-weight: 500;
+}
+
+.timeline-description ul li:last-child {
+    margin-bottom: 0;
 }
 
 .timeline-time {
