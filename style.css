@@ -1594,6 +1594,84 @@ section .writing-list li {
     position: relative;
 }
 
+.project-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.95), rgba(var(--primary-color-rgb), 0.65));
+    color: #1A0F0A;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid rgba(var(--primary-color-rgb), 0.5);
+    box-shadow: 0 12px 30px rgba(var(--primary-color-rgb), 0.18);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.project-badge::before {
+    content: "★";
+    color: var(--secondary-color);
+    filter: brightness(1.1);
+}
+
+.project-badge.badge-grad::before {
+    content: "🎓";
+}
+
+.project-badge.badge-stories::before {
+    content: "📘";
+}
+
+.project-badge.badge-prototype::before {
+    content: "📊";
+}
+
+.project-badge.badge-community::before {
+    content: "🤝";
+}
+
+.badge-bottom-right {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+    left: auto;
+}
+
+.badge-bottom-left {
+    top: auto;
+    bottom: 1rem;
+    left: 1rem;
+    right: auto;
+}
+
+.project-badge::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(var(--primary-color-rgb), 0.22), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.project-card-enhanced:hover .project-badge {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 18px 40px rgba(var(--primary-color-rgb), 0.24);
+}
+
+.project-card-enhanced:hover .project-badge::after {
+    opacity: 1;
+}
+
 .project-card-enhanced:hover {
     transform: translateY(-8px);
     box-shadow: 0 25px 80px rgba(var(--primary-color-rgb), 0.25), 0 10px 30px var(--shadow-color);
@@ -1608,6 +1686,7 @@ section .writing-list li {
     justify-content: center;
     border-bottom: 1px solid var(--border-color);
     overflow: hidden;
+    position: relative;
 }
 
 @media screen and (max-width: 768px) {
