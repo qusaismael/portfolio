@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog – Qusai Ismael</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
+    <meta name="theme-color" content="#de5e91" />
+    <meta name="keywords" content="Blog, Cybersecurity, Tech, Open Source, Qusai Ismael" />
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <meta name="description" content="Thoughts on cybersecurity, privacy, AI development, and open-source software from Qusai Ismael." />
+    <link rel="canonical" href="https://qusai.pro/blog.html" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blog – Qusai Ismael" />
+    <meta property="og:description" content="Thoughts on cybersecurity, privacy, AI development, and open-source software from Qusai Ismael." />
+    <meta property="og:url" content="https://qusai.pro/blog.html" />
+    <meta property="og:site_name" content="Qusai Ismael" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog – Qusai Ismael" />
+    <meta name="twitter:description" content="Thoughts on cybersecurity, privacy, AI development, and open-source software." />
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="msapplication-navbutton-color" content="#de5e91" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/jpeg" href="pfp.jpeg">
+    <link rel="apple-touch-icon" href="pfp.jpeg">
+    <style>
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 400;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaRegular.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 500;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaMedium.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Recoleta';
+        font-weight: 700;
+        src: url('https://fonts.cdnfonts.com/s/19751/RecoletaBold.woff') format('woff');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 400;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 500;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Text';
+        font-weight: 700;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuByfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Helvetica Now Display';
+        font-weight: 700;
+        src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuByfAZ9hiA.woff2') format('woff2');
+        font-display: swap;
+    }
+    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="print.css" media="print">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader05"></div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="progress-wrap" aria-label="Scroll to top">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+        </svg>
+    </div>
+
+    <div class="header-enhanced" id="header-enhanced">
+        <div class="header-enhanced-inner">
+            <div class="header-logo">
+                <a href="index.html">
+                    <span class="logo-text">Q</span>
+                </a>
+            </div>
+            <div class="header-center">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="header-info">
+                <p class="header-location">Based in Jordan</p>
+                <p class="header-time" id="header-time">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <img src="pfp.jpeg" alt="Qusai Ismael Profile Picture" class="profile-picture">
+                <div class="profile-info">
+                    <h1>Qusai Ismael</h1>
+                    <p class="subtitle">Security & Privacy by day | AI & SWE by night</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="main-nav">
+                <a href="index.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Home
+                </a>
+                <a href="portfolio.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 4h4v3h-4V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    Portfolio
+                </a>
+                <a href="sites.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    My Sites
+                </a>
+                <a href="recommendations.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Recommendations
+                </a>
+                <a href="index.html#contact">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M22 6l-10 7L2 6" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Contact
+                </a>
+            </nav>
+        </header>
+        
+        <main class="main-content">
+            <section id="blog">
+                <h2>Blog Posts from Medium<span class="accent-dot">.</span></h2>
+                <div id="medium-posts" class="blog-grid"></div>
+
+                <!-- Medium Profile Button -->
+                <div class="medium-button-container">
+                    <a href="https://medium.com/@qusaismael" target="_blank" class="medium-button">
+                        <span>View More on Medium</span>
+                        <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+            <div id="post-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div id="modal-body"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer-enhanced">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2 class="footer-title">qusai.pro</h2>
+                <p class="footer-copyright">© 2025 All rights reserved. 
+                    <span class="keyboard-hint" onclick="toggleKeyboardHelp()" title="Click for keyboard shortcuts">[?]</span>
+                </p>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Available for work</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        
+        function updateTime() {
+            const now = new Date();
+            const jordanTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Amman"}));
+            const timeString = jordanTime.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: "Asia/Amman"
+            });
+            const element = document.getElementById('header-time');
+            if (element) {
+                element.textContent = timeString + ' GMT+3';
+            }
+        }
+        
+        // Update time every second
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html> 
