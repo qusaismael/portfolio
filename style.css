@@ -375,10 +375,11 @@ a:hover {
     .mobile-menu-toggle {
         display: flex;
         position: fixed;
-        top: 0.85rem;
+        top: 0.95rem;
         left: 1rem;
-        background: rgba(47,27,20,0.9);
-        backdrop-filter: blur(10px);
+        background: transparent;
+        backdrop-filter: none;
+        border-color: var(--border-color);
     }
     
     .header nav {
@@ -2626,7 +2627,7 @@ nav a:hover {
     }
     
     .container {
-        padding: 3.5rem 0.75rem 0.75rem 0.75rem;
+        padding: 2rem 0.75rem 0.75rem 0.75rem;
     }
     
     .profile-picture {
