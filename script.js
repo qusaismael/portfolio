@@ -112,8 +112,50 @@ function updateTime() {
     });
     const element = document.getElementById('header-time');
     if (element) {
-        element.textContent = timeString + ' GMT+3';
+        element.textContent = `${timeString} GMT+3`;
     }
+}
+
+function initProfileLightbox() {
+    if (document.getElementById('pfp-lightbox')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'pfp-lightbox';
+    overlay.className = 'pfp-lightbox';
+    overlay.innerHTML = `
+        <div class="pfp-lightbox__backdrop"></div>
+        <div class="pfp-lightbox__content">
+            <img alt="Profile photo enlarged" />
+            <button class="pfp-lightbox__close" aria-label="Close photo">&times;</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const imgEl = overlay.querySelector('img');
+    const close = () => overlay.classList.remove('is-visible');
+
+    overlay.addEventListener('click', (e) => {
+        if (
+            e.target === overlay ||
+            e.target.classList.contains('pfp-lightbox__backdrop') ||
+            e.target.classList.contains('pfp-lightbox__close')
+        ) {
+            close();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-visible')) close();
+    });
+
+    document.querySelectorAll('.profile-picture').forEach((pic) => {
+        pic.style.cursor = 'zoom-in';
+        pic.addEventListener('click', () => {
+            imgEl.src = pic.src;
+            imgEl.alt = pic.alt || 'Profile photo';
+            overlay.classList.add('is-visible');
+        });
+    });
 }
 
 // Initialize time display
@@ -121,6 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTime();
     setInterval(updateTime, 1000);
 });
+
+// Initialize profile photo lightbox once DOM is ready
+document.addEventListener('DOMContentLoaded', initProfileLightbox);
 
 // Console Easter Egg
 console.log(

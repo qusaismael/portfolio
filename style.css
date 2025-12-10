@@ -211,6 +211,63 @@ a:hover {
     box-shadow: 0 12px 35px rgba(var(--primary-color-rgb), 0.3);
 }
 
+.pfp-lightbox {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 999;
+}
+.pfp-lightbox.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+.pfp-lightbox__content {
+    position: relative;
+    max-width: min(85vw, 520px);
+    max-height: 85vh;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+    background: var(--card-bg, #0f0f0f);
+}
+.pfp-lightbox__content img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.pfp-lightbox__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: grid;
+    place-items: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.pfp-lightbox__close:hover {
+    transform: scale(1.05);
+    background: rgba(0,0,0,0.75);
+}
+.pfp-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+}
+
 .profile-info {
     flex: 1;
 }
@@ -226,7 +283,7 @@ a:hover {
         width: 100px;
         height: 100px;
         object-fit: cover;
-        object-position: center top;
+        object-position: center 40%;
         padding: 2px;
     }
     
@@ -1705,11 +1762,20 @@ section .writing-list li {
     padding-top: 5rem;
 }
 
+@media screen and (max-width: 768px) {
+    .container {
+        padding-top: 6rem;
+    }
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .header-enhanced-inner {
         padding: 0 1rem;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 0.75rem;
     }
     
     .header-logo .logo-text {
@@ -1717,11 +1783,23 @@ section .writing-list li {
     }
     
     .header-center {
-        display: none; /* Hide theme toggle on mobile for cleaner look */
+        display: block;
+        justify-self: end;
+        order: 3;
     }
     
     .header-info {
-        display: none; /* Hide time/location on mobile for space */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        text-align: center;
+        justify-self: center;
+        order: 2;
+    }
+
+    .header-logo {
+        order: 1;
     }
     
     .project-grid-enhanced {
@@ -2544,14 +2622,14 @@ nav a:hover {
     }
     
     .container {
-        padding: 0.75rem;
+        padding: 3.5rem 0.75rem 0.75rem 0.75rem;
     }
     
     .profile-picture {
         width: 90px;
         height: 90px;
         object-fit: cover;
-        object-position: center 20%;
+        object-position: center 40%;
         padding: 2px;
     }
     
