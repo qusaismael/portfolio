@@ -282,6 +282,9 @@ function loadMediumPosts() {
     }
 }function showPostModal(e){const t=document.getElementById("post-modal");document.getElementById("modal-body").innerHTML=`\n        <h2>${e.title}</h2>\n        <p class="post-date">${new Date(e.pubDate).toLocaleDateString()}</p>\n        ${e.description}\n    `,t.style.display="block";document.querySelector(".close-modal").onclick=()=>t.style.display="none",window.onclick=e=>{e.target===t&&(t.style.display="none")}}style.textContent="\n    .ripple {\n        position: absolute;\n        border-radius: 50%;\n        background: rgba(222, 94, 145, 0.3);\n        transform: scale(0);\n        animation: rippleEffect 0.6s linear;\n        pointer-events: none;\n    }\n    \n    @keyframes rippleEffect {\n        to {\n            transform: scale(2);\n            opacity: 0;\n        }\n    }\n",document.head.appendChild(style),document.addEventListener("DOMContentLoaded",loadMediumPosts);
 
+const LAZY_PLACEHOLDER="data:image/gif;base64,R0lGODlhAQABAAD/ACw=";
+function initLazyImages(){const e=Array.from(document.querySelectorAll("img.lazy-image"));if(!e.length)return;const t=t=>{if(t.dataset.loaded)return;const e=t.dataset.src;e&&(t.src=e,t.dataset.loaded="true")};if("IntersectionObserver"in window){const n=new IntersectionObserver((e,o)=>{e.forEach(e=>{e.isIntersecting&&(t(e.target),o.unobserve(e.target))})},{rootMargin:"200px 0px",threshold:.01});e.forEach(e=>{e.dataset.src&&n.observe(e)})}else e.forEach(t)}document.addEventListener("DOMContentLoaded",initLazyImages);
+
 
 document.querySelectorAll('.project-card-enhanced').forEach(card => {
     const link = card.querySelector('.project-arrow');
