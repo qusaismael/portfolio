@@ -97,6 +97,9 @@
             background-color: rgba(0,0,0,0.9);
             align-items: center;
             justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            overflow: auto;
         }
 
         .photo-modal.active {
@@ -104,29 +107,42 @@
         }
 
         .photo-modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: calc(100vw - 4rem);
+            max-height: calc(100vh - 4rem);
+            width: auto;
+            height: auto;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            flex-shrink: 0;
         }
 
         .photo-modal img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: calc(100vw - 4rem);
+            max-height: calc(100vh - 4rem);
+            width: auto;
+            height: auto;
             object-fit: contain;
             border-radius: 8px;
+            display: block;
         }
 
         .photo-modal-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
             color: white;
             font-size: 2rem;
             cursor: pointer;
-            background: none;
+            background: rgba(0,0,0,0.5);
             border: none;
-            padding: 0.5rem;
-            transition: opacity 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            z-index: 1001;
+            line-height: 1;
         }
 
         .photo-modal-close:hover {
@@ -160,9 +176,24 @@
                 gap: 0.5rem;
             }
 
+            .photo-modal {
+                padding: 1rem;
+            }
+
+            .photo-modal-content {
+                max-width: calc(100vw - 2rem);
+                max-height: calc(100vh - 2rem);
+            }
+
+            .photo-modal img {
+                max-height: calc(100vh - 2rem);
+            }
+
             .photo-modal-close {
-                top: -40px;
+                top: 0.5rem;
+                right: 0.5rem;
                 font-size: 1.5rem;
+                padding: 0.4rem 0.8rem;
             }
         }
 
