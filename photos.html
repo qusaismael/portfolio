@@ -161,8 +161,12 @@
             font-weight: 500;
         }
 
-        /* Mobile - keep 3 columns, adjust modal */
+        /* Mobile - 2 columns, adjust modal */
         @media screen and (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
 
             .photo-modal {
                 padding: 1rem;
