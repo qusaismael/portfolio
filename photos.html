@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
+    <meta name="theme-color" content="#de5e91" />
+    <meta name="keywords" content="Qusai Ismael, Photos, Photography, Portfolio, Personal" />
+    <meta name="msapplication-navbutton-color" content="#de5e91" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/jpeg" href="pfp.jpeg">
+    <link rel="apple-touch-icon" href="pfp.jpeg">
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <title>Photos – Qusai Ismael</title>
+    <meta name="description" content="Personal photography collection by Qusai Ismael – capturing moments, memories, and the beauty in everyday life." />
+    <link rel="canonical" href="https://qusai.pro/photos.html" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Photos – Qusai Ismael" />
+    <meta property="og:description" content="Personal photography collection by Qusai Ismael – capturing moments, memories, and the beauty in everyday life." />
+    <meta property="og:url" content="https://qusai.pro/photos.html" />
+    <meta property="og:site_name" content="Qusai Ismael" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Photos – Qusai Ismael" />
+    <meta name="twitter:description" content="Personal photography collection by Qusai Ismael – capturing moments and memories." />
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="print.css" media="print">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Photo Gallery Styles - 3-column layout */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 4/5;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            filter: brightness(1.05) contrast(1.05) saturate(1.1);
+        }
+
+        .photo-item:hover img {
+            filter: brightness(1.1) contrast(1.1) saturate(1.2);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-caption {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-modal.active {
+            display: flex;
+        }
+
+        .photo-modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .photo-modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .photo-modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-modal-close:hover {
+            opacity: 0.7;
+        }
+
+        .gallery-section {
+            margin-bottom: 3rem;
+        }
+
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        /* Tablet - 2 columns */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+        }
+
+        /* Mobile - 1 column */
+        @media screen and (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .photo-modal-close {
+                top: -40px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Color adjustments for dark theme */
+        [data-theme="dark"] .photo-item img {
+            filter: brightness(1.08) contrast(1.08) saturate(1.15) sepia(0.1);
+        }
+
+        [data-theme="dark"] .photo-item:hover img {
+            filter: brightness(1.15) contrast(1.15) saturate(1.25) sepia(0.15);
+        }
+
+        /* Light theme adjustments */
+        [data-theme="light"] .photo-item img {
+            filter: brightness(1.02) contrast(1.02) saturate(1.05);
+        }
+
+        [data-theme="light"] .photo-item:hover img {
+            filter: brightness(1.08) contrast(1.08) saturate(1.15);
+        }
+
+        /* Photo card and meta styles */
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 4/5;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-card-media {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            filter: brightness(1.05) contrast(1.05) saturate(1.1);
+        }
+
+        .photo-card:hover img {
+            filter: brightness(1.1) contrast(1.1) saturate(1.2);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .photo-overlay-quote {
+            color: white;
+            font-size: 1rem;
+            font-weight: 400;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            font-style: italic;
+            text-align: center;
+            line-height: 1.4;
+            max-width: 80%;
+        }
+
+        .photo-card-meta {
+            margin-top: 0.75rem;
+            text-align: center;
+        }
+
+        .photo-quote {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-color);
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .photo-quote:before {
+            content: '"';
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            position: absolute;
+            left: -15px;
+            top: -5px;
+        }
+
+        .photo-quote:after {
+            content: '"';
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            position: absolute;
+            right: -15px;
+            bottom: -5px;
+        }
+
+        .photo-caption {
+            font-size: 0.9rem;
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        /* Modal meta styles */
+        .photo-modal-meta {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            padding: 2rem 1.5rem 1.5rem;
+            color: white;
+        }
+
+        .photo-modal-quote {
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-style: italic;
+            text-align: center;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .photo-modal-quote:before {
+            content: '"';
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-right: 5px;
+        }
+
+        .photo-modal-quote:after {
+            content: '"';
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-left: 5px;
+        }
+
+        .photo-modal-caption {
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .photo-gallery-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted-text);
+        }
+
+        .photo-gallery-empty h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .photo-gallery-empty code {
+            background: var(--card-background);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="loader05"></div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="progress-wrap" aria-label="Scroll to top">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+        </svg>
+    </div>
+
+    <div class="header-enhanced" id="header-enhanced">
+        <div class="header-enhanced-inner">
+            <div class="header-logo">
+                <a href="index.html">
+                    <span class="logo-text">Q</span>
+                </a>
+            </div>
+            <div class="header-center">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="header-info">
+                <p class="header-location">Based in Jordan</p>
+                <p class="header-time" id="header-time">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <img src="pfp.jpeg"
+                     alt="Qusai Ismael Profile Picture"
+                     class="profile-picture">
+                <div class="profile-info">
+                    <h1>Photos</h1>
+                    <p class="subtitle">
+                        Capturing moments, memories, and the beauty in everyday life <br>
+                        Through my lens
+                    </p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="main-nav">
+                <a href="index.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Home
+                </a>
+                <a href="portfolio.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 4h4v3h-4V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    Portfolio
+                </a>
+                <a href="sites.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    My Sites
+                </a>
+                <a href="blog.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Blog
+                </a>
+                <a href="recommendations.html">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    Recommendations
+                </a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section id="photos-intro">
+                <h2>Photo Collection<span class="accent-dot">.</span></h2>
+                <p>I'm a human after all, here are some photos of me and my life.<br>Enjoy!</p>
+            </section>
+
+            <section class="gallery-section">
+                <p class="gallery-title">Personal Moments</p>
+                <div id="photo-gallery" class="photo-gallery" aria-live="polite"></div>
+                <div id="photo-gallery-empty" class="photo-gallery-empty" hidden>
+                    <h3>Drop photos into <code>pics/photos/</code><span class="accent-dot">.</span></h3>
+                    <p>
+                        This page is intentionally simple: add your images inside <code>pics/photos/</code>, then add entries in the <code>PHOTOS</code> array below (each entry can include a quote).
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal" role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <button class="photo-modal-close" onclick="closePhotoModal()" aria-label="Close photo">&times;</button>
+        <div class="photo-modal-content">
+            <img id="modal-image" src="" alt="">
+            <div id="modal-meta" class="photo-modal-meta" hidden>
+                <div id="modal-quote" class="photo-modal-quote"></div>
+                <div id="modal-caption" class="photo-modal-caption"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-enhanced">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h2 class="footer-title">qusai.pro</h2>
+                <p class="footer-copyright">© 2025 All rights reserved.
+                    <span class="keyboard-hint" onclick="toggleKeyboardHelp()" title="Click for keyboard shortcuts">[?]</span>
+                </p>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Available for work</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        if (window.AOS) {
+            AOS.init({
+                duration: 800,
+                once: true,
+            });
+        }
+
+        // Enhanced time display - Always show GMT+3 (Jordan time)
+        function updateTime() {
+            const now = new Date();
+            // Convert to GMT+3 timezone (Jordan/Amman)
+            const jordanTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Amman"}));
+            const timeString = jordanTime.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: "Asia/Amman"
+            });
+            const element = document.getElementById('header-time');
+            if (element) {
+                element.textContent = timeString + ' GMT+3';
+            }
+        }
+
+        // Update time every second
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Photos manifest (static sites can't list directories automatically)
+        // Add images to: pics/photos/
+        // Then add entries here:
+        // { src: 'your-file.jpg', alt: 'Short alt', quote: 'Your quote', caption: 'Optional caption' }
+        const PHOTOS_DIR = 'pics/photos/';
+        const PHOTOS = [
+            {
+                src: 'Car.jpg',
+                alt: 'Car',
+                quote: 'You can just drive things',
+                caption: 'AirPort Road, Jordan',
+            },
+            {
+                src: 'Hillton.webp',
+                alt: 'Hilton',
+                quote: 'You can just go places',
+                caption: 'Dead Sea, Jordan',
+            },
+            {
+                src: 'Retire.jpg',
+                alt: 'Retire',
+                quote: 'you can just retire here',
+                caption: 'Ajloun, Jordan',
+            },
+            {
+                src: 'pfp.jpeg',
+                alt: 'Qusai Ismael',
+                quote: 'You can just be yourself here',
+                caption: 'Hashemite University, Jordan',
+            },
+        ];
+
+        function escapeHtml(str) {
+            return String(str)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function renderGallery() {
+            const gallery = document.getElementById('photo-gallery');
+            const empty = document.getElementById('photo-gallery-empty');
+            if (!gallery || !empty) return;
+
+            if (!Array.isArray(PHOTOS) || PHOTOS.length === 0) {
+                gallery.innerHTML = '';
+                empty.hidden = false;
+                return;
+            }
+
+            empty.hidden = true;
+            gallery.innerHTML = PHOTOS.map((p, idx) => {
+                const src = PHOTOS_DIR + p.src;
+                const alt = p.alt || '';
+                const quote = p.quote || '';
+                const caption = p.caption || '';
+                return `
+                    <figure class="photo-card">
+                        <button class="photo-card-media" type="button" onclick="openPhotoModal(${idx})" aria-label="Open photo">
+                            <img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy">
+                            <div class="photo-overlay" aria-hidden="true">
+                                <div class="photo-overlay-quote">${escapeHtml(quote)}</div>
+                            </div>
+                        </button>
+                        <figcaption class="photo-card-meta">
+                            ${quote ? `<div class="photo-quote">“${escapeHtml(quote)}”</div>` : ''}
+                            ${caption ? `<div class="photo-caption">${escapeHtml(caption)}</div>` : ''}
+                        </figcaption>
+                    </figure>
+                `;
+            }).join('');
+        }
+
+        // Photo modal functionality
+        function openPhotoModal(photoIndex) {
+            const modal = document.getElementById('photo-modal');
+            const modalImg = document.getElementById('modal-image');
+            const meta = document.getElementById('modal-meta');
+            const modalQuote = document.getElementById('modal-quote');
+            const modalCaption = document.getElementById('modal-caption');
+
+            const p = PHOTOS[photoIndex];
+            if (!p || !modal || !modalImg) return;
+
+            modalImg.src = PHOTOS_DIR + p.src;
+            modalImg.alt = p.alt || '';
+
+            const quote = p.quote || '';
+            const caption = p.caption || '';
+
+            if (meta && modalQuote && modalCaption && (quote || caption)) {
+                meta.hidden = false;
+                modalQuote.textContent = quote ? `"${quote}"` : '';
+                modalCaption.textContent = caption;
+            } else if (meta) {
+                meta.hidden = true;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhotoModal() {
+            const modal = document.getElementById('photo-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('photo-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePhotoModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('photo-modal').classList.contains('active')) {
+                closePhotoModal();
+            }
+        });
+
+        // Initial render
+        renderGallery();
+    </script>
+</body>
+</html>
