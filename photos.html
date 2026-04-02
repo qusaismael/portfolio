@@ -510,6 +510,33 @@
         </div>
     </footer>
 
+    <div id="term-notify" class="term-hidden">
+        <div class="notify-content">
+            <span class="pulse-dot"></span>
+            <span>System access granted. Press <kbd>`</kbd> to open terminal.</span>
+        </div>
+    </div>
+
+    <div id="term-overlay" class="term-hidden">
+        <div class="term-container">
+            <div class="term-header">
+                <span>qusai@fedora:~</span>
+                <button id="term-close" aria-label="Close Terminal">×</button>
+            </div>
+            <div class="term-window" id="term-window">
+                <div class="term-intro">
+                    Welcome to QusaiOS v3.1 (Kernel: Linux x86_64)<br>
+                    Type <span class="highlight">'help'</span> to see available commands.
+                </div>
+                <div id="term-output"></div>
+                <div class="term-input-wrapper">
+                    <span class="term-prompt">[qusai@fedora ~]$</span>
+                    <input type="text" id="term-input" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         if (window.AOS) {

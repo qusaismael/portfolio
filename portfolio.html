@@ -210,6 +210,39 @@
 
                     <div class="timeline-entry-container timeline-right" data-aos="fade-left">
                         <time class="timeline-time">
+                            <span class="timeline-company">ScanWave</span>
+                            <span class="timeline-date">Jan 2026 - Feb 2026 · 2 mos</span>
+                        </time>
+                        <div class="timeline-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="4" y="11" width="16" height="10" rx="2" ry="2"></rect>
+                                <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+                                <path d="M12 15v2"></path>
+                                <path d="M9 15h.01"></path>
+                                <path d="M15 15h.01"></path>
+                            </svg>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">AI Security Intern</div>
+                            <div class="timeline-description">
+                                <p><strong>Location:</strong> Amman, Jordan (On-site)</p>
+                                <ul>
+                                    <li>Deployed an air-gapped, high-performance AI pipeline, enabling the secure, localized processing of sensitive corporate data.</li>
+                                    <li>Optimized and compiled custom open-source inference engines for specific hardware architectures to maximize processing efficiency.</li>
+                                </ul>
+                            </div>
+                            <div class="tags">
+                                <span>AI Security</span>
+                                <span>Air-gapped</span>
+                                <span>Inference Optimization</span>
+                                <span>Open Source</span>
+                                <span>Hardware</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry-container timeline-left" data-aos="fade-right">
+                        <time class="timeline-time">
                             <span class="timeline-company">Freelance</span>
                             <span class="timeline-date">Aug 2024 - Present</span>
                         </time>
@@ -249,7 +282,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-entry-container timeline-left" data-aos="fade-right">
+                    <div class="timeline-entry-container timeline-right" data-aos="fade-left">
                         <time class="timeline-time">
                             <span class="timeline-company">Zain Jordan</span>
                             <span class="timeline-date">Jul 2025 - Sep 2025 · 3 mos</span>
@@ -281,7 +314,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-entry-container timeline-right" data-aos="fade-left">
+                    <div class="timeline-entry-container timeline-left" data-aos="fade-right">
                         <time class="timeline-time">
                             <span class="timeline-company">Freelance</span>
                             <span class="timeline-date">Dec 2022 - Aug 2024 · 1 yr 9 mos</span>
@@ -316,7 +349,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-entry-container timeline-left" data-aos="fade-right">
+                    <div class="timeline-entry-container timeline-right" data-aos="fade-left">
                         <time class="timeline-time">
                             <span class="timeline-company">Freelance</span>
                             <span class="timeline-date">2020 · Less than a year</span>
@@ -579,6 +612,33 @@
 
         </div>
     </footer>
+
+    <div id="term-notify" class="term-hidden">
+        <div class="notify-content">
+            <span class="pulse-dot"></span>
+            <span>System access granted. Press <kbd>`</kbd> to open terminal.</span>
+        </div>
+    </div>
+
+    <div id="term-overlay" class="term-hidden">
+        <div class="term-container">
+            <div class="term-header">
+                <span>qusai@fedora:~</span>
+                <button id="term-close" aria-label="Close Terminal">×</button>
+            </div>
+            <div class="term-window" id="term-window">
+                <div class="term-intro">
+                    Welcome to QusaiOS v3.1 (Kernel: Linux x86_64)<br>
+                    Type <span class="highlight">'help'</span> to see available commands.
+                </div>
+                <div id="term-output"></div>
+                <div class="term-input-wrapper">
+                    <span class="term-prompt">[qusai@fedora ~]$</span>
+                    <input type="text" id="term-input" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

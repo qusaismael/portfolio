@@ -154,6 +154,53 @@
                 <p>Hi Anon, I'm Qusai.</p><p>A 20-year-old guy from the <span class="location-tooltip">middle of the Middle East<span class="tooltip-content">🇯🇴 Jordan</span></span> and this is my corner of the internet.</p>
                 <p>The main reason I made this webpage is to be a part of building a decentralized future.</p>
                 <p><strong>Opinions my own.</strong></p>
+                
+                <div class="gh-ticker-container" data-github-username="qusaismael" role="status" aria-live="polite" aria-label="Live GitHub activity ticker">
+                    <svg class="gh-icon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                    </svg>
+                    <span id="gh-ticker-text" class="gh-ticker-text">Loading latest system commit...</span>
+                    <span class="gh-ticker-cursor" aria-hidden="true"></span>
+                </div>
+            </section>
+
+            <section id="github-pulse" data-github-username="qusaismael">
+                <h2>GitHub Pulse<span class="accent-dot">.</span></h2>
+                <p>Live public activity snapshot with a contribution-style heatmap.</p>
+
+                <div class="gh-pulse-card">
+                    <div class="gh-pulse-head">
+                        <span class="gh-pulse-title">Contribution-style activity</span>
+                        <span id="gh-pulse-updated" class="gh-pulse-updated">Updating...</span>
+                    </div>
+
+                    <div id="gh-heatmap-grid" class="gh-heatmap-grid" aria-label="GitHub activity heatmap"></div>
+
+                    <div class="gh-heatmap-legend" aria-hidden="true">
+                        <span>Less</span>
+                        <span class="gh-heatmap-level l0"></span>
+                        <span class="gh-heatmap-level l1"></span>
+                        <span class="gh-heatmap-level l2"></span>
+                        <span class="gh-heatmap-level l3"></span>
+                        <span class="gh-heatmap-level l4"></span>
+                        <span>More</span>
+                    </div>
+
+                    <div class="gh-pulse-columns">
+                        <div class="gh-pulse-col">
+                            <h3>Recent Commits</h3>
+                            <ul id="gh-recent-commits" class="gh-pulse-list">
+                                <li class="gh-pulse-empty">Loading recent commits...</li>
+                            </ul>
+                        </div>
+                        <div class="gh-pulse-col">
+                            <h3>Recent Merged PRs</h3>
+                            <ul id="gh-recent-merges" class="gh-pulse-list">
+                                <li class="gh-pulse-empty">Loading merged PRs...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </section>
     
             <section id="contact">
@@ -501,6 +548,33 @@
 
         </div>
     </footer>
+
+    <div id="term-notify" class="term-hidden">
+        <div class="notify-content">
+            <span class="pulse-dot"></span>
+            <span>System access granted. Press <kbd>`</kbd> to open terminal.</span>
+        </div>
+    </div>
+
+    <div id="term-overlay" class="term-hidden">
+        <div class="term-container">
+            <div class="term-header">
+                <span>qusai@fedora:~</span>
+                <button id="term-close" aria-label="Close Terminal">×</button>
+            </div>
+            <div class="term-window" id="term-window">
+                <div class="term-intro">
+                    Welcome to QusaiOS v3.1 (Kernel: Linux x86_64)<br>
+                    Type <span class="highlight">'help'</span> to see available commands.
+                </div>
+                <div id="term-output"></div>
+                <div class="term-input-wrapper">
+                    <span class="term-prompt">[qusai@fedora ~]$</span>
+                    <input type="text" id="term-input" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <script>
