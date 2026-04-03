@@ -3510,8 +3510,46 @@ nav a:hover {
     font-variant-ligatures: none;
 }
 
+.pretext-tight-quote {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.pretext-caption-char {
+    will-change: transform, opacity;
+}
+
+.pretext-card-measured {
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.pretext-404-canvas {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: min(96vw, 720px);
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pretext-hide-404-title {
+    opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .pretext-editorial-canvas {
+    .pretext-editorial-canvas,
+    .pretext-404-canvas {
         display: none !important;
+    }
+    .pretext-hide-404-title {
+        opacity: 1 !important;
+    }
+    .pretext-caption-char,
+    .pretext-cascade-char {
+        transform: none !important;
+        opacity: 1 !important;
     }
 }

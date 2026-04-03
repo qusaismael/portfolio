@@ -199,7 +199,7 @@
     }
 
     /* ---------------------------------------------------------
-       2) Editorial orb reflow (layoutNextLine)
+       2) Editorial cat reflow (layoutNextLine)
        --------------------------------------------------------- */
     function initEditorialReflow(P) {
         if (reducedMotion || isMobile()) return;
@@ -229,54 +229,63 @@
         const font = getFontShorthand(paragraphs[0]);
         const lineHeight = lineHeightOf(paragraphs[0]);
         const prepared = P.prepareWithSegments(sourceText, font, { whiteSpace: 'pre-wrap' });
+
+        const catFont = `${Math.max(12, Math.round(lineHeight * 0.72))}px "Courier New", Courier, monospace`;
+        const walkA = [' /\\_/\\', '( o.o )', ' > ^ <'];
+        const walkB = [' /\\_/\\', '( o.o )', ' < ^ >'];
+        const sit = [' /\\_/\\', '( -.- )', '  z z z'];
+        const cat = { x: 0, y: 0, vx: 0.4, vy: 0, width: 92, height: 50, settled: false };
+
         let pointer = null, phase = 0, visible = true, frameId = null;
         let sW = 0, sH = 0, textTop = 36;
 
-        const orbs = [];
-        for (let i = 0; i < 3; i++) {
-            orbs.push({
-                x: 160 + i * 140, y: 180 + i * 40,
-                vx: (Math.random() - 0.5) * 1.2,
-                vy: (Math.random() - 0.5) * 1.2,
-                r: 42 + i * 12
-            });
-        }
-
         function sizeCanvas() {
             const rect = about.getBoundingClientRect();
-            sW = rect.width; sH = rect.height;
+            sW = rect.width;
+            sH = rect.height;
             textTop = h2El ? h2El.offsetHeight + 20 : 36;
             canvas.width = Math.round(sW * dpr);
             canvas.height = Math.round(sH * dpr);
-            canvas.style.width = sW + 'px';
-            canvas.style.height = sH + 'px';
-            for (let i = 0; i < orbs.length; i++) {
-                const o = orbs[i];
-                o.x = clamp(o.x, o.r + 14, sW - o.r - 14);
-                o.y = clamp(o.y, textTop + o.r, sH - 18 - o.r);
+            canvas.style.width = `${sW}px`;
+            canvas.style.height = `${sH}px`;
+            cat.y = clamp(textTop + lineHeight * 2.2, textTop + 4, sH - cat.height - 18);
+            cat.x = clamp(cat.x, 0, sW - cat.width - 8);
+        }
+
+        function updateCat() {
+            if (!cat.settled) {
+                cat.x += cat.vx;
+                cat.vx = clamp(cat.vx + 0.002, 0.18, 0.65);
+                if (pointer) {
+                    const cx = cat.x + cat.width * 0.5;
+                    const cy = cat.y + cat.height * 0.5;
+                    const dx = cx - pointer.x;
+                    const dy = cy - pointer.y;
+                    const d = Math.hypot(dx, dy);
+                    if (d < 140 && d > 0.001) {
+                        cat.vx += (dx / d) * 0.16;
+                        cat.vy += (dy / d) * 0.10;
+                    }
+                }
+                cat.vy = (cat.vy * 0.85) + Math.sin(phase * 0.9) * 0.04;
+                cat.y = clamp(cat.y + cat.vy, textTop + 4, sH - cat.height - 18);
+                if (cat.x >= sW * 0.78) {
+                    cat.x = Math.max(0, sW * 0.78);
+                    cat.settled = true;
+                    cat.vx = 0;
+                    cat.vy = 0;
+                }
             }
         }
 
-        function updateOrbs() {
-            const textBottom = sH - 18;
-            for (let i = 0; i < orbs.length; i++) {
-                const o = orbs[i];
-                o.x += o.vx; o.y += o.vy;
-                o.vx *= 0.996; o.vy *= 0.996;
-                o.vx += Math.sin(phase + i * 0.9) * 0.003;
-                o.vy += Math.cos(phase * 1.1 + i * 0.7) * 0.003;
-                if (pointer) {
-                    const dx = o.x - pointer.x, dy = o.y - pointer.y;
-                    const d = Math.hypot(dx, dy);
-                    if (d < 140 && d > 0.001) {
-                        const push = (1 - d / 140) * 0.36;
-                        o.vx += (dx / d) * push; o.vy += (dy / d) * push;
-                    }
-                }
-                if (o.x < o.r + 14) { o.x = o.r + 14; o.vx = Math.abs(o.vx) * 0.95; }
-                else if (o.x > sW - o.r - 14) { o.x = sW - o.r - 14; o.vx = -Math.abs(o.vx) * 0.95; }
-                if (o.y < textTop + o.r) { o.y = textTop + o.r; o.vy = Math.abs(o.vy) * 0.95; }
-                else if (o.y > textBottom - o.r) { o.y = textBottom - o.r; o.vy = -Math.abs(o.vy) * 0.95; }
+        function drawCat(colors) {
+            const lines = cat.settled ? sit : ((Math.floor(phase * 6) % 2 === 0) ? walkA : walkB);
+            ctx.font = catFont;
+            ctx.textBaseline = 'top';
+            ctx.globalAlpha = 0.88;
+            ctx.fillStyle = colors.heading;
+            for (let i = 0; i < lines.length; i += 1) {
+                ctx.fillText(lines[i], cat.x, cat.y + i * (lineHeight * 0.85));
             }
         }
 
@@ -286,31 +295,35 @@
             const colors = getThemeColors();
             const textLeft = 8, textRight = sW - 8, textBottom = sH - 18;
 
-            updateOrbs();
+            updateCat();
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             ctx.clearRect(0, 0, sW, sH);
-            ctx.font = font; ctx.textBaseline = 'top'; ctx.fillStyle = colors.text;
+            ctx.font = font;
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = colors.text;
 
             let cursor = { segmentIndex: 0, graphemeIndex: 0 };
             let y = textTop, guard = 0;
             while (guard < 300 && y <= textBottom) {
-                guard++;
+                guard += 1;
                 const lineMid = y + lineHeight * 0.52;
                 let slotL = textLeft, slotR = textRight;
 
-                for (let i = 0; i < orbs.length; i++) {
-                    const o = orbs[i];
-                    const dy = lineMid - o.y;
-                    if (Math.abs(dy) >= o.r) continue;
-                    const half = Math.sqrt(o.r * o.r - dy * dy);
-                    const bL = o.x - half - 10, bR = o.x + half + 10;
-                    if (bL <= slotL && bR >= slotR) { slotL = slotR; break; }
-                    if (bL > slotL && bR < slotR) {
-                        const leftW = bL - slotL, rightW = slotR - bR;
-                        if (leftW >= rightW) slotR = bL;
-                        else slotL = bR;
-                    } else if (bL <= slotL) { slotL = Math.max(slotL, bR); }
-                    else if (bR >= slotR) { slotR = Math.min(slotR, bL); }
+                if (lineMid >= cat.y && lineMid <= cat.y + cat.height) {
+                    const catL = clamp(cat.x - 8, textLeft, textRight);
+                    const catR = clamp(cat.x + cat.width + 8, textLeft, textRight);
+                    if (catL <= slotL && catR >= slotR) {
+                        slotL = slotR;
+                    } else if (catL > slotL && catR < slotR) {
+                        const leftW = catL - slotL;
+                        const rightW = slotR - catR;
+                        if (leftW >= rightW) slotR = catL;
+                        else slotL = catR;
+                    } else if (catL <= slotL) {
+                        slotL = Math.max(slotL, catR);
+                    } else if (catR >= slotR) {
+                        slotR = Math.min(slotR, catL);
+                    }
                 }
 
                 const avail = slotR - slotL;
@@ -323,20 +336,7 @@
                 y += lineHeight;
             }
 
-            ctx.fillStyle = colors.accent;
-            for (let i = 0; i < orbs.length; i++) {
-                const o = orbs[i];
-                const grad = ctx.createRadialGradient(o.x, o.y, 2, o.x, o.y, o.r * 1.4);
-                grad.addColorStop(0, 'rgba(' + colors.primaryRgb + ',0.22)');
-                grad.addColorStop(0.6, 'rgba(' + colors.primaryRgb + ',0.10)');
-                grad.addColorStop(1, 'rgba(' + colors.primaryRgb + ',0)');
-                ctx.globalAlpha = 1; ctx.fillStyle = grad;
-                ctx.beginPath(); ctx.arc(o.x, o.y, o.r * 1.4, 0, 6.2832); ctx.fill();
-                ctx.fillStyle = colors.accent;
-                ctx.globalAlpha = 0.55 + Math.sin(phase + i) * 0.08;
-                ctx.beginPath(); ctx.arc(o.x, o.y, o.r * 0.22, 0, 6.2832); ctx.fill();
-            }
-
+            drawCat(colors);
             phase += 0.014;
             frameId = requestAnimationFrame(draw);
         }
@@ -365,6 +365,68 @@
         }, { passive: true });
     }
 
+    function runCascadeForElement(P, el, widthCache, delaySeed) {
+        if (el.dataset.pretextCascade === '1') return;
+        el.dataset.pretextCascade = '1';
+        const font = getFontShorthand(el);
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        let node;
+        while ((node = walker.nextNode())) textNodes.push(node);
+        const items = [];
+
+        textNodes.forEach((tn) => {
+            const txt = tn.nodeValue || '';
+            if (!txt.trim()) return;
+            const frag = document.createDocumentFragment();
+            const chars = txt.split('');
+            for (let i = 0; i < chars.length; i += 1) {
+                const ch = chars[i];
+                const span = document.createElement('span');
+                span.className = 'pretext-cascade-char';
+                span.style.display = 'inline-block';
+                span.style.width = `${charWidth(P, ch, font, widthCache)}px`;
+                span.textContent = ch === ' ' ? '\u00A0' : ch;
+                const sx = rand(-11, 11);
+                const sy = rand(20, 52);
+                span.style.transform = `translate(${sx}px, ${sy}px)`;
+                span.style.opacity = '0';
+                frag.appendChild(span);
+                items.push({
+                    span,
+                    x: sx,
+                    y: sy,
+                    vx: 0,
+                    vy: 0,
+                    opacity: 0,
+                    delay: delaySeed + (i * 16) + rand(0, 35)
+                });
+            }
+            tn.parentNode.replaceChild(frag, tn);
+        });
+
+        if (!items.length) return;
+        const startTs = performance.now();
+        function tick(now) {
+            const t = now - startTs;
+            let active = false;
+            for (let i = 0; i < items.length; i += 1) {
+                const it = items[i];
+                if (t < it.delay) { active = true; continue; }
+                it.vx = (it.vx + (-it.x * 0.12)) * 0.8;
+                it.vy = (it.vy + (-it.y * 0.12)) * 0.8;
+                it.x += it.vx;
+                it.y += it.vy;
+                it.opacity = Math.min(1, it.opacity + 0.12);
+                it.span.style.transform = `translate(${it.x.toFixed(1)}px, ${it.y.toFixed(1)}px)`;
+                it.span.style.opacity = it.opacity.toFixed(2);
+                if (Math.abs(it.x) > 0.3 || Math.abs(it.y) > 0.3 || it.opacity < 0.98) active = true;
+            }
+            if (active) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
     /* ---------------------------------------------------------
        3) Heading character cascade (spring settle)
        --------------------------------------------------------- */
@@ -373,64 +435,256 @@
         const headings = Array.from(document.querySelectorAll('h2'));
         if (!headings.length) return;
         const widthCache = new Map();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) runCascadeForElement(P, e.target, widthCache, 0);
+            });
+        }, { threshold: 0.28 });
+        headings.forEach((h) => observer.observe(h));
+    }
 
-        function animateChars(items) {
-            const startTs = performance.now();
+    /* ---------------------------------------------------------
+       4) Timeline title cascade (portfolio)
+       --------------------------------------------------------- */
+    function initTimelineCascade(P) {
+        if (reducedMotion) return;
+        const entries = Array.from(document.querySelectorAll('.timeline-entry-container .timeline-title'));
+        if (!entries.length) return;
+        const widthCache = new Map();
+        const observer = new IntersectionObserver((nodes) => {
+            nodes.forEach((node) => {
+                if (!node.isIntersecting) return;
+                const idx = entries.indexOf(node.target);
+                runCascadeForElement(P, node.target, widthCache, Math.max(0, idx) * 100);
+                observer.unobserve(node.target);
+            });
+        }, { threshold: 0.22 });
+        entries.forEach((el) => observer.observe(el));
+    }
+
+    /* ---------------------------------------------------------
+       5) Tight-wrap recommendation quotes
+       --------------------------------------------------------- */
+    function initTightQuotes(P) {
+        const quotes = Array.from(document.querySelectorAll('.recommendation-item p, .recommendation-content p'));
+        if (!quotes.length) return;
+
+        const handles = [];
+        quotes.forEach((q) => {
+            const text = (q.textContent || '').trim();
+            if (text.length < 32) return;
+            q.style.maxWidth = '';
+            const width = q.offsetWidth;
+            if (!width) return;
+            const lineHeight = lineHeightOf(q);
+            const prepared = P.prepare(text, getFontShorthand(q));
+            const base = P.layout(prepared, width, lineHeight);
+            if (base.lineCount <= 1) return;
+            const tight = binaryTighten(P, prepared, lineHeight, width, base.lineCount);
+            q.style.maxWidth = `${tight}px`;
+            q.classList.add('pretext-tight-quote');
+            handles.push({ el: q, prepared, lineHeight });
+        });
+
+        let rt;
+        window.addEventListener('resize', () => {
+            clearTimeout(rt);
+            rt = setTimeout(() => {
+                handles.forEach((h) => {
+                    h.el.style.maxWidth = '';
+                    const width = h.el.offsetWidth;
+                    if (!width) return;
+                    const base = P.layout(h.prepared, width, h.lineHeight);
+                    if (base.lineCount <= 1) return;
+                    h.el.style.maxWidth = `${binaryTighten(P, h.prepared, h.lineHeight, width, base.lineCount)}px`;
+                });
+            }, 260);
+        }, { passive: true });
+    }
+
+    /* ---------------------------------------------------------
+       6) Photo quote one-shot wave
+       --------------------------------------------------------- */
+    function initCaptionWave(P) {
+        if (reducedMotion) return;
+        const quotes = Array.from(document.querySelectorAll('.photo-quote'));
+        if (!quotes.length) return;
+        const widthCache = new Map();
+
+        function animateQuote(el) {
+            if (el.dataset.pretextCaptionWave === '1') return;
+            el.dataset.pretextCaptionWave = '1';
+            const text = (el.textContent || '').trim();
+            if (!text) return;
+            const font = getFontShorthand(el);
+
+            const chars = text.split('');
+            el.innerHTML = '';
+            const spans = chars.map((ch, i) => {
+                const s = document.createElement('span');
+                s.className = 'pretext-caption-char';
+                s.style.display = 'inline-block';
+                s.style.width = `${charWidth(P, ch, font, widthCache)}px`;
+                s.textContent = ch === ' ' ? '\u00A0' : ch;
+                s.style.transform = `translateY(${8 + Math.sin(i * 0.35) * 10}px)`;
+                s.style.opacity = '0';
+                el.appendChild(s);
+                return { s, delay: i * 14 };
+            });
+
+            const start = performance.now();
             function tick(now) {
-                const t = now - startTs;
+                const t = now - start;
                 let active = false;
-                for (let i = 0; i < items.length; i++) {
-                    const it = items[i];
-                    if (t < it.delay) { active = true; continue; }
-                    it.vx = (it.vx + (-it.x * 0.12)) * 0.8;
-                    it.vy = (it.vy + (-it.y * 0.12)) * 0.8;
-                    it.x += it.vx; it.y += it.vy;
-                    it.opacity = Math.min(1, it.opacity + 0.12);
-                    it.span.style.transform = 'translate(' + it.x.toFixed(1) + 'px,' + it.y.toFixed(1) + 'px)';
-                    it.span.style.opacity = it.opacity.toFixed(2);
-                    if (Math.abs(it.x) > 0.3 || Math.abs(it.y) > 0.3 || it.opacity < 0.98) active = true;
+                for (let i = 0; i < spans.length; i += 1) {
+                    const { s, delay } = spans[i];
+                    const local = Math.max(0, t - delay);
+                    const k = Math.min(1, local / 800);
+                    const eased = 1 - Math.pow(1 - k, 3);
+                    const y = (1 - eased) * (8 + Math.sin(i * 0.35) * 10);
+                    s.style.transform = `translateY(${y.toFixed(2)}px)`;
+                    s.style.opacity = eased.toFixed(3);
+                    if (k < 1) active = true;
                 }
                 if (active) requestAnimationFrame(tick);
             }
             requestAnimationFrame(tick);
         }
 
-        function revealHeading(el) {
-            if (el.dataset.pretextCascade === '1') return;
-            el.dataset.pretextCascade = '1';
-            const font = getFontShorthand(el);
-            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-            const textNodes = [];
-            let node;
-            while ((node = walker.nextNode())) textNodes.push(node);
-            const items = [];
-            textNodes.forEach((tn) => {
-                const txt = tn.nodeValue || '';
-                if (!txt.trim()) return;
-                const frag = document.createDocumentFragment();
-                const chars = txt.split('');
-                for (let i = 0; i < chars.length; i++) {
-                    const ch = chars[i];
-                    const span = document.createElement('span');
-                    span.className = 'pretext-cascade-char';
-                    span.style.display = 'inline-block';
-                    span.style.width = charWidth(P, ch, font, widthCache) + 'px';
-                    span.textContent = ch === ' ' ? '\u00A0' : ch;
-                    const sx = rand(-11, 11), sy = rand(20, 52);
-                    span.style.transform = 'translate(' + sx + 'px,' + sy + 'px)';
-                    span.style.opacity = '0';
-                    frag.appendChild(span);
-                    items.push({ span, x: sx, y: sy, vx: 0, vy: 0, opacity: 0, delay: i * 16 + rand(0, 35) });
-                }
-                tn.parentNode.replaceChild(frag, tn);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) animateQuote(entry.target);
             });
-            if (items.length) animateChars(items);
+        }, { threshold: 0.24 });
+        quotes.forEach((q) => observer.observe(q));
+    }
+
+    /* ---------------------------------------------------------
+       7) 404 particle text
+       --------------------------------------------------------- */
+    function init404Particles() {
+        if (reducedMotion) return;
+        const title = document.querySelector('.error-container h1');
+        if (!title) return;
+        const text = (title.textContent || '').trim();
+        if (!text || !/404/.test(text)) return;
+
+        let canvas = title.parentElement.querySelector('.pretext-404-canvas');
+        if (!canvas) {
+            canvas = document.createElement('canvas');
+            canvas.className = 'pretext-404-canvas';
+            canvas.setAttribute('aria-hidden', 'true');
+            title.parentElement.appendChild(canvas);
+        }
+        if (getComputedStyle(title.parentElement).position === 'static') {
+            title.parentElement.style.position = 'relative';
+        }
+        title.classList.add('pretext-hide-404-title');
+
+        const ctx = canvas.getContext('2d', { alpha: true });
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const ramp = ' .:-=+*#%@'.split('');
+        const font = `${Math.max(24, Math.round(parseFloat(getComputedStyle(title).fontSize) * 0.22))}px ${getComputedStyle(document.body).fontFamily}`;
+        let points = [];
+        let w = 0, h = 0, visible = true, frameId = null, pointer = null;
+
+        function rebuild() {
+            const rect = title.getBoundingClientRect();
+            w = Math.max(1, rect.width);
+            h = Math.max(1, rect.height);
+            canvas.width = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
+
+            const off = document.createElement('canvas');
+            off.width = Math.max(10, Math.round(w / 8));
+            off.height = Math.max(10, Math.round(h / 10));
+            const oc = off.getContext('2d');
+            oc.fillStyle = '#000';
+            oc.fillRect(0, 0, off.width, off.height);
+            oc.fillStyle = '#fff';
+            oc.font = `700 ${Math.min(off.width, off.height) * 0.8}px ${getComputedStyle(title).fontFamily}`;
+            oc.textAlign = 'center';
+            oc.textBaseline = 'middle';
+            oc.fillText('404', off.width * 0.5, off.height * 0.5);
+            const data = oc.getImageData(0, 0, off.width, off.height).data;
+            points = [];
+            const sx = w / off.width;
+            const sy = h / off.height;
+            for (let y = 0; y < off.height; y += 1) {
+                for (let x = 0; x < off.width; x += 1) {
+                    const b = data[(y * off.width + x) * 4] / 255;
+                    if (b < 0.14) continue;
+                    points.push({
+                        x: Math.random() * w,
+                        y: Math.random() * h,
+                        vx: 0, vy: 0,
+                        tx: x * sx,
+                        ty: y * sy,
+                        ch: ramp[Math.round(b * (ramp.length - 1))] || '#',
+                        b
+                    });
+                }
+            }
         }
 
+        function draw(now) {
+            frameId = null;
+            if (!visible) return;
+            const colors = getThemeColors();
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, w, h);
+            ctx.font = font;
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = colors.accent;
+
+            for (let i = 0; i < points.length; i += 1) {
+                const p = points[i];
+                let fx = (p.tx - p.x) * 0.025;
+                let fy = (p.ty - p.y) * 0.025;
+                if (pointer) {
+                    const dx = p.x - pointer.x;
+                    const dy = p.y - pointer.y;
+                    const d = Math.hypot(dx, dy);
+                    if (d < 90 && d > 0.001) {
+                        const f = (1 - d / 90) * 1.6;
+                        fx += (dx / d) * f;
+                        fy += (dy / d) * f;
+                    }
+                }
+                p.vx = (p.vx + fx) * 0.87;
+                p.vy = (p.vy + fy) * 0.87;
+                p.x += p.vx;
+                p.y += p.vy;
+                ctx.globalAlpha = clamp(0.08 + p.b * 0.22, 0.04, 0.3);
+                ctx.fillText(p.ch, p.x, p.y);
+            }
+            frameId = requestAnimationFrame(draw);
+        }
+
+        title.parentElement.addEventListener('pointermove', (e) => {
+            const r = canvas.getBoundingClientRect();
+            pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+        }, { passive: true });
+        title.parentElement.addEventListener('pointerleave', () => { pointer = null; }, { passive: true });
+
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((e) => { if (e.isIntersecting) revealHeading(e.target); });
-        }, { threshold: 0.28 });
-        headings.forEach((h) => observer.observe(h));
+            entries.forEach((entry) => {
+                visible = entry.isIntersecting;
+                if (visible && !frameId) frameId = requestAnimationFrame(draw);
+            });
+        }, { threshold: 0 });
+        observer.observe(title);
+
+        rebuild();
+        frameId = requestAnimationFrame(draw);
+
+        let rt;
+        window.addEventListener('resize', () => {
+            clearTimeout(rt);
+            rt = setTimeout(rebuild, 250);
+        }, { passive: true });
     }
 
     /* ---------------------------------------------------------
@@ -517,7 +771,24 @@
             g.style.minHeight = Math.round(th + dh + 96) + 'px';
             g.classList.add('pretext-reserved-height');
             const mo = new MutationObserver(() => {
-                setTimeout(() => { g.style.minHeight = ''; g.classList.remove('pretext-reserved-height'); }, 100);
+                setTimeout(() => {
+                    g.style.minHeight = '';
+                    g.classList.remove('pretext-reserved-height');
+                    const cards = Array.from(g.querySelectorAll('.blog-post'));
+                    cards.forEach((card) => {
+                        const h3 = card.querySelector('h3');
+                        const p = card.querySelector('p');
+                        if (!h3 || !p) return;
+                        const cardW = Math.max(240, card.clientWidth - 32);
+                        const hPrep = P.prepare((h3.textContent || '').trim(), getFontShorthand(h3));
+                        const pPrep = P.prepare((p.textContent || '').trim(), getFontShorthand(p));
+                        const hH = P.layout(hPrep, cardW, lineHeightOf(h3)).height;
+                        const pH = P.layout(pPrep, cardW, lineHeightOf(p)).height;
+                        const predicted = Math.ceil(hH + pH + 120);
+                        card.style.maxHeight = `${predicted}px`;
+                        card.classList.add('pretext-card-measured');
+                    });
+                }, 100);
                 mo.disconnect();
             });
             mo.observe(g, { childList: true });
@@ -527,7 +798,11 @@
     function initAll(P) {
         initAsciiQ(P);
         initEditorialReflow(P);
+        init404Particles(P);
         initCharCascade(P);
+        initTimelineCascade(P);
+        initTightQuotes(P);
+        initCaptionWave(P);
         initBalancedSiteText(P);
         initTightBlogHeadlines(P);
         initNoShiftLoading(P);
