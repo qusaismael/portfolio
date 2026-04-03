@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
-    <meta name="theme-color" content="#de5e91" />
+    <meta name="theme-color" content="#1A0F0A" />
     <meta name="keywords" content="Qusai Ismael, Portfolio, Cybersecurity, Web Development, Open Source, Software Engineer" />
     <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <meta name="msapplication-navbutton-color" content="#de5e91" />
+    <meta name="msapplication-navbutton-color" content="#1A0F0A" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="icon" type="image/jpeg" href="pfp.jpg">
     <link rel="apple-touch-icon" href="pfp.jpg">
@@ -75,12 +75,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <div id="preloader">
         <div class="loader05"></div>
     </div>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-outline" aria-hidden="true"></div>
 
     <div class="progress-wrap" aria-label="Scroll to top">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
@@ -118,7 +119,10 @@
             <div class="profile-section">
                 <img src="pfp.jpg" 
                      alt="Qusai Ismael Profile Picture" 
-                     class="profile-picture">
+                     class="profile-picture"
+                     width="120" height="120"
+                     decoding="async"
+                     fetchpriority="high">
                 <div class="profile-info">
                     <h1>Qusai Ismail</h1>
                     <p class="subtitle">Cybersecurity Student | AI & Software Development Enthusiast</p>
@@ -195,7 +199,7 @@
             </nav>
         </header>
 
-        <main class="main-content">
+        <main class="main-content" id="main-content">
             <section id="about">
                 <h2>About</h2>
                 <p>I'm a 20-year-old cybersecurity student at The Hashemite University in Jordan, passionate about building secure, privacy-focused digital solutions.<br>I specialize in web security, AI application development, and open-source contributions.</p>

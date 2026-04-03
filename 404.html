@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
-    <meta name="theme-color" content="#de5e91" />
+    <meta name="theme-color" content="#1A0F0A" />
     <title>404 - Page Not Found | Qusai Ismael</title>
     <link rel="icon" type="image/jpeg" href="pfp.jpg">
     <link rel="apple-touch-icon" href="pfp.jpg">
@@ -101,6 +101,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <button class="theme-toggle-404" id="theme-toggle" aria-label="Toggle theme">
         <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
@@ -111,10 +112,10 @@
         </svg>
     </button>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-outline" aria-hidden="true"></div>
 
-    <div class="error-container">
+    <div class="error-container" id="main-content">
         <h1>404</h1>
         <p class="error-message">Page not found</p>
         <p class="error-subtitle">The page you're looking for doesn't exist or has been moved.</p>
