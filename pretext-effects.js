@@ -79,6 +79,8 @@
         if (reducedMotion || isMobile()) return;
         const header = document.querySelector('.header');
         if (!header) return;
+        const title = header.querySelector('h1');
+        if (!title || title.textContent.trim() !== 'Qusai Ismael') return;
 
         let canvas = header.querySelector('.pretext-ascii-canvas');
         if (!canvas) {
@@ -448,7 +450,7 @@
        3) Heading character cascade (spring settle)
        --------------------------------------------------------- */
     function initCharCascade(P) {
-        if (reducedMotion) return;
+        if (reducedMotion || isMobile()) return;
         const headings = Array.from(document.querySelectorAll('h2'));
         if (!headings.length) return;
         const widthCache = new Map();
@@ -464,7 +466,7 @@
        4) Timeline title cascade (portfolio)
        --------------------------------------------------------- */
     function initTimelineCascade(P) {
-        if (reducedMotion) return;
+        if (reducedMotion || isMobile()) return;
         const entries = Array.from(document.querySelectorAll('.timeline-entry-container .timeline-title'));
         if (!entries.length) return;
         const widthCache = new Map();
@@ -1161,14 +1163,15 @@
 
     function initAll(P) {
         initAsciiQ(P);
-        initCatOverlay();
         init404Particles();
+        // Headline-only character effects (h2, timeline titles, project h3). Paragraph/body
+        // cascades stay off for readability.
         initCharCascade(P);
         initTimelineCascade(P);
-        initTightQuotes(P);
-        initCaptionWave(P);
-        initMagneticTitles(P);
         initHoverJump();
+        initMagneticTitles(P);
+        initTightQuotes(P);
+        initCatOverlay();
         initDancingFigure();
         initBalancedSiteText(P);
         initTightBlogHeadlines(P);

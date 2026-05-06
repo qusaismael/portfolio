@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#1A0F0A" />
     <meta name="keywords" content="Qusai Ismael, Photos, Photography, Portfolio, Personal" />
     <meta name="msapplication-navbutton-color" content="#1A0F0A" />
@@ -23,7 +23,7 @@
     <meta name="twitter:title" content="Photos – Qusai Ismael" />
     <meta name="twitter:description" content="Personal photography collection by Qusai Ismael – capturing moments and memories." />
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=visual-fix-6">
     <link rel="stylesheet" href="print.css" media="print">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -34,31 +34,6 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 0.5rem;
             margin: 2rem 0;
-        }
-
-        .photo-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            aspect-ratio: 4/5;
-        }
-
-        .photo-item:hover {
-            transform: scale(1.02);
-        }
-
-        .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.3s ease;
-            filter: brightness(1.05) contrast(1.05) saturate(1.1);
-        }
-
-        .photo-item:hover img {
-            filter: brightness(1.1) contrast(1.1) saturate(1.2);
         }
 
         .photo-overlay {
@@ -73,17 +48,6 @@
             display: flex;
             align-items: flex-end;
             padding: 1rem;
-        }
-
-        .photo-item:hover .photo-overlay {
-            opacity: 1;
-        }
-
-        .photo-caption {
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .photo-modal {
@@ -107,8 +71,8 @@
         }
 
         .photo-modal-content {
-            max-width: calc(100vw - 4rem);
-            max-height: calc(100vh - 4rem);
+            max-width: calc(100% - 4rem);
+            max-height: calc(100% - 4rem);
             width: auto;
             height: auto;
             position: relative;
@@ -120,8 +84,8 @@
         }
 
         .photo-modal img {
-            max-width: calc(100vw - 4rem);
-            max-height: calc(100vh - 4rem);
+            max-width: calc(100% - 4rem);
+            max-height: calc(100% - 4rem);
             width: auto;
             height: auto;
             object-fit: contain;
@@ -173,12 +137,13 @@
             }
 
             .photo-modal-content {
-                max-width: calc(100vw - 2rem);
-                max-height: calc(100vh - 2rem);
+                max-width: calc(100% - 2rem);
+                max-height: calc(100% - 2rem);
             }
 
             .photo-modal img {
-                max-height: calc(100vh - 2rem);
+                max-width: calc(100% - 2rem);
+                max-height: calc(100% - 2rem);
             }
 
             .photo-modal-close {
@@ -189,24 +154,6 @@
             }
         }
 
-        /* Color adjustments for dark theme */
-        [data-theme="dark"] .photo-item img {
-            filter: brightness(1.08) contrast(1.08) saturate(1.15) sepia(0.1);
-        }
-
-        [data-theme="dark"] .photo-item:hover img {
-            filter: brightness(1.15) contrast(1.15) saturate(1.25) sepia(0.15);
-        }
-
-        /* Light theme adjustments */
-        [data-theme="light"] .photo-item img {
-            filter: brightness(1.02) contrast(1.02) saturate(1.05);
-        }
-
-        [data-theme="light"] .photo-item:hover img {
-            filter: brightness(1.08) contrast(1.08) saturate(1.15);
-        }
-
         /* Photo card and meta styles */
         .photo-card {
             position: relative;
@@ -214,7 +161,6 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            aspect-ratio: 4/5;
         }
 
         .photo-card:hover {
@@ -229,6 +175,10 @@
             background: none;
             padding: 0;
             cursor: pointer;
+            display: block;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            border-radius: 12px;
         }
 
         .photo-card img {
@@ -241,6 +191,24 @@
 
         .photo-card:hover img {
             filter: brightness(1.1) contrast(1.1) saturate(1.2);
+        }
+
+        /* Color adjustments for dark theme */
+        [data-theme="dark"] .photo-card img {
+            filter: brightness(1.08) contrast(1.08) saturate(1.15) sepia(0.1);
+        }
+
+        [data-theme="dark"] .photo-card:hover img {
+            filter: brightness(1.15) contrast(1.15) saturate(1.25) sepia(0.15);
+        }
+
+        /* Light theme adjustments */
+        [data-theme="light"] .photo-card img {
+            filter: brightness(1.02) contrast(1.02) saturate(1.05);
+        }
+
+        [data-theme="light"] .photo-card:hover img {
+            filter: brightness(1.08) contrast(1.08) saturate(1.15);
         }
 
         .photo-overlay {
@@ -358,6 +326,10 @@
             text-align: center;
             padding: 3rem 1rem;
             color: var(--muted-text);
+        }
+
+        .photo-gallery-empty[hidden] {
+            display: none !important;
         }
 
         .photo-gallery-empty h3 {
@@ -479,7 +451,7 @@
             </section>
 
             <div id="photo-gallery" class="photo-gallery"></div>
-            <div id="photo-gallery-empty" class="photo-gallery-empty" hidden>
+            <div id="photo-gallery-empty" class="photo-gallery-empty" hidden aria-hidden="true">
                 <h3>No photos yet</h3>
                 <p>Photos will appear here once added to the <code>PHOTOS</code> array.</p>
             </div>
@@ -546,7 +518,7 @@
         import { prepare, prepareWithSegments, layout, layoutWithLines, layoutNextLine, walkLineRanges } from 'https://esm.sh/@chenglou/pretext@0.0.4';
         window.Pretext = { prepare, prepareWithSegments, layout, layoutWithLines, layoutNextLine, walkLineRanges };
     </script>
-    <script src="pretext-effects.js" defer></script>
+    <script src="pretext-effects.js?v=visual-fix-7" defer></script>
     <script>
         if (window.AOS) {
             AOS.init({
@@ -615,7 +587,7 @@
                 caption: 'Ajloun, Jordan',
             },
             {
-                src: 'pfp.png',
+                src: 'pfp.jpeg',
                 alt: 'Qusai Ismael',
                 quote: 'You can just be yourself here',
                 caption: 'Hashemite University, Jordan',
@@ -639,10 +611,13 @@
             if (!Array.isArray(PHOTOS) || PHOTOS.length === 0) {
                 gallery.innerHTML = '';
                 empty.hidden = false;
+                empty.setAttribute('aria-hidden', 'false');
                 return;
             }
 
             empty.hidden = true;
+            empty.setAttribute('aria-hidden', 'true');
+            empty.remove();
             gallery.innerHTML = PHOTOS.map((p, idx) => {
                 const src = PHOTOS_DIR + p.src;
                 const alt = p.alt || '';

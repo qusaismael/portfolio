@@ -63,8 +63,20 @@
         --timeline-dot: #3C1810;
     }
 }
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
 }
 
 .skip-to-content {
@@ -119,11 +131,13 @@ body {
 }
 .container {
     max-width: 900px;
+    width: 100%;
     margin: 0 auto;
     padding: 2rem;
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -474,6 +488,7 @@ a:hover {
     padding: 0;
     flex: 1;
     margin-top: 0;
+    min-width: 0;
 }
 section {
     background-color: transparent;
@@ -823,18 +838,18 @@ body {
     background: rgba(47, 27, 20, 0.95);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
-    padding: 1.5rem 0;
+    padding: calc(1.5rem + env(safe-area-inset-top, 0px)) 0 1.5rem;
 }
 
 @media screen and (max-width: 768px) {
     .header-enhanced {
-        padding: 0.875rem 0;
+        padding: calc(0.875rem + env(safe-area-inset-top, 0px)) 0 0.875rem;
     }
 }
 .header-enhanced-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 calc(2rem + env(safe-area-inset-right, 0px)) 0 calc(2rem + env(safe-area-inset-left, 0px));
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -892,8 +907,8 @@ body:hover .cursor-outline {
 /* Enhanced Progress Indicator */
 .progress-wrap {
     position: fixed;
-    right: 30px;
-    bottom: 30px;
+    right: max(30px, env(safe-area-inset-right, 0px));
+    bottom: max(30px, env(safe-area-inset-bottom, 0px));
     height: 46px;
     width: 46px;
     cursor: pointer;
@@ -934,8 +949,8 @@ body:hover .cursor-outline {
 }
 @media screen and (max-width: 768px) {
     .progress-wrap {
-        right: 20px;
-        bottom: 20px;
+        right: max(20px, env(safe-area-inset-right, 0px));
+        bottom: max(20px, env(safe-area-inset-bottom, 0px));
         height: 40px;
         width: 40px;
         --progress-size: 40px;
@@ -999,7 +1014,7 @@ section h2 { animation-delay: 0.2s; }
 }
 .reading-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -1097,7 +1112,7 @@ section .writing-list li {
 }
 .project-showcase {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
     gap: 2.5rem;
 }
 .project-card {
@@ -1620,7 +1635,7 @@ section .writing-list li {
 /* Enhanced Project Cards */
 .project-grid-enhanced {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
     gap: 2rem;
     margin-top: 3rem;
 }
@@ -1894,19 +1909,19 @@ section .writing-list li {
 
 /* Container adjustment for fixed header */
 .container {
-    padding-top: 5rem;
+    padding-top: calc(5rem + env(safe-area-inset-top, 0px));
 }
 
 @media screen and (max-width: 768px) {
     .container {
-        padding-top: 6rem;
+        padding-top: calc(6rem + env(safe-area-inset-top, 0px));
     }
 }
 
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .header-enhanced-inner {
-        padding: 0 1rem;
+        padding: 0 calc(1rem + env(safe-area-inset-right, 0px)) 0 calc(1rem + env(safe-area-inset-left, 0px));
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
@@ -2058,7 +2073,7 @@ section .writing-list li {
 /* Donts and Recommendations Page Styles */
 .donts-grid, .recommendations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -2433,7 +2448,7 @@ section .writing-list li {
 /* Blog Post Styles */
 .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -2945,8 +2960,8 @@ nav a:hover {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: min(860px, calc(100vw - 24px));
-    height: min(560px, calc(100vh - 24px));
+    width: min(860px, calc(100% - 24px));
+    height: min(560px, calc(100% - 24px));
     background: rgba(26, 15, 10, 0.92);
     border: 1px solid rgba(210, 180, 140, 0.28);
     border-radius: 12px;
@@ -3089,8 +3104,8 @@ nav a:hover {
 
 @media (max-width: 900px) {
     #terminal-easter-egg-panel {
-        width: calc(100vw - 16px);
-        height: min(560px, calc(100vh - 16px));
+        width: calc(100% - 16px);
+        height: min(560px, calc(100% - 16px));
     }
 }
 
@@ -3401,7 +3416,8 @@ nav a:hover {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: 1;
+    display: none;
+    opacity: 0;
 }
 
 .header > *:not(.pretext-ascii-canvas) {
@@ -3484,6 +3500,18 @@ nav a:hover {
     }
 }
 
+@media screen and (max-width: 900px) {
+    .header h1 {
+        font-size: clamp(2.25rem, 10vw, 3.2rem);
+        letter-spacing: -1px;
+        overflow-wrap: anywhere;
+    }
+
+    .header .subtitle {
+        font-size: clamp(0.95rem, 3.6vw, 1.05rem);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .pretext-ascii-canvas {
         display: none !important;
@@ -3499,6 +3527,7 @@ nav a:hover {
     inset: 0;
     pointer-events: none;
     z-index: 2;
+    display: block;
 }
 
 .pretext-cascade-char {

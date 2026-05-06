@@ -1550,8 +1550,8 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
         // If the markup isn't present on a page, skip quietly.
         if (!notifyEl || !overlayEl || !inputEl || !outputEl || !closeBtn || !windowEl) return;
 
-        let notificationShown = false;
         let terminalOpen = false;
+        overlayEl.setAttribute('aria-hidden', 'true');
 
         const isDesktop = () => window.innerWidth >= 1024;
 
@@ -1578,39 +1578,25 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
 
             if (terminalOpen) {
                 overlayEl.classList.remove('term-hidden');
+                overlayEl.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
                 setNotificationHidden(); // Hide notification if open
                 setTimeout(() => inputEl.focus(), 100);
             } else {
                 overlayEl.classList.add('term-hidden');
+                overlayEl.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
                 inputEl.blur();
             }
         }
 
         closeBtn.addEventListener('click', toggleTerminal);
 
-        // 1. Scroll Trigger (Desktop only)
-        window.addEventListener('scroll', () => {
-            if (notificationShown) return;
-            if (terminalOpen) return;
-            if (!isDesktop()) return;
-
-            if (window.scrollY > 300) {
-                notifyEl.classList.remove('term-hidden');
-                notifyEl.classList.add('term-slide-in');
-                notificationShown = true;
-
-                // Auto-hide notification after 6 seconds
-                setTimeout(() => {
-                    notifyEl.classList.remove('term-slide-in');
-                    notifyEl.classList.add('term-hidden');
-                }, 6000);
-            }
-        }, { passive: true });
-
-        // 2. Keyboard Listener for Backtick (`) and Escape
+        // 2. Keyboard Listener for opt-in terminal toggle and Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === '`' && isDesktop()) {
-                e.preventDefault(); // Prevent typing the backtick
+            const isEditable = e.target && e.target.closest && e.target.closest('input, textarea, [contenteditable="true"]');
+            if (e.key === '`' && (e.ctrlKey || e.metaKey) && isDesktop() && !isEditable) {
+                e.preventDefault();
                 toggleTerminal();
                 return;
             }
