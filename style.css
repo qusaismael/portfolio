@@ -249,14 +249,19 @@ a:hover {
     border-radius: 50%;
     object-fit: cover;
     object-position: center center;
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 8px 25px var(--shadow-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid color-mix(in srgb, var(--primary-color) 80%, transparent);
+    box-shadow:
+        0 8px 25px var(--shadow-color),
+        0 0 0 8px rgba(var(--primary-color-rgb), 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-picture:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 35px rgba(var(--primary-color-rgb), 0.3);
+    transform: scale(1.05) rotate(-1deg);
+    border-color: var(--accent-color);
+    box-shadow:
+        0 12px 35px rgba(var(--primary-color-rgb), 0.3),
+        0 0 0 10px rgba(var(--primary-color-rgb), 0.08);
 }
 
 .pfp-lightbox {
@@ -644,9 +649,12 @@ section:last-of-type {
     border-radius: 8px;
     border: 1px solid var(--border-color);
     background: var(--card-background);
-    transition: all 0.3s ease;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
     text-decoration: none;
     color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
 }
 .social-links a:hover {
     background: var(--hover-background);
@@ -654,6 +662,11 @@ section:last-of-type {
     color: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px var(--shadow-color);
+}
+.social-links a:active,
+.social-links a.is-pressed {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 8px var(--shadow-color);
 }
 .social-links a svg {
     flex-shrink: 0;
@@ -2275,11 +2288,14 @@ section .writing-list li {
 
 /* GPG Contact Section */
 .gpg-section {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
+    background:
+        linear-gradient(145deg, rgba(var(--primary-color-rgb), 0.055), transparent 55%),
+        var(--card-background);
+    border: 1px solid color-mix(in srgb, var(--border-color) 78%, var(--primary-color) 22%);
+    border-radius: 14px;
     padding: 2rem;
     margin-top: 2rem;
+    box-shadow: inset 0 1px 0 rgba(var(--primary-color-rgb), 0.08);
 }
 
 .gpg-section h3 {
@@ -2329,12 +2345,21 @@ section .writing-list li {
     border: none;
     cursor: pointer;
     font-family: var(--font-sans);
+    touch-action: manipulation;
 }
 
-.gpg-action:hover {
+.gpg-action:hover,
+.gpg-action.is-pressed {
     background-color: var(--primary-color);
     color: var(--background-color);
     text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(var(--primary-color-rgb), 0.16);
+}
+
+.gpg-action:active,
+.gpg-action.is-pressed {
+    transform: translateY(1px) scale(0.98);
 }
 
 @media screen and (max-width: 768px) {
@@ -3260,10 +3285,35 @@ nav a:hover {
 /* --- GitHub Pulse Section --- */
 .gh-pulse-card {
     margin-top: 1rem;
-    padding: 1.1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background: rgba(var(--primary-color-rgb), 0.04);
+    padding: 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--border-color) 70%, var(--primary-color) 30%);
+    border-radius: 16px;
+    background:
+        linear-gradient(145deg, rgba(var(--primary-color-rgb), 0.08), rgba(var(--primary-color-rgb), 0.025)),
+        color-mix(in srgb, var(--card-background) 92%, transparent);
+    box-shadow:
+        inset 0 1px 0 rgba(var(--primary-color-rgb), 0.12),
+        0 22px 70px rgba(0, 0, 0, 0.16),
+        0 0 52px rgba(var(--primary-color-rgb), 0.055);
+    overflow: hidden;
+    position: relative;
+}
+
+.gh-pulse-card::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 28% 18%, rgba(var(--primary-color-rgb), 0.14), transparent 24%),
+        radial-gradient(circle at 84% 74%, rgba(var(--primary-color-rgb), 0.08), transparent 24%);
+    opacity: 0.8;
+    animation: ghPulseDrift 14s ease-in-out infinite alternate;
+}
+
+.gh-pulse-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .gh-pulse-head {
@@ -3277,6 +3327,7 @@ nav a:hover {
 .gh-pulse-title {
     font-weight: 700;
     color: var(--heading-color);
+    letter-spacing: 0.02em;
 }
 
 .gh-pulse-updated {
@@ -3290,24 +3341,35 @@ nav a:hover {
     grid-template-rows: repeat(7, minmax(10px, 1fr));
     grid-auto-flow: column;
     grid-auto-columns: minmax(10px, 1fr);
-    gap: 4px;
-    margin: 0.25rem 0 0.7rem;
+    gap: 5px;
+    margin: 0.35rem 0 0.85rem;
     overflow-x: auto;
-    padding-bottom: 2px;
+    padding: 0.35rem 0.2rem 0.45rem;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
 }
 
 .gh-heatmap-cell {
     width: 14px;
     aspect-ratio: 1 / 1;
-    border-radius: 3px;
+    border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(93, 58, 43, 0.42);
     box-sizing: border-box;
+    transform: scale(0.72);
+    opacity: 0;
+    animation: heatmapCellIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: var(--cell-delay, 0ms);
+    transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+    touch-action: manipulation;
 }
 
-.gh-heatmap-cell:hover {
+.gh-heatmap-cell:hover,
+.gh-heatmap-cell.is-pressed {
     outline: 1px solid rgba(var(--primary-color-rgb), 0.55);
-    transform: translateY(-1px);
+    transform: translateY(-2px) scale(1.16);
+    filter: saturate(1.25) brightness(1.08);
+    box-shadow: 0 0 16px rgba(var(--primary-color-rgb), 0.18);
 }
 
 .gh-heatmap-cell.is-outside-range {
@@ -3363,10 +3425,24 @@ nav a:hover {
 
 .gh-pulse-list li {
     margin: 0;
-    border: 1px solid var(--border-color);
-    background: var(--card-background);
-    border-radius: 8px;
-    padding: 0.55rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--border-color) 78%, transparent);
+    background:
+        linear-gradient(145deg, rgba(var(--primary-color-rgb), 0.045), transparent),
+        var(--card-background);
+    border-radius: 10px;
+    padding: 0.65rem 0.75rem;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: pulseListIn 0.5s ease forwards;
+    animation-delay: var(--item-delay, 0ms);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gh-pulse-list li:hover,
+.gh-pulse-list li.is-pressed {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--primary-color) 38%, var(--border-color));
+    box-shadow: 0 10px 26px rgba(var(--primary-color-rgb), 0.08);
 }
 
 .gh-pulse-main {
@@ -3398,6 +3474,25 @@ nav a:hover {
     }
 }
 
+@keyframes heatmapCellIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseListIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ghPulseDrift {
+    from { transform: translate3d(-2%, -1%, 0) rotate(0deg); }
+    to { transform: translate3d(2%, 1.5%, 0) rotate(8deg); }
+}
+
 /* ==========================================================
    Pretext Creative Layer (subtle, non-disruptive)
    ========================================================== */
@@ -3407,6 +3502,9 @@ nav a:hover {
     overflow: hidden;
     border-radius: 20px;
     isolation: isolate;
+    background:
+        linear-gradient(145deg, rgba(var(--primary-color-rgb), 0.035), transparent 58%),
+        transparent;
 }
 
 .pretext-ascii-canvas {
@@ -3436,6 +3534,12 @@ nav a:hover {
         radial-gradient(circle at 80% 12%, rgba(var(--primary-color-rgb), 0.06), transparent 36%),
         radial-gradient(circle at 65% 85%, rgba(var(--primary-color-rgb), 0.05), transparent 40%);
     filter: blur(14px);
+    animation: headerAuraDrift 16s ease-in-out infinite alternate;
+    transform: translate3d(0, 0, 0);
+}
+
+.header::before {
+    animation: headerGlowBreathe 10s ease-in-out infinite alternate;
 }
 
 .pretext-balanced {
@@ -3477,6 +3581,9 @@ nav a:hover {
 
 .project-card-enhanced {
     backdrop-filter: blur(3px);
+    box-shadow:
+        0 14px 38px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(var(--primary-color-rgb), 0.07);
 }
 
 .project-card-enhanced::before {
@@ -3484,7 +3591,9 @@ nav a:hover {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.06), transparent 45%);
+    background:
+        radial-gradient(circle at 18% 12%, rgba(var(--primary-color-rgb), 0.13), transparent 30%),
+        linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.06), transparent 45%);
     opacity: 0;
     transition: opacity 0.35s ease;
     pointer-events: none;
@@ -3492,6 +3601,30 @@ nav a:hover {
 
 .project-card-enhanced:hover::before {
     opacity: 1;
+}
+
+.project-card-enhanced.is-pressed {
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(var(--primary-color-rgb), 0.1);
+}
+
+.project-card-enhanced.is-card-active .project-badge {
+    transform: translateY(-2px) scale(1.02);
+}
+
+@keyframes headerAuraDrift {
+    from {
+        transform: translate3d(-1.5%, -1%, 0) scale(1);
+    }
+    to {
+        transform: translate3d(1.5%, 1%, 0) scale(1.04);
+    }
+}
+
+@keyframes headerGlowBreathe {
+    from { opacity: 0.72; }
+    to { opacity: 1; }
 }
 
 @media screen and (max-width: 768px) {
@@ -3550,14 +3683,34 @@ nav a:hover {
 }
 
 .pretext-dancer-wrap {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
     margin: 2.4rem 0 1.6rem;
+    padding: 0.75rem 0.6rem;
+    min-height: 180px;
     cursor: crosshair;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 12px;
+}
+
+.pretext-dancer-wrap:focus {
+    outline: none;
+}
+
+.pretext-dancer-wrap:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent-color) 75%, transparent);
+    outline-offset: 4px;
 }
 
 .pretext-dancer-canvas {
     display: block;
+    pointer-events: auto;
+    touch-action: none;
 }
 
 .pretext-card-measured {
@@ -3584,6 +3737,18 @@ nav a:hover {
     .pretext-editorial-canvas,
     .pretext-404-canvas {
         display: none !important;
+    }
+    .header::before,
+    .header::after,
+    .gh-pulse-card::before,
+    .gh-heatmap-cell,
+    .gh-pulse-list li {
+        animation: none !important;
+    }
+    .gh-heatmap-cell,
+    .gh-pulse-list li {
+        opacity: 1 !important;
+        transform: none !important;
     }
     .pretext-hide-404-title {
         opacity: 1 !important;

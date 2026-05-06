@@ -9,6 +9,7 @@
     const isMobile = () => window.innerWidth < 768;
     const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const pageIsVisible = () => !document.hidden;
 
     function waitForPretext(cb) {
         if (window.Pretext) { cb(window.Pretext); return; }
@@ -138,7 +139,7 @@
         let tick = 0;
         function draw(now) {
             frameId = null;
-            if (!visible) return;
+            if (!visible || !pageIsVisible()) return;
             tick++;
             const colors = getThemeColors();
             const springK = 0.035 + pulse * 0.06;
@@ -199,7 +200,7 @@
         const obs = new IntersectionObserver((entries) => {
             entries.forEach((e) => {
                 visible = e.isIntersecting;
-                if (visible && !frameId) frameId = requestAnimationFrame(draw);
+                if (visible && pageIsVisible() && !frameId) frameId = requestAnimationFrame(draw);
             });
         }, { threshold: 0 });
         obs.observe(header);
@@ -214,6 +215,9 @@
                 if (isMobile()) { canvas.style.display = 'none'; visible = false; return; }
                 canvas.style.display = ''; rebuild();
             }, 250);
+        }, { passive: true });
+        document.addEventListener('visibilitychange', () => {
+            if (pageIsVisible() && visible && !frameId) frameId = requestAnimationFrame(draw);
         }, { passive: true });
     }
 
@@ -326,7 +330,7 @@
 
         function draw() {
             frameId = null;
-            if (!visible || sW < 10) return;
+            if (!visible || !pageIsVisible() || sW < 10) return;
             const colors = getThemeColors();
 
             updateCat();
@@ -360,7 +364,7 @@
         const obs = new IntersectionObserver((entries) => {
             entries.forEach((e) => {
                 visible = e.isIntersecting;
-                if (visible && !frameId) frameId = requestAnimationFrame(draw);
+                if (visible && pageIsVisible() && !frameId) frameId = requestAnimationFrame(draw);
             });
         }, { threshold: 0 });
         obs.observe(about);
@@ -381,6 +385,9 @@
         window.addEventListener('resize', () => {
             clearTimeout(rt);
             rt = setTimeout(sizeCanvas, 250);
+        }, { passive: true });
+        document.addEventListener('visibilitychange', () => {
+            if (pageIsVisible() && visible && !frameId) frameId = requestAnimationFrame(draw);
         }, { passive: true });
     }
 
@@ -1005,7 +1012,9 @@
 
         const container = document.createElement('div');
         container.className = 'pretext-dancer-wrap';
-        container.setAttribute('aria-hidden', 'true');
+        container.setAttribute('role', 'img');
+        container.setAttribute('aria-label', 'Interactive stick figure. Drag or slide your finger over it to steer the dance.');
+        container.tabIndex = 0;
         gpg.parentNode.insertBefore(container, gpg);
 
         const canvas = document.createElement('canvas');
@@ -1050,13 +1059,27 @@
         let pointer = null;
         let visible = false;
         let rafId = null;
+        let capturedPointerId = null;
         const armLen = 32, legLen = 48;
+
+        function setPointerFromClient(clientX, clientY) {
+            const r = canvas.getBoundingClientRect();
+            pointer = { x: clientX - r.left, y: clientY - r.top };
+        }
+
+        function shouldPaint() {
+            return pageIsVisible() && (visible || pointer != null || capturedPointerId != null);
+        }
+
+        function kickDraw() {
+            if (!rafId) rafId = requestAnimationFrame(draw);
+        }
 
         function lerp(a, b, t) { return a + (b - a) * t; }
 
         function draw(now) {
             rafId = null;
-            if (!visible) return;
+            if (!shouldPaint()) return;
             const t = now * 0.0018;
             const kfIdx = Math.floor(t) % keyframes.length;
             const kfNext = (kfIdx + 1) % keyframes.length;
@@ -1143,22 +1166,87 @@
             ctx.ellipse(baseX, H - 14, 28 + Math.abs(hb), 4, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            rafId = requestAnimationFrame(draw);
+            if (shouldPaint()) {
+                rafId = requestAnimationFrame(draw);
+            }
         }
 
-        container.addEventListener('pointermove', (e) => {
-            const r = canvas.getBoundingClientRect();
-            pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+        function endCapturedPointer(e) {
+            if (capturedPointerId !== e.pointerId) return;
+            try {
+                container.releasePointerCapture(e.pointerId);
+            } catch (_) { /* noop */ }
+            capturedPointerId = null;
+            if (e.pointerType === 'touch' || e.pointerType === 'pen') {
+                pointer = null;
+            }
+            kickDraw();
+        }
+
+        container.addEventListener('pointerdown', (e) => {
+            setPointerFromClient(e.clientX, e.clientY);
+            try {
+                container.setPointerCapture(e.pointerId);
+                capturedPointerId = e.pointerId;
+            } catch (_) {
+                capturedPointerId = null;
+            }
+            kickDraw();
         }, { passive: true });
-        container.addEventListener('pointerleave', () => { pointer = null; }, { passive: true });
+
+        container.addEventListener('pointermove', (e) => {
+            if (capturedPointerId != null && e.pointerId !== capturedPointerId) return;
+            setPointerFromClient(e.clientX, e.clientY);
+            kickDraw();
+        }, { passive: true });
+        container.addEventListener('pointerup', endCapturedPointer, { passive: true });
+        container.addEventListener('pointercancel', endCapturedPointer, { passive: true });
+        container.addEventListener('pointerleave', () => {
+            if (capturedPointerId != null) return;
+            pointer = null;
+            kickDraw();
+        }, { passive: true });
+
+        function firstTouchClient(ev) {
+            const touch = ev.targetTouches[0] || ev.changedTouches[0];
+            if (!touch) return null;
+            return { x: touch.clientX, y: touch.clientY };
+        }
+
+        container.addEventListener('touchstart', (e) => {
+            const p = firstTouchClient(e);
+            if (!p) return;
+            e.preventDefault();
+            setPointerFromClient(p.x, p.y);
+            kickDraw();
+        }, { passive: false });
+        container.addEventListener('touchmove', (e) => {
+            const p = firstTouchClient(e);
+            if (!p) return;
+            e.preventDefault();
+            setPointerFromClient(p.x, p.y);
+            kickDraw();
+        }, { passive: false });
+        container.addEventListener('touchend', () => {
+            pointer = null;
+            kickDraw();
+        }, { passive: true });
+        container.addEventListener('touchcancel', () => {
+            pointer = null;
+            kickDraw();
+        }, { passive: true });
 
         const obs = new IntersectionObserver((entries) => {
             entries.forEach((e) => {
                 visible = e.isIntersecting;
-                if (visible && !rafId) rafId = requestAnimationFrame(draw);
+                if (visible) kickDraw();
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0, rootMargin: '120px' });
         obs.observe(container);
+
+        document.addEventListener('visibilitychange', () => {
+            if (pageIsVisible() && shouldPaint()) kickDraw();
+        }, { passive: true });
     }
 
     function initAll(P) {

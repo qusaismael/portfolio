@@ -70,8 +70,12 @@ function initCustomCursor() {
     const dot = document.querySelector('.cursor-dot');
     const outline = document.querySelector('.cursor-outline');
     if (!dot || !outline) return;
+    const pointerFine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!pointerFine || reducedMotion) return;
 
     let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
+    let cursorVisible = true;
 
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -81,12 +85,20 @@ function initCustomCursor() {
     });
 
     (function animate() {
+        if (!cursorVisible) {
+            requestAnimationFrame(animate);
+            return;
+        }
         outlineX += 0.1 * (mouseX - outlineX);
         outlineY += 0.1 * (mouseY - outlineY);
         outline.style.left = outlineX + 'px';
         outline.style.top = outlineY + 'px';
         requestAnimationFrame(animate);
     })();
+
+    document.addEventListener('visibilitychange', () => {
+        cursorVisible = !document.hidden;
+    }, { passive: true });
 
     document.querySelectorAll('a, button, .project-card-enhanced').forEach(el => {
         el.addEventListener('mouseenter', () => {
@@ -134,11 +146,37 @@ function initProgressCircle() {
 
 function initProjectCards() {
     document.querySelectorAll('.project-card-enhanced').forEach(card => {
+        const lift = () => {
+            card.classList.add('is-card-active');
+            card.style.transform = 'translateY(-12px) scale(1.02)';
+        };
+        const settle = () => {
+            card.classList.remove('is-card-active', 'is-pressed');
+            card.style.transform = 'translateY(0) scale(1)';
+        };
+        const press = () => {
+            card.classList.add('is-pressed');
+            card.style.transform = 'translateY(-4px) scale(0.992)';
+        };
+
         card.addEventListener('mouseenter', function () {
-            this.style.transform = 'translateY(-12px) scale(1.02)';
+            lift();
         });
         card.addEventListener('mouseleave', function () {
-            this.style.transform = 'translateY(0) scale(1)';
+            settle();
+        });
+        card.addEventListener('pointerdown', function () {
+            press();
+        }, { passive: true });
+        card.addEventListener('pointerup', function () {
+            if (window.matchMedia && window.matchMedia('(hover: hover)').matches) lift();
+            else settle();
+        }, { passive: true });
+        card.addEventListener('pointercancel', function () {
+            settle();
+        }, { passive: true });
+        card.addEventListener('blur', function () {
+            settle();
         });
         card.addEventListener('click', function (e) {
             const ripple = document.createElement('div');
@@ -165,20 +203,40 @@ function initSmoothScrollAnchors() {
 }
 
 function initScrollReveal() {
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('is-revealed');
+                observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    document.querySelectorAll('.project-card-enhanced, .timeline-entry-container').forEach(el => {
+    document.querySelectorAll('.project-card-enhanced, .timeline-entry-container, .gh-pulse-card, .social-links a, .gpg-section').forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transition = 'opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)';
+        el.style.transitionDelay = `${Math.min(index * 45, 360)}ms`;
         observer.observe(el);
+    });
+}
+
+function initTouchPolish() {
+    const targets = document.querySelectorAll('.social-links a, .gpg-action, .project-card-enhanced, .gh-pulse-list li');
+    targets.forEach((el) => {
+        el.addEventListener('pointerdown', () => {
+            el.classList.add('is-pressed');
+        }, { passive: true });
+        ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach((eventName) => {
+            el.addEventListener(eventName, () => {
+                el.classList.remove('is-pressed');
+            }, { passive: true });
+        });
     });
 }
 
@@ -230,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCustomCursor();
     initProgressCircle();
     initProjectCards();
+    initTouchPolish();
     initSmoothScrollAnchors();
     initScrollReveal();
     handleTimelineAnimation();
@@ -1074,10 +1133,21 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
 
             const cell = document.createElement('div');
             cell.className = 'gh-heatmap-cell level-' + level;
+            cell.style.setProperty('--cell-delay', `${Math.min(i * 18, 900)}ms`);
+            cell.dataset.level = String(level);
+            cell.dataset.count = String(count);
             cell.setAttribute('role', 'img');
             cell.setAttribute('aria-label', count + ' tracked events on ' + key);
             cell.title = key + ': ' + count + (count === 1 ? ' tracked event' : ' tracked events');
             if (!inRange) cell.classList.add('is-outside-range');
+            cell.addEventListener('pointerdown', () => {
+                cell.classList.add('is-pressed');
+            }, { passive: true });
+            ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach((eventName) => {
+                cell.addEventListener(eventName, () => {
+                    cell.classList.remove('is-pressed');
+                }, { passive: true });
+            });
             grid.appendChild(cell);
         }
     }
@@ -1101,6 +1171,15 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
 
         items.forEach((item) => {
             const li = document.createElement('li');
+            li.style.setProperty('--item-delay', `${Math.min(listEl.children.length * 70, 420)}ms`);
+            li.addEventListener('pointerdown', () => {
+                li.classList.add('is-pressed');
+            }, { passive: true });
+            ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach((eventName) => {
+                li.addEventListener(eventName, () => {
+                    li.classList.remove('is-pressed');
+                }, { passive: true });
+            });
             const main = document.createElement('a');
             main.className = 'gh-pulse-main';
             main.target = '_blank';
