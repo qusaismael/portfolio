@@ -91,8 +91,8 @@
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         const fontSize = 11, cellW = 12, cellH = 14;
         const font = fontSize + 'px ' + getComputedStyle(document.body).fontFamily;
-        const ramp = ' .:-=+*#%@'.split('');
-        let pointer = null, phase = 0, pulse = 0, nextPulseAt = 2200;
+        const asciiPool = '!@#$%^&*<>{}[]|/\\~`?+=_-:.;0123456789abcdefghijklmnopqrstuvwxyz'.split('');
+        let pointer = null, phase = 0, pulse = 0, nextPulseAt = 800;
         let particles = [], cW = 0, cH = 0, visible = true, frameId = null;
 
         function sampleQ(cols, rows) {
@@ -116,7 +116,6 @@
             canvas.style.height = cH + 'px';
             const cols = Math.ceil(cW / cellW), rows = Math.ceil(cH / cellH);
             const data = sampleQ(cols, rows);
-            const cx = cW / 2, cy = cH / 2;
             particles = [];
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
@@ -125,24 +124,26 @@
                     const tx = x * cellW, ty = y * cellH;
                     particles.push({
                         x: Math.random() * cW, y: Math.random() * cH,
-                        vx: (Math.random() - 0.5) * 2.2, vy: (Math.random() - 0.5) * 2.2,
+                        vx: (Math.random() - 0.5) * 4, vy: (Math.random() - 0.5) * 4,
                         tx, ty, b,
-                        ch: ramp[Math.round(b * (ramp.length - 1))] || '#'
+                        ch: asciiPool[rand(0, asciiPool.length - 1)],
+                        nextSwap: rand(40, 220)
                     });
                 }
             }
         }
 
+        let tick = 0;
         function draw(now) {
             frameId = null;
             if (!visible) return;
+            tick++;
             const colors = getThemeColors();
-            const springK = 0.028 + pulse * 0.05;
-            const damping = 0.87;
-            const wobble = 0.9 + Math.sin(phase * 0.45) * 0.22;
+            const springK = 0.035 + pulse * 0.06;
+            const damping = 0.88;
 
-            if (now > nextPulseAt) { pulse = 1; nextPulseAt = now + rand(2600, 4300); }
-            pulse *= 0.94;
+            if (now > nextPulseAt) { pulse = 1; nextPulseAt = now + rand(1200, 2800); }
+            pulse *= 0.93;
 
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             ctx.clearRect(0, 0, cW, cH);
@@ -150,21 +151,37 @@
             ctx.textBaseline = 'top';
             ctx.fillStyle = colors.accent;
 
+            const jitterStrength = 0.3 + pulse * 1.8;
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
+                // Continuous random character cycling
+                p.nextSwap--;
+                if (p.nextSwap <= 0) {
+                    p.ch = asciiPool[rand(0, asciiPool.length - 1)];
+                    p.nextSwap = rand(20, 140);
+                }
+
                 let fx = (p.tx - p.x) * springK;
                 let fy = (p.ty - p.y) * springK;
+
+                // Continuous jitter so particles never fully settle
+                fx += (Math.random() - 0.5) * jitterStrength;
+                fy += (Math.random() - 0.5) * jitterStrength;
+
                 if (pointer) {
                     const dx = p.x - pointer.x, dy = p.y - pointer.y;
                     const d = Math.hypot(dx, dy);
-                    if (d < 90 && d > 0.001) {
-                        const f = (1 - d / 90) * 1.7;
+                    if (d < 130 && d > 0.001) {
+                        const f = (1 - d / 130) * 3.5;
                         fx += (dx / d) * f; fy += (dy / d) * f;
                     }
                 }
                 p.vx = (p.vx + fx) * damping; p.vy = (p.vy + fy) * damping;
                 p.x += p.vx; p.y += p.vy;
-                ctx.globalAlpha = clamp((0.07 + p.b * 0.18) * wobble, 0.03, 0.28);
+
+                const alpha = clamp(0.12 + p.b * 0.55 + pulse * 0.15, 0.08, 0.72);
+                ctx.globalAlpha = alpha;
                 ctx.fillText(p.ch, p.x, p.y);
             }
             phase += 0.016;
@@ -199,15 +216,16 @@
     }
 
     /* ---------------------------------------------------------
-       2) Editorial cat reflow (layoutNextLine)
+       2) Cat overlay (walks on top of original content)
        --------------------------------------------------------- */
-    function initEditorialReflow(P) {
+    function initCatOverlay() {
         if (reducedMotion || isMobile()) return;
         const about = document.querySelector('#about');
         if (!about) return;
-        const paragraphs = Array.from(about.querySelectorAll(':scope > p'));
-        if (!paragraphs.length) return;
-        const h2El = about.querySelector('h2');
+
+        if (getComputedStyle(about).position === 'static') {
+            about.style.position = 'relative';
+        }
 
         let canvas = about.querySelector('.pretext-editorial-canvas');
         if (!canvas) {
@@ -219,124 +237,114 @@
         const ctx = canvas.getContext('2d', { alpha: true });
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-        paragraphs.forEach((p) => p.classList.add('pretext-editorial-source'));
+        const baseFontSize = Math.max(12, parseFloat(getComputedStyle(about).fontSize) || 16);
+        const lineHeight = baseFontSize * 1.6;
+        const catFont = `${Math.max(13, Math.round(baseFontSize * 0.82))}px "Courier New", Courier, monospace`;
 
-        const sourceText = paragraphs
-            .map((p) => (p.textContent || '').replace(/\s+/g, ' ').trim())
-            .filter(Boolean).join('\n\n');
-        if (!sourceText) return;
+        const walkFrames = [
+            [' /\\_/\\', '( o.o )', ' > ^ < '],
+            [' /\\_/\\', '( o.o )', ' < ^ > '],
+            [' /\\_/\\', '( ^.^ )', ' > ^ < '],
+        ];
+        const sitFrames = [
+            [' /\\_/\\', '( -.- )', '  z z z'],
+            [' /\\_/\\', '( -.^ )', '  ~ ~ ~'],
+        ];
+        const pokedFrame = [' /\\_/\\', '( O.O )', '  !!! '];
 
-        const font = getFontShorthand(paragraphs[0]);
-        const lineHeight = lineHeightOf(paragraphs[0]);
-        const prepared = P.prepareWithSegments(sourceText, font, { whiteSpace: 'pre-wrap' });
-
-        const catFont = `${Math.max(12, Math.round(lineHeight * 0.72))}px "Courier New", Courier, monospace`;
-        const walkA = [' /\\_/\\', '( o.o )', ' > ^ <'];
-        const walkB = [' /\\_/\\', '( o.o )', ' < ^ >'];
-        const sit = [' /\\_/\\', '( -.- )', '  z z z'];
-        const cat = { x: 0, y: 0, vx: 0.4, vy: 0, width: 92, height: 50, settled: false };
-
+        const cat = { x: -10, y: 0, vx: 0.35, vy: 0, settled: false, poked: 0 };
+        const catW = 92, catH = 48;
         let pointer = null, phase = 0, visible = true, frameId = null;
-        let sW = 0, sH = 0, textTop = 36;
+        let sW = 0, sH = 0, contentBottom = 200;
+
+        function measureContentZone() {
+            const paragraphs = Array.from(about.querySelectorAll(':scope > p'));
+            const h2 = about.querySelector('h2');
+            const aboutRect = about.getBoundingClientRect();
+            let bottom = 0;
+            paragraphs.forEach((p) => {
+                const r = p.getBoundingClientRect();
+                bottom = Math.max(bottom, r.bottom - aboutRect.top);
+            });
+            if (h2) {
+                const r = h2.getBoundingClientRect();
+                bottom = Math.max(bottom, r.bottom - aboutRect.top);
+            }
+            const ticker = about.querySelector('.gh-ticker-container');
+            if (ticker) {
+                const r = ticker.getBoundingClientRect();
+                bottom = Math.max(bottom, r.bottom - aboutRect.top);
+            }
+            contentBottom = bottom > 40 ? bottom : 200;
+        }
 
         function sizeCanvas() {
             const rect = about.getBoundingClientRect();
             sW = rect.width;
             sH = rect.height;
-            textTop = h2El ? h2El.offsetHeight + 20 : 36;
             canvas.width = Math.round(sW * dpr);
             canvas.height = Math.round(sH * dpr);
             canvas.style.width = `${sW}px`;
             canvas.style.height = `${sH}px`;
-            cat.y = clamp(textTop + lineHeight * 2.2, textTop + 4, sH - cat.height - 18);
-            cat.x = clamp(cat.x, 0, sW - cat.width - 8);
+            measureContentZone();
+            cat.y = clamp(cat.y, 20, contentBottom - catH);
+            cat.x = clamp(cat.x, -10, sW - catW);
         }
 
         function updateCat() {
+            const yMin = 20, yMax = Math.max(yMin + 10, contentBottom - catH);
             if (!cat.settled) {
                 cat.x += cat.vx;
-                cat.vx = clamp(cat.vx + 0.002, 0.18, 0.65);
+                cat.vx = clamp(cat.vx + 0.002, 0.2, 0.6);
                 if (pointer) {
-                    const cx = cat.x + cat.width * 0.5;
-                    const cy = cat.y + cat.height * 0.5;
-                    const dx = cx - pointer.x;
-                    const dy = cy - pointer.y;
+                    const cx = cat.x + catW * 0.5, cy = cat.y + catH * 0.5;
+                    const dx = cx - pointer.x, dy = cy - pointer.y;
                     const d = Math.hypot(dx, dy);
-                    if (d < 140 && d > 0.001) {
-                        cat.vx += (dx / d) * 0.16;
-                        cat.vy += (dy / d) * 0.10;
-                    }
-                }
-                cat.vy = (cat.vy * 0.85) + Math.sin(phase * 0.9) * 0.04;
-                cat.y = clamp(cat.y + cat.vy, textTop + 4, sH - cat.height - 18);
-                if (cat.x >= sW * 0.78) {
-                    cat.x = Math.max(0, sW * 0.78);
+                    if (d < 120 && d > 1) {
+                        cat.vx += (dx / d) * 0.18;
+                        cat.vy += (dy / d) * 0.12;
+                        if (d < 55) cat.poked = Math.min(1, cat.poked + 0.2);
+                        else cat.poked *= 0.9;
+                    } else { cat.poked *= 0.9; }
+                } else { cat.poked *= 0.9; }
+                cat.vy = cat.vy * 0.85 + Math.sin(phase * 0.9) * 0.04;
+                cat.y = clamp(cat.y + cat.vy, yMin, yMax);
+                if (cat.x >= sW * 0.72) {
+                    cat.x = sW * 0.72;
                     cat.settled = true;
-                    cat.vx = 0;
-                    cat.vy = 0;
+                    cat.vx = 0; cat.vy = 0;
                 }
-            }
-        }
-
-        function drawCat(colors) {
-            const lines = cat.settled ? sit : ((Math.floor(phase * 6) % 2 === 0) ? walkA : walkB);
-            ctx.font = catFont;
-            ctx.textBaseline = 'top';
-            ctx.globalAlpha = 0.88;
-            ctx.fillStyle = colors.heading;
-            for (let i = 0; i < lines.length; i += 1) {
-                ctx.fillText(lines[i], cat.x, cat.y + i * (lineHeight * 0.85));
-            }
+            } else if (pointer) {
+                const cx = cat.x + catW * 0.5, cy = cat.y + catH * 0.5;
+                const d = Math.hypot(cx - pointer.x, cy - pointer.y);
+                if (d < 70) cat.poked = Math.min(1, cat.poked + 0.16);
+                else cat.poked *= 0.93;
+            } else { cat.poked *= 0.93; }
         }
 
         function draw() {
             frameId = null;
             if (!visible || sW < 10) return;
             const colors = getThemeColors();
-            const textLeft = 8, textRight = sW - 8, textBottom = sH - 18;
 
             updateCat();
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             ctx.clearRect(0, 0, sW, sH);
-            ctx.font = font;
+
+            let lines;
+            if (cat.poked > 0.5) lines = pokedFrame;
+            else if (cat.settled) lines = sitFrames[Math.floor(phase * 1.8) % 7 === 6 ? 1 : 0];
+            else lines = walkFrames[Math.floor(phase * 5) % 3];
+
+            const jumpY = cat.poked > 0.15 ? -Math.sin(cat.poked * Math.PI) * 12 : 0;
+            ctx.font = catFont;
             ctx.textBaseline = 'top';
-            ctx.fillStyle = colors.text;
-
-            let cursor = { segmentIndex: 0, graphemeIndex: 0 };
-            let y = textTop, guard = 0;
-            while (guard < 300 && y <= textBottom) {
-                guard += 1;
-                const lineMid = y + lineHeight * 0.52;
-                let slotL = textLeft, slotR = textRight;
-
-                if (lineMid >= cat.y && lineMid <= cat.y + cat.height) {
-                    const catL = clamp(cat.x - 8, textLeft, textRight);
-                    const catR = clamp(cat.x + cat.width + 8, textLeft, textRight);
-                    if (catL <= slotL && catR >= slotR) {
-                        slotL = slotR;
-                    } else if (catL > slotL && catR < slotR) {
-                        const leftW = catL - slotL;
-                        const rightW = slotR - catR;
-                        if (leftW >= rightW) slotR = catL;
-                        else slotL = catR;
-                    } else if (catL <= slotL) {
-                        slotL = Math.max(slotL, catR);
-                    } else if (catR >= slotR) {
-                        slotR = Math.min(slotR, catL);
-                    }
-                }
-
-                const avail = slotR - slotL;
-                if (avail < 60) { y += lineHeight; continue; }
-                const line = P.layoutNextLine(prepared, cursor, avail);
-                if (!line) break;
-                ctx.globalAlpha = 0.92;
-                ctx.fillText(line.text, slotL, y);
-                cursor = line.end;
-                y += lineHeight;
+            ctx.globalAlpha = 0.92;
+            ctx.fillStyle = colors.heading;
+            for (let i = 0; i < lines.length; i++) {
+                ctx.fillText(lines[i], cat.x, cat.y + jumpY + i * (lineHeight * 0.72));
             }
 
-            drawCat(colors);
             phase += 0.014;
             frameId = requestAnimationFrame(draw);
         }
@@ -356,6 +364,15 @@
         obs.observe(about);
 
         sizeCanvas();
+        // Start cat at the level of the second paragraph
+        const paras = Array.from(about.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+            const r = paras[1].getBoundingClientRect();
+            const ar = about.getBoundingClientRect();
+            cat.y = r.top - ar.top;
+        } else {
+            cat.y = 60;
+        }
         frameId = requestAnimationFrame(draw);
 
         let rt;
@@ -795,14 +812,364 @@
         });
     }
 
+    /* ---------------------------------------------------------
+       Magnetic jump on project h3 titles
+       --------------------------------------------------------- */
+    function initMagneticTitles(P) {
+        if (reducedMotion || isMobile()) return;
+        const cards = Array.from(document.querySelectorAll('.project-card-enhanced'));
+        if (!cards.length) return;
+        const widthCache = new Map();
+
+        cards.forEach((card) => {
+            const h3 = card.querySelector('.project-header h3');
+            if (!h3 || h3.dataset.pretextMag === '1') return;
+            h3.dataset.pretextMag = '1';
+            const font = getFontShorthand(h3);
+            const text = (h3.textContent || '').trim();
+            if (!text) return;
+
+            h3.style.overflow = 'visible';
+            h3.style.position = 'relative';
+            h3.style.zIndex = '2';
+
+            const chars = text.split('');
+            h3.textContent = '';
+            const items = [];
+            chars.forEach((ch) => {
+                const s = document.createElement('span');
+                s.className = 'pretext-mag-char';
+                s.style.display = 'inline-block';
+                s.style.width = `${charWidth(P, ch, font, widthCache)}px`;
+                s.textContent = ch === ' ' ? '\u00A0' : ch;
+                h3.appendChild(s);
+                items.push({ s, ox: 0, oy: 0, vx: 0, vy: 0 });
+            });
+            if (!items.length) return;
+
+            let frameId = null, hovered = false, pointer = null;
+
+            function tick() {
+                frameId = null;
+                let anyActive = false;
+                for (let i = 0; i < items.length; i++) {
+                    const it = items[i];
+                    let tx = 0, ty = 0;
+
+                    if (hovered && pointer) {
+                        const r = it.s.getBoundingClientRect();
+                        const cx = r.left + r.width * 0.5;
+                        const cy = r.top + r.height * 0.5;
+                        const dx = cx - pointer.x;
+                        const dy = cy - pointer.y;
+                        const d = Math.hypot(dx, dy);
+                        if (d < 180 && d > 0.5) {
+                            const mag = Math.pow(1 - d / 180, 1.5) * 28;
+                            tx = (dx / d) * mag;
+                            ty = (dy / d) * mag - 6;
+                        }
+                    } else if (hovered) {
+                        // Card hovered but no pointer coords yet: gentle upward bounce
+                        ty = -4 - Math.sin((performance.now() * 0.004) + i * 0.5) * 3;
+                    }
+
+                    const springK = 0.14;
+                    const damp = 0.68;
+                    it.vx = (it.vx + (tx - it.ox) * springK) * damp;
+                    it.vy = (it.vy + (ty - it.oy) * springK) * damp;
+                    it.ox += it.vx;
+                    it.oy += it.vy;
+                    it.s.style.transform = `translate(${it.ox.toFixed(1)}px,${it.oy.toFixed(1)}px)`;
+                    if (Math.abs(it.vx) > 0.08 || Math.abs(it.vy) > 0.08 ||
+                        Math.abs(it.ox - tx) > 0.2 || Math.abs(it.oy - ty) > 0.2) {
+                        anyActive = true;
+                    }
+                }
+                if (anyActive || hovered) frameId = requestAnimationFrame(tick);
+            }
+
+            function startLoop() {
+                if (!frameId) frameId = requestAnimationFrame(tick);
+            }
+
+            card.addEventListener('pointerenter', () => {
+                hovered = true;
+                startLoop();
+            }, { passive: true });
+            card.addEventListener('pointermove', (e) => {
+                pointer = { x: e.clientX, y: e.clientY };
+                hovered = true;
+                startLoop();
+            }, { passive: true });
+            card.addEventListener('pointerleave', () => {
+                hovered = false;
+                pointer = null;
+                startLoop();
+            }, { passive: true });
+        });
+    }
+
+    /* ---------------------------------------------------------
+       Hover jump on h2 headings
+       --------------------------------------------------------- */
+    function initHoverJump() {
+        if (reducedMotion || isMobile()) return;
+        const headings = Array.from(document.querySelectorAll('h2'));
+        if (!headings.length) return;
+
+        headings.forEach((h2) => {
+            if (h2.dataset.pretextHover === '1') return;
+            h2.dataset.pretextHover = '1';
+
+            let spans = null;
+            let items = null;
+            let frameId = null;
+            let pointer = null;
+            let hovered = false;
+
+            function ensureSpans() {
+                if (spans) return true;
+                spans = Array.from(h2.querySelectorAll('.pretext-cascade-char'));
+                if (spans.length > 0) {
+                    items = spans.map((s) => ({ s, ox: 0, oy: 0, vx: 0, vy: 0 }));
+                    return true;
+                }
+                spans = null;
+                items = null;
+                return false;
+            }
+
+            function tick() {
+                frameId = null;
+                if (!items) return;
+                let anyActive = false;
+                for (let i = 0; i < items.length; i++) {
+                    const it = items[i];
+                    let tx = 0, ty = 0;
+                    if (hovered && pointer) {
+                        const r = it.s.getBoundingClientRect();
+                        const cx = r.left + r.width * 0.5;
+                        const cy = r.top + r.height * 0.5;
+                        const dx = cx - pointer.x;
+                        const dy = cy - pointer.y;
+                        const d = Math.hypot(dx, dy);
+                        if (d < 160 && d > 0.5) {
+                            const mag = Math.pow(1 - d / 160, 1.4) * 22;
+                            tx = (dx / d) * mag;
+                            ty = (dy / d) * mag - 5;
+                        }
+                    } else if (hovered) {
+                        ty = -3 - Math.sin(performance.now() * 0.005 + i * 0.6) * 3;
+                    }
+                    it.vx = (it.vx + (tx - it.ox) * 0.15) * 0.7;
+                    it.vy = (it.vy + (ty - it.oy) * 0.15) * 0.7;
+                    it.ox += it.vx;
+                    it.oy += it.vy;
+                    it.s.style.transform = `translate(${it.ox.toFixed(1)}px,${it.oy.toFixed(1)}px)`;
+                    if (Math.abs(it.vx) > 0.06 || Math.abs(it.vy) > 0.06 ||
+                        Math.abs(it.ox - tx) > 0.15 || Math.abs(it.oy - ty) > 0.15) {
+                        anyActive = true;
+                    }
+                }
+                if (anyActive || hovered) frameId = requestAnimationFrame(tick);
+            }
+
+            function start() {
+                if (!ensureSpans()) return;
+                if (!frameId) frameId = requestAnimationFrame(tick);
+            }
+
+            h2.addEventListener('pointerenter', () => { hovered = true; start(); }, { passive: true });
+            h2.addEventListener('pointermove', (e) => {
+                pointer = { x: e.clientX, y: e.clientY };
+                hovered = true;
+                start();
+            }, { passive: true });
+            h2.addEventListener('pointerleave', () => {
+                hovered = false; pointer = null; start();
+            }, { passive: true });
+        });
+    }
+
+    /* ---------------------------------------------------------
+       Dancing ASCII figure in contact section
+       --------------------------------------------------------- */
+    function initDancingFigure() {
+        if (reducedMotion) return;
+        const contact = document.querySelector('#contact');
+        if (!contact) return;
+        const gpg = contact.querySelector('.gpg-section');
+        if (!gpg) return;
+
+        const container = document.createElement('div');
+        container.className = 'pretext-dancer-wrap';
+        container.setAttribute('aria-hidden', 'true');
+        gpg.parentNode.insertBefore(container, gpg);
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'pretext-dancer-canvas';
+        container.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const W = 200, H = 160;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.scale(dpr, dpr);
+
+        // Stick figure with physics joints
+        const joints = {
+            head:  { x: W/2, y: 30 },
+            neck:  { x: W/2, y: 42 },
+            hip:   { x: W/2, y: 82 },
+            lHand: { x: W/2 - 28, y: 55 },
+            rHand: { x: W/2 + 28, y: 55 },
+            lFoot: { x: W/2 - 18, y: 130 },
+            rFoot: { x: W/2 + 18, y: 130 },
+        };
+
+        // Keyframes: each is [lHandAngle, rHandAngle, lFootAngle, rFootAngle, headBob]
+        const keyframes = [
+            [-1.3,  1.3,  -0.3,  0.3,  0],
+            [ 0.5, -0.5,   0.4, -0.4, -4],
+            [-0.8,  2.0,   0.2, -0.3, -2],
+            [ 2.0, -0.8,  -0.3,  0.2, -2],
+            [-1.6,  1.6,  -0.5,  0.5, -6],
+            [ 0.0,  0.0,   0.3, -0.3,  0],
+            [ 1.2, -1.8,   0.5, -0.5, -3],
+            [-1.8,  1.2,  -0.5,  0.5, -3],
+            [-2.2,  2.2,  -0.2,  0.2, -8],
+            [ 0.3, -0.3,   0.4, -0.4, -1],
+            [ 1.5, -0.2,  -0.4,  0.6, -5],
+            [-0.2,  1.5,   0.6, -0.4, -5],
+        ];
+
+        let pointer = null;
+        let visible = false;
+        let rafId = null;
+        const armLen = 32, legLen = 48;
+
+        function lerp(a, b, t) { return a + (b - a) * t; }
+
+        function draw(now) {
+            rafId = null;
+            if (!visible) return;
+            const t = now * 0.0018;
+            const kfIdx = Math.floor(t) % keyframes.length;
+            const kfNext = (kfIdx + 1) % keyframes.length;
+            const frac = t - Math.floor(t);
+            const smooth = frac * frac * (3 - 2 * frac);
+            const kf = keyframes[kfIdx];
+            const kn = keyframes[kfNext];
+            const la = lerp(kf[0], kn[0], smooth);
+            const ra = lerp(kf[1], kn[1], smooth);
+            const ll = lerp(kf[2], kn[2], smooth);
+            const rl = lerp(kf[3], kn[3], smooth);
+            const hb = lerp(kf[4], kn[4], smooth);
+
+            const baseX = W / 2 + Math.sin(t * 1.7) * 8;
+            const baseY = 82;
+            const neckX = baseX;
+            const neckY = 42 + hb * 0.3;
+            const headY = 28 + hb;
+
+            // Mouse influence
+            let mfx = 0, mfy = 0;
+            if (pointer) {
+                const dx = pointer.x - baseX;
+                const dy = pointer.y - baseY;
+                mfx = clamp(dx * 0.08, -12, 12);
+                mfy = clamp(dy * 0.05, -8, 8);
+            }
+
+            const lhx = neckX + Math.sin(la) * armLen + mfx * 0.5;
+            const lhy = neckY + Math.cos(la) * armLen + mfy * 0.3;
+            const rhx = neckX + Math.sin(ra) * armLen + mfx * 0.5;
+            const rhy = neckY + Math.cos(ra) * armLen + mfy * 0.3;
+            const lfx = baseX + Math.sin(ll) * legLen + mfx * 0.2;
+            const lfy = baseY + Math.cos(ll) * legLen;
+            const rfx = baseX + Math.sin(rl) * legLen + mfx * 0.2;
+            const rfy = baseY + Math.cos(rl) * legLen;
+
+            const colors = getThemeColors();
+            ctx.clearRect(0, 0, W, H);
+            ctx.strokeStyle = colors.accent;
+            ctx.fillStyle = colors.accent;
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.globalAlpha = 0.85;
+
+            // Head
+            ctx.beginPath();
+            ctx.arc(baseX + mfx * 0.3, headY + mfy * 0.2, 11, 0, Math.PI * 2);
+            ctx.stroke();
+            // Eyes
+            ctx.globalAlpha = 0.6;
+            const eyeY = headY + mfy * 0.2 - 1;
+            ctx.fillRect(baseX + mfx * 0.3 - 4, eyeY, 2, 2);
+            ctx.fillRect(baseX + mfx * 0.3 + 3, eyeY, 2, 2);
+            ctx.globalAlpha = 0.85;
+
+            // Spine
+            ctx.beginPath();
+            ctx.moveTo(neckX + mfx * 0.3, neckY);
+            ctx.lineTo(baseX, baseY);
+            ctx.stroke();
+            // Arms
+            ctx.beginPath();
+            ctx.moveTo(neckX + mfx * 0.3, neckY);
+            ctx.lineTo(lhx, lhy);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(neckX + mfx * 0.3, neckY);
+            ctx.lineTo(rhx, rhy);
+            ctx.stroke();
+            // Legs
+            ctx.beginPath();
+            ctx.moveTo(baseX, baseY);
+            ctx.lineTo(lfx, lfy);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(baseX, baseY);
+            ctx.lineTo(rfx, rfy);
+            ctx.stroke();
+
+            // Floor shadow
+            ctx.globalAlpha = 0.12;
+            ctx.beginPath();
+            ctx.ellipse(baseX, H - 14, 28 + Math.abs(hb), 4, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            rafId = requestAnimationFrame(draw);
+        }
+
+        container.addEventListener('pointermove', (e) => {
+            const r = canvas.getBoundingClientRect();
+            pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+        }, { passive: true });
+        container.addEventListener('pointerleave', () => { pointer = null; }, { passive: true });
+
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                visible = e.isIntersecting;
+                if (visible && !rafId) rafId = requestAnimationFrame(draw);
+            });
+        }, { threshold: 0.1 });
+        obs.observe(container);
+    }
+
     function initAll(P) {
         initAsciiQ(P);
-        initEditorialReflow(P);
-        init404Particles(P);
+        initCatOverlay();
+        init404Particles();
         initCharCascade(P);
         initTimelineCascade(P);
         initTightQuotes(P);
         initCaptionWave(P);
+        initMagneticTitles(P);
+        initHoverJump();
+        initDancingFigure();
         initBalancedSiteText(P);
         initTightBlogHeadlines(P);
         initNoShiftLoading(P);
