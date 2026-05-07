@@ -11,6 +11,13 @@
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     const pageIsVisible = () => !document.hidden;
 
+    /** Keep portfolio section headlines static (no per-char motion). */
+    function portfolioPlayfulHeadlinesOff() {
+        if (document.body && document.body.classList.contains('portfolio-page')) return true;
+        const p = typeof window.location !== 'undefined' ? window.location.pathname : '';
+        return /portfolio\.html$/i.test(p);
+    }
+
     function waitForPretext(cb) {
         if (window.Pretext) { cb(window.Pretext); return; }
         let n = 0;
@@ -52,7 +59,9 @@
         const prep = P.prepareWithSegments(ch || 'M', font);
         let w = 0;
         P.walkLineRanges(prep, 9999, (l) => { w = l.width; });
-        const out = Math.max(2, w);
+        let out = Math.max(2, w);
+        // Space glyphs can look too tight after per-char splitting; pad slightly.
+        if (ch === ' ' || ch === '\u00A0') out = Math.max(8, out * 1.22);
         cache.set(key, out);
         return out;
     }
@@ -457,6 +466,7 @@
        3) Heading character cascade (spring settle)
        --------------------------------------------------------- */
     function initCharCascade(P) {
+        if (portfolioPlayfulHeadlinesOff()) return;
         if (reducedMotion || isMobile()) return;
         const headings = Array.from(document.querySelectorAll('h2'));
         if (!headings.length) return;
@@ -473,6 +483,7 @@
        4) Timeline title cascade (portfolio)
        --------------------------------------------------------- */
     function initTimelineCascade(P) {
+        if (portfolioPlayfulHeadlinesOff()) return;
         if (reducedMotion || isMobile()) return;
         const entries = Array.from(document.querySelectorAll('.timeline-entry-container .timeline-title'));
         if (!entries.length) return;
@@ -825,6 +836,7 @@
        Magnetic jump on project h3 titles
        --------------------------------------------------------- */
     function initMagneticTitles(P) {
+        if (portfolioPlayfulHeadlinesOff()) return;
         if (reducedMotion || isMobile()) return;
         const cards = Array.from(document.querySelectorAll('.project-card-enhanced'));
         if (!cards.length) return;
@@ -922,6 +934,7 @@
        Hover jump on h2 headings
        --------------------------------------------------------- */
     function initHoverJump() {
+        if (portfolioPlayfulHeadlinesOff()) return;
         if (reducedMotion || isMobile()) return;
         const headings = Array.from(document.querySelectorAll('h2'));
         if (!headings.length) return;

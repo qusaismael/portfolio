@@ -45,6 +45,17 @@
     <link rel="stylesheet" href="style.css?v=visual-fix-9">
 </head>
 <body class="connect-page">
+    <div id="connect-loader" class="connect-loader" aria-hidden="true">
+        <div class="connect-loader-content">
+            <div class="connect-loader-spinner"></div>
+            <div class="connect-loader-text">
+                <span class="connect-loader-line connect-loader-line-1">$ nfc-link --init</span>
+                <span class="connect-loader-line connect-loader-line-2"><span class="connect-log-tag">out</span> establishing connection...</span>
+                <span class="connect-loader-line connect-loader-line-3"><span class="connect-log-tag">out</span> decrypting identity...</span>
+            </div>
+        </div>
+    </div>
+
     <a href="#connect-main" class="skip-to-content">Skip to content</a>
 
     <main id="connect-main" class="connect-shell" aria-label="Connect with Qusai Ismael">
@@ -76,7 +87,7 @@
 
             <header class="connect-hero">
                 <div class="connect-identity">
-                    <div class="connect-photo-wrap">
+                    <div class="connect-photo-wrap" role="button" tabindex="0" aria-label="Expand profile photo" id="connect-photo-trigger">
                         <img src="pfp.png"
                              alt="Qusai Ismael"
                              class="connect-photo"
@@ -175,6 +186,19 @@
         </section>
     </main>
 
+    <div id="connect-lightbox" class="connect-lightbox" aria-hidden="true">
+        <div class="connect-lightbox-backdrop" id="connect-lightbox-backdrop"></div>
+        <div class="connect-lightbox-content">
+            <img src="pfp.png" alt="Qusai Ismael" class="connect-lightbox-photo">
+            <button class="connect-lightbox-close" id="connect-lightbox-close" aria-label="Close zoom">
+                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <script>
     (() => {
         const email = 'qusai@qusai.pro';
@@ -213,6 +237,49 @@
             } catch (error) {
                 fallbackCopy(email);
                 swapLabel(event.currentTarget, 'Copied');
+            }
+        });
+
+        // Preloader Logic
+        const loader = document.getElementById('connect-loader');
+        window.addEventListener('load', () => {
+            // Give the animation time to play before fading out
+            setTimeout(() => {
+                loader.classList.add('is-hidden');
+            }, 1800);
+        });
+
+        // Lightbox Logic
+        const photoTrigger = document.getElementById('connect-photo-trigger');
+        const lightbox = document.getElementById('connect-lightbox');
+        const lightboxClose = document.getElementById('connect-lightbox-close');
+        const lightboxBackdrop = document.getElementById('connect-lightbox-backdrop');
+
+        const openLightbox = () => {
+            lightbox.classList.add('is-active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('is-active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        };
+
+        photoTrigger?.addEventListener('click', openLightbox);
+        photoTrigger?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox();
+            }
+        });
+
+        lightboxClose?.addEventListener('click', closeLightbox);
+        lightboxBackdrop?.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('is-active')) {
+                closeLightbox();
             }
         });
     })();
