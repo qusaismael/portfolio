@@ -1632,7 +1632,8 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
         let terminalOpen = false;
         overlayEl.setAttribute('aria-hidden', 'true');
 
-        const isDesktop = () => window.innerWidth >= 1024;
+        const prefersCoarsePointer = () => window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        const isDesktop = () => window.innerWidth >= 720 && !prefersCoarsePointer();
 
         const escapeHtml = (str) => {
             return String(str).replace(/[&<>"']/g, (ch) => {
@@ -1671,10 +1672,43 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
 
         closeBtn.addEventListener('click', toggleTerminal);
 
+        notifyEl.setAttribute('title', 'Open terminal');
+        notifyEl.style.cursor = 'pointer';
+        notifyEl.addEventListener('click', () => {
+            if (notifyEl.classList.contains('term-hidden')) return;
+            toggleTerminal();
+        });
+
+        const SCROLL_HINT_KEY = 'term_scroll_hint_session_v1';
+        function showTermScrollHint() {
+            if (!isDesktop()) return;
+            if (sessionStorage.getItem(SCROLL_HINT_KEY)) return;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (maxScroll <= 80) return;
+            const progress = window.scrollY / maxScroll;
+            if (progress < 0.34) return;
+            sessionStorage.setItem(SCROLL_HINT_KEY, '1');
+            notifyEl.classList.remove('term-hidden');
+            requestAnimationFrame(() => notifyEl.classList.add('term-slide-in'));
+            window.setTimeout(() => {
+                if (!terminalOpen) setNotificationHidden();
+            }, 14000);
+        }
+        let hintTicking = false;
+        window.addEventListener('scroll', () => {
+            if (hintTicking) return;
+            hintTicking = true;
+            window.requestAnimationFrame(() => {
+                hintTicking = false;
+                showTermScrollHint();
+            });
+        }, { passive: true });
+        showTermScrollHint();
+
         // 2. Keyboard Listener for opt-in terminal toggle and Escape
         document.addEventListener('keydown', (e) => {
             const isEditable = e.target && e.target.closest && e.target.closest('input, textarea, [contenteditable="true"]');
-            if (e.key === '`' && (e.ctrlKey || e.metaKey) && isDesktop() && !isEditable) {
+            if (e.key === '`' && isDesktop() && !isEditable) {
                 e.preventDefault();
                 toggleTerminal();
                 return;
@@ -1849,7 +1883,7 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
                             printLines([
                                 'This easter egg is intentionally:',
                                 '  - dependency-free',
-                                '  - desktop-gated (1024px+)',
+                                '  - fine-pointer desktop (about 720px+ wide, not touch-primary)',
                                 '  - keyboard friendly',
                                 'Commands are just vibes and safe outputs.'
                             ]);
@@ -1904,7 +1938,7 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
                 case 'motd': {
                     const messages = [
                         'Welcome, operator. The baseline is defended. The surface area expands.',
-                        'Fedora mode: aesthetic engaged. Backtick opens the shell. Escape closes it.',
+                        'Fedora mode: aesthetic engaged. Scroll a bit, then ` opens the shell. Escape closes it.',
                         'Privacy is a feature. Play is a protocol.'
                     ];
                     const pick = messages[Math.floor(Math.random() * messages.length)];

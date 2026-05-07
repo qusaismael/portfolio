@@ -3275,8 +3275,8 @@ nav a:hover {
     outline: none;
 }
 
-/* Ensure it never shows on mobile even if JS fails */
-@media (max-width: 1023px) {
+/* Hide mock terminal on small / touch-primary viewports (keep usable on small laptops). */
+@media (max-width: 719px), (pointer: coarse) {
     #term-notify, #term-overlay {
         display: none !important;
     }
