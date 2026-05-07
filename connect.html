@@ -46,12 +46,16 @@
 </head>
 <body class="connect-page">
     <div id="connect-loader" class="connect-loader" aria-hidden="true">
+        <div class="connect-loader-crt"></div>
         <div class="connect-loader-content">
-            <div class="connect-loader-spinner"></div>
             <div class="connect-loader-text">
-                <span class="connect-loader-line connect-loader-line-1">$ nfc-link --init</span>
-                <span class="connect-loader-line connect-loader-line-2"><span class="connect-log-tag">out</span> establishing connection...</span>
-                <span class="connect-loader-line connect-loader-line-3"><span class="connect-log-tag">out</span> decrypting identity...</span>
+                <span class="connect-loader-line connect-loader-line-1"><span class="connect-log-tag">tap</span> Card scanned — hello! 👋</span>
+                <span class="connect-loader-line connect-loader-line-2"><span class="connect-log-tag">link</span> Opening Qusai's contact card...</span>
+                <span class="connect-loader-line connect-loader-line-3"><span class="connect-log-tag">lock</span> <span id="cipher-target">Securing your connection...</span></span>
+                <span class="connect-loader-line connect-loader-line-4"><span class="connect-log-tag">find</span> Looking up profile...</span>
+                <span class="connect-loader-line connect-loader-line-5"><span class="connect-log-tag">ok</span> Profile found — loading details...</span>
+                <span class="connect-loader-line connect-loader-line-6"><span class="connect-log-tag">···</span> <span id="progress-bar">[░░░░░░░░░░░░░░░░░░░░]</span> <span id="progress-text">0%</span></span>
+                <span class="connect-loader-line connect-loader-line-7" id="loader-status"></span>
             </div>
         </div>
     </div>
@@ -190,14 +194,11 @@
         <div class="connect-lightbox-backdrop" id="connect-lightbox-backdrop"></div>
         <div class="connect-lightbox-content">
             <img src="pfp.png" alt="Qusai Ismael" class="connect-lightbox-photo">
-            <button class="connect-lightbox-close" id="connect-lightbox-close" aria-label="Close zoom">
-                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
+            <div class="connect-lightbox-glitch-layer"></div>
         </div>
     </div>
+
+    <div id="connect-cursor" class="connect-cursor" aria-hidden="true">CLOSE</div>
 
     <script>
     (() => {
@@ -240,46 +241,145 @@
             }
         });
 
-        // Preloader Logic
+        // Cyber-Boot Preloader Logic
         const loader = document.getElementById('connect-loader');
-        window.addEventListener('load', () => {
-            // Give the animation time to play before fading out
-            setTimeout(() => {
-                loader.classList.add('is-hidden');
-            }, 1800);
-        });
+        const cipherTarget = document.getElementById('cipher-target');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const loaderStatus = document.getElementById('loader-status');
+        
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+        const targetText = 'Establishing secure link...';
+        let iterations = 0;
 
-        // Lightbox Logic
-        const photoTrigger = document.getElementById('connect-photo-trigger');
+        // Slower cipher — 45ms per frame, decode 0.3 chars at a time
+        const scramble = setInterval(() => {
+            if (!cipherTarget) return;
+            cipherTarget.innerText = targetText.split('').map((letter, index) => {
+                if (index < iterations) return letter;
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            if (iterations >= targetText.length) clearInterval(scramble);
+            iterations += 0.3;
+        }, 45);
+
+        // Progress bar: slower, smaller random increments, pauses at key milestones
+        let progress = 0;
+        const milestones = [30, 65, 85]; // pause here to feel real
+        let atMilestone = false;
+
+        const progressInterval = setInterval(() => {
+            if (!progressBar || atMilestone) return;
+
+            const nextMilestone = milestones.find(m => progress < m);
+            if (nextMilestone && progress + 3 >= nextMilestone) {
+                progress = nextMilestone;
+                atMilestone = true;
+                setTimeout(() => { atMilestone = false; }, 600); // pause 600ms at milestone
+            } else {
+                progress += Math.floor(Math.random() * 3) + 1; // slower: +1 to +3 per tick
+            }
+            if (progress >= 100) progress = 100;
+
+            const blocks = Math.floor(progress / 5);
+            const empty = 20 - blocks;
+            progressBar.innerText = '[' + '█'.repeat(blocks) + '░'.repeat(empty) + ']';
+            progressText.innerText = progress + '%';
+
+            // Update status label at key stages
+            if (loaderStatus) {
+                if (progress >= 30 && progress < 65) {
+                    loaderStatus.className = 'connect-loader-line connect-loader-status';
+                    loaderStatus.innerHTML = '<span class="connect-log-tag">✓</span> Qusai\'s profile verified!';
+                } else if (progress >= 65 && progress < 85) {
+                    loaderStatus.className = 'connect-loader-line connect-loader-status';
+                    loaderStatus.innerHTML = '<span class="connect-log-tag">✓</span> Loading links & contact info...';
+                } else if (progress >= 85) {
+                    loaderStatus.className = 'connect-loader-line connect-loader-status';
+                    loaderStatus.innerHTML = '<span class="connect-log-tag">✓</span> <strong>All done — enjoy the card!</strong>';
+                }
+            }
+
+            if (progress === 100) {
+                clearInterval(progressInterval);
+                // Let user read the final state for 1.2s before glitch
+                setTimeout(() => {
+                    loader.classList.add('is-glitching');
+                    setTimeout(() => {
+                        loader.classList.add('is-hidden');
+                    }, 450);
+                }, 1200);
+            }
+        }, 120); // 120ms per tick — much more readable
+
+        // 3D Parallax Hover Logic
+        const photoWrap = document.getElementById('connect-photo-trigger');
+        const photo = photoWrap?.querySelector('.connect-photo');
+        
+        if (photoWrap && photo) {
+            photoWrap.addEventListener('mousemove', (e) => {
+                const rect = photoWrap.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -20; // max 20 deg
+                const rotateY = ((x - centerX) / centerX) * 20;
+                
+                photo.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+            });
+            
+            photoWrap.addEventListener('mouseleave', () => {
+                photo.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+        }
+
+        // Lightbox & Custom Cursor Logic
         const lightbox = document.getElementById('connect-lightbox');
-        const lightboxClose = document.getElementById('connect-lightbox-close');
         const lightboxBackdrop = document.getElementById('connect-lightbox-backdrop');
+        const customCursor = document.getElementById('connect-cursor');
+
+        let isLightboxActive = false;
 
         const openLightbox = () => {
             lightbox.classList.add('is-active');
             lightbox.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden'; // Prevent scrolling
+            if (customCursor) customCursor.classList.add('is-visible');
+            isLightboxActive = true;
         };
 
         const closeLightbox = () => {
             lightbox.classList.remove('is-active');
             lightbox.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            if (customCursor) customCursor.classList.remove('is-visible');
+            isLightboxActive = false;
         };
 
-        photoTrigger?.addEventListener('click', openLightbox);
-        photoTrigger?.addEventListener('keydown', (e) => {
+        photoWrap?.addEventListener('click', openLightbox);
+        photoWrap?.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 openLightbox();
             }
         });
 
-        lightboxClose?.addEventListener('click', closeLightbox);
         lightboxBackdrop?.addEventListener('click', closeLightbox);
+        // Also close if clicking the image itself in the lightbox
+        lightbox?.querySelector('.connect-lightbox-photo')?.addEventListener('click', closeLightbox);
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('is-active')) {
+            if (e.key === 'Escape' && isLightboxActive) {
                 closeLightbox();
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if(isLightboxActive && customCursor) {
+                // translate by half width/height to center the cursor on mouse
+                customCursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
             }
         });
     })();
