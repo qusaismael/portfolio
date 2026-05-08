@@ -49,12 +49,12 @@
         <div class="connect-loader-crt"></div>
         <div class="connect-loader-content">
             <div class="connect-loader-text">
-                <span class="connect-loader-line connect-loader-line-1"><span class="connect-log-tag">tap</span> Card scanned — hello! 👋</span>
-                <span class="connect-loader-line connect-loader-line-2"><span class="connect-log-tag">link</span> Opening Qusai's contact card...</span>
-                <span class="connect-loader-line connect-loader-line-3"><span class="connect-log-tag">lock</span> <span id="cipher-target">Securing your connection...</span></span>
-                <span class="connect-loader-line connect-loader-line-4"><span class="connect-log-tag">find</span> Looking up profile...</span>
-                <span class="connect-loader-line connect-loader-line-5"><span class="connect-log-tag">ok</span> Profile found — loading details...</span>
-                <span class="connect-loader-line connect-loader-line-6"><span class="connect-log-tag">···</span> <span id="progress-bar">[░░░░░░░░░░░░░░░░░░░░]</span> <span id="progress-text">0%</span></span>
+                <span class="connect-loader-line connect-loader-line-1"><span class="connect-log-tag">···</span> <span id="progress-bar">[░░░░░░░░░░░░░░░░░░░░]</span> <span id="progress-text">0%</span></span>
+                <span class="connect-loader-line connect-loader-line-2"><span class="connect-log-tag">tap</span> Phone tap detected — hey! 👋</span>
+                <span class="connect-loader-line connect-loader-line-3"><span class="connect-log-tag">link</span> Opening Qusai's contact card...</span>
+                <span class="connect-loader-line connect-loader-line-4"><span class="connect-log-tag">lock</span> <span id="cipher-target">Securing your connection...</span></span>
+                <span class="connect-loader-line connect-loader-line-5"><span class="connect-log-tag">find</span> Looking up profile...</span>
+                <span class="connect-loader-line connect-loader-line-6"><span class="connect-log-tag">ok</span> Profile found — loading details...</span>
                 <span class="connect-loader-line connect-loader-line-7" id="loader-status"></span>
             </div>
         </div>
@@ -82,9 +82,9 @@
                     <strong>~/contact</strong>
                 </div>
                 <ol class="connect-boot-lines">
-                    <li class="connect-command"><span>$</span><b>nfc-link</b></li>
-                    <li><span class="connect-log-tag">out</span>in_person verified</li>
-                    <li><span class="connect-log-tag">out</span>ready</li>
+                    <li class="connect-command"><span>$</span><b>nfc --handshake</b></li>
+                    <li><span class="connect-log-tag">out</span>signal_received</li>
+                    <li><span class="connect-log-tag">out</span>channel open</li>
                     <li class="connect-terminal-caret-line" aria-hidden="true"><span class="connect-terminal-emote" role="presentation">👋</span></li>
                 </ol>
             </div>
@@ -279,7 +279,7 @@
         const targetText = 'Establishing secure link...';
         let iterations = 0;
 
-        // Slower cipher — 45ms per frame, decode 0.3 chars at a time
+        // Fast cipher — 25ms per frame, decode 0.7 chars at a time
         const scramble = setInterval(() => {
             if (!cipherTarget) return;
             cipherTarget.innerText = targetText.split('').map((letter, index) => {
@@ -287,8 +287,8 @@
                 return chars[Math.floor(Math.random() * chars.length)];
             }).join('');
             if (iterations >= targetText.length) clearInterval(scramble);
-            iterations += 0.3;
-        }, 45);
+            iterations += 0.7;
+        }, 25);
 
         // Progress bar: slower, smaller random increments, pauses at key milestones
         let progress = 0;
@@ -299,12 +299,12 @@
             if (!progressBar || atMilestone) return;
 
             const nextMilestone = milestones.find(m => progress < m);
-            if (nextMilestone && progress + 3 >= nextMilestone) {
+            if (nextMilestone && progress + 5 >= nextMilestone) {
                 progress = nextMilestone;
                 atMilestone = true;
-                setTimeout(() => { atMilestone = false; }, 600); // pause 600ms at milestone
+                setTimeout(() => { atMilestone = false; }, 250); // snappy 250ms pause
             } else {
-                progress += Math.floor(Math.random() * 3) + 1; // slower: +1 to +3 per tick
+                progress += Math.floor(Math.random() * 4) + 2; // +2 to +5 per tick
             }
             if (progress >= 100) progress = 100;
 
@@ -329,15 +329,15 @@
 
             if (progress === 100) {
                 clearInterval(progressInterval);
-                // Let user read the final state for 1.2s before glitch
+                // Brief hold so user can read, then glitch out
                 setTimeout(() => {
                     loader.classList.add('is-glitching');
                     setTimeout(() => {
                         loader.classList.add('is-hidden');
                     }, 450);
-                }, 1200);
+                }, 600);
             }
-        }, 120); // 120ms per tick — much more readable
+        }, 65); // 65ms per tick — fast but readable
 
         // 3D Parallax Hover Logic
         const photoWrap = document.getElementById('connect-photo-trigger');
@@ -413,7 +413,13 @@
         // Cat Mode Animation
         const catButton = document.getElementById('cat-button');
         const catContainer = document.getElementById('cat-container');
-        const catFaces = ['=^._.^=', '(=^･ω･^=)', '(=｀ω´=)', '(=^･ｪ･^=)', '(^-人-^)', '(^・x・^)', '(=ＴェＴ=)', '(=;ェ;=)', '(=චᆽච=)', '(=✖ᆽ✖=)'];
+        const catFaces = [
+            '=^._.^=', '(=^･ω･^=)', '(=｀ω´=)', '(=^･ｪ･^=)',
+            '(^-人-^)', '(^・x・^)', '(=ＴェＴ=)', '(=;ェ;=)',
+            '(=చᆽచ=)', '(=✖ᆽ✖=)', '(=^-ω-^=)', '(^•ﻌ•^)',
+            'ฅ^･ω･^ฅ', '(๑•̀ω•́๑)', '(=ΦωΦ=)', '=^♡ᆽ♡^=',
+            '( =ω= )', '>^.^<', '(^ↀᴥↀ^)', '=( ̳• · • ̳)='
+        ];
 
         const spawnCat = () => {
             const cat = document.createElement('div');
@@ -438,14 +444,14 @@
                 cat.style.transform = `translate(-50%, -50%) scale(1)`;
 
                 setTimeout(() => {
-                    cat.style.transition = 'transform 0.3s, opacity 1.5s';
+                    cat.style.transition = 'transform 0.25s, opacity 0.8s';
                     cat.style.transform = `translate(-50%, -50%) scale(${Math.random() > 0.5 ? 1.2 : 0.8}) rotate(${Math.random() * 40 - 20}deg)`;
                     cat.style.opacity = '0';
 
                     setTimeout(() => {
                         cat.remove();
-                    }, 1500);
-                }, 800 + Math.random() * 1200);
+                    }, 800);
+                }, 400 + Math.random() * 700);
             });
         };
 
@@ -455,7 +461,7 @@
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
                     spawnCat();
-                }, Math.random() * 2000);
+                }, Math.random() * 800);
             }
 
             // Keep spawning for a while
