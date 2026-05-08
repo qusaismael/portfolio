@@ -202,11 +202,20 @@
                     <span class="connect-link-mark">PGP</span>
                     <span>Public key</span>
                 </a>
+                <a href="javascript:void(0)" id="cat-button" aria-label="Cat mode" title="Click for cats!">
+                    <span class="connect-link-mark">CAT</span>
+                    <span>Cats</span>
+                </a>
             </nav>
 
             <footer class="connect-footer" aria-hidden="true"></footer>
         </section>
     </main>
+
+
+
+    <!-- Cat Animation Container -->
+    <div id="cat-container" aria-hidden="true"></div>
 
     <div id="connect-lightbox" class="connect-lightbox" aria-hidden="true">
         <div class="connect-lightbox-backdrop" id="connect-lightbox-backdrop"></div>
@@ -399,6 +408,68 @@
                 // translate by half width/height to center the cursor on mouse
                 customCursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
             }
+        });
+
+        // Cat Mode Animation
+        const catButton = document.getElementById('cat-button');
+        const catContainer = document.getElementById('cat-container');
+        const catFaces = ['=^._.^=', '(=^･ω･^=)', '(=｀ω´=)', '(=^･ｪ･^=)', '(^-人-^)', '(^・x・^)', '(=ＴェＴ=)', '(=;ェ;=)', '(=චᆽච=)', '(=✖ᆽ✖=)'];
+
+        const spawnCat = () => {
+            const cat = document.createElement('div');
+            const face = catFaces[Math.floor(Math.random() * catFaces.length)];
+            cat.textContent = face;
+            cat.style.position = 'fixed';
+            cat.style.zIndex = '9999';
+            cat.style.pointerEvents = 'none';
+            cat.style.color = 'var(--accent-color, #D2B48C)';
+            cat.style.fontFamily = 'var(--font-mono, monospace)';
+            cat.style.fontWeight = 'bold';
+            cat.style.fontSize = (Math.random() * 16 + 14) + 'px';
+            cat.style.left = Math.random() * 100 + '%';
+            cat.style.top = Math.random() * 100 + '%';
+            cat.style.transform = `translate(-50%, -50%) scale(0)`;
+            cat.style.transition = 'none';
+            catContainer.appendChild(cat);
+
+            // Bounce animation
+            requestAnimationFrame(() => {
+                cat.style.transition = 'transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                cat.style.transform = `translate(-50%, -50%) scale(1)`;
+
+                setTimeout(() => {
+                    cat.style.transition = 'transform 0.3s, opacity 1.5s';
+                    cat.style.transform = `translate(-50%, -50%) scale(${Math.random() > 0.5 ? 1.2 : 0.8}) rotate(${Math.random() * 40 - 20}deg)`;
+                    cat.style.opacity = '0';
+
+                    setTimeout(() => {
+                        cat.remove();
+                    }, 1500);
+                }, 800 + Math.random() * 1200);
+            });
+        };
+
+        catButton?.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Spawn cats in bursts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    spawnCat();
+                }, Math.random() * 2000);
+            }
+
+            // Keep spawning for a while
+            let burstCount = 0;
+            const burstInterval = setInterval(() => {
+                spawnCat();
+                burstCount++;
+                if (burstCount > 15) clearInterval(burstInterval);
+            }, 200);
+
+            // Clear container after everything fades
+            setTimeout(() => {
+                catContainer.innerHTML = '';
+            }, 5000);
         });
     })();
     </script>
