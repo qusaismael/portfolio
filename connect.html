@@ -30,7 +30,7 @@
       "name": "Qusai Ismael",
       "url": "https://qusai.pro",
       "image": "https://qusai.pro/pfp.png",
-      "email": "mailto:qusai@qusai.pro",
+
       "jobTitle": "Cybersecurity Student & Software Developer",
       "sameAs": [
         "https://github.com/qusaismael",
@@ -179,7 +179,7 @@
                 <button class="connect-action" type="button" data-copy-email>
                     <span>
                         <strong data-default-label="Copy email">Copy email</strong>
-                        <small>qusai@qusai.pro</small>
+                        <small id="email-display" aria-label="Email address"></small>
                     </span>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none">
                         <rect x="8" y="8" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
@@ -198,7 +198,7 @@
                     <span class="connect-link-mark">M</span>
                     <span>Medium</span>
                 </a>
-                <a href="https://keys.openpgp.org/search?q=qusai@qusai.pro" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+                <a id="pgp-link" href="#" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
                     <span class="connect-link-mark">PGP</span>
                     <span>Public key</span>
                 </a>
@@ -229,7 +229,18 @@
 
     <script>
     (() => {
-        const email = 'qusai@qusai.pro';
+        // Anti-scrape: email assembled at runtime from char codes
+        const _e = [104,105,64,113,117,115,97,105,46,112,114,111];
+        const email = _e.map(c => String.fromCharCode(c)).join('');
+
+        // Populate email display element (never in static HTML)
+        const emailDisplay = document.getElementById('email-display');
+        if (emailDisplay) emailDisplay.textContent = email;
+
+        // Populate PGP keyserver link
+        const pgpLink = document.getElementById('pgp-link');
+        if (pgpLink) pgpLink.href = 'https://keys.openpgp.org/search?q=' + encodeURIComponent(email);
+
         const swapLabel = (button, message) => {
             const label = button?.querySelector('strong');
             if (!label) return;

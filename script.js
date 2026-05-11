@@ -2052,7 +2052,7 @@ document.querySelectorAll('.project-card-enhanced').forEach(card => {
                         blog: 'blog.html',
                         sites: 'sites.html',
                         recommendations: 'recommendations.html',
-                        email: 'mailto:qusai@qusai.pro'
+                        email: 'mailto:' + [104,105,64,113,117,115,97,105,46,112,114,111].map(function(c){return String.fromCharCode(c)}).join('')
                     };
                     const url = map[dest];
                     if (!url) {

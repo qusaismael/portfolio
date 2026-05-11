@@ -211,12 +211,12 @@
                 <h2>Get In Touch<span class="accent-dot">.</span></h2>
                 <p>Feel free to send a message, we are both humans. ❤️</p>
                 <div class="social-links">
-                    <a href="#" onclick="location.href='mailto:' + 'qusai' + '@' + 'qusai.pro'; return false;" class="email-link">
+                    <a href="#" onclick="location.href='mailto:' + 'hi' + '@' + 'qusai.pro'; return false;" class="email-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        qusai@qusai.pro
+                        <span id="idx-email-display"></span>
                     </a>
                     <a href="https://github.com/qusaismael" target="_blank" rel="noopener noreferrer">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -261,9 +261,9 @@
                         <p><code>1F62 8725 80D8 4EDA 5000  6997 4133 1629 AA80 3597</code></p>
                     </div>
                     <div class="gpg-actions">
-                        <a href="https://keys.openpgp.org/search?q=qusai@qusai.pro" target="_blank" rel="noopener" class="gpg-action">Download from Keyserver</a>
+                        <a id="idx-pgp-keyserver" href="#" target="_blank" rel="noopener" class="gpg-action">Download from Keyserver</a>
                         <button class="gpg-action" onclick="copyGpgKey()">Copy Key</button>
-                        <a href="#" onclick="location.href='mailto:' + 'qusai' + '@' + 'qusai.pro' + '?subject=Encrypted%20Message'; return false;" class="gpg-action">Send Encrypted Email</a>
+                        <a href="#" onclick="location.href='mailto:' + 'hi' + '@' + 'qusai.pro' + '?subject=Encrypted%20Message'; return false;" class="gpg-action">Send Encrypted Email</a>
                     </div>
                 </div>
             </section>
@@ -670,6 +670,16 @@
         }
       }
 
+
+      // Anti-scrape: populate email and PGP links at runtime
+      (function(){
+        var _e = [104,105,64,113,117,115,97,105,46,112,114,111];
+        var addr = _e.map(function(c){return String.fromCharCode(c)}).join('');
+        var el = document.getElementById('idx-email-display');
+        if (el) el.textContent = addr;
+        var pgp = document.getElementById('idx-pgp-keyserver');
+        if (pgp) pgp.href = 'https://keys.openpgp.org/search?q=' + encodeURIComponent(addr);
+      })();
 
     </script>
 </body>
