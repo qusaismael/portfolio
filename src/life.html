@@ -1,0 +1,539 @@
+---
+layout: base
+title: "Life & Interests – Qusai Ismael"
+description: "Personal interests, travel history, tech stack, fun facts, and gaming favorites of Qusai Ismael."
+permalink: "/life/"
+customStyles: "/css/life.css"
+customScripts: "/js/globe.js"
+---
+<div class="container">
+    <main class="main-content" id="main-content"><header class="page-heading"><p class="eyebrow">The person behind the projects</p><h1>A little more life<span class="accent-dot">.</span></h1><p class="page-lede">Places, games, tools, and a few stories.<br> Not everything needs to be a work thing.</p><nav class="section-jumps" aria-label="On this page"><a href="#travel">Places</a><a href="#fun-facts">Stories</a><a href="#tech-stack">My setup</a><a href="#gaming">Games</a><a href="/photos/">Photos ↗</a></nav></header>
+      <!-- SECTION 1: TRAVEL & PLACES -->
+      <section id="travel" class="travel-section">
+        <div class="section-header">
+          <h2>Travel &amp; Places<span class="accent-dot">.</span></h2>
+          <p class="section-intro">A few places I have been, and a few I keep thinking about. Pick a place to see the story.</p>
+        </div>
+
+        <!-- 3D Interactive Globe Showcase Hub -->
+        <div class="travel-showcase-container globe-showcase-container">
+          <!-- Left Column: 3D WebGL Canvas Stage -->
+          <div class="globe-canvas-col">
+            <div class="globe-canvas-wrapper">
+              <canvas id="cobe-globe-canvas" class="globe-canvas cobe-canvas" width="800" height="800"
+                aria-label="Globe of places I have visited and want to visit. Use the destination buttons to explore." role="img"></canvas>
+              <div class="globe-legend-overlay" aria-label="Globe Pin Legend">
+                <span class="globe-legend-item legend-visited"><span class="legend-dot visited-dot">●</span> Visited
+                  (10)</span>
+                <span class="globe-legend-item legend-bucket"><span class="legend-dot bucket-dot">◆</span> Planning to
+                  Explore (8)</span>
+              </div>
+              <div class="globe-drag-hint">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path
+                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                <span>Drag to rotate · Or choose a place</span>
+              </div>
+              <div class="globe-controls-overlay">
+                <button id="globe-reset-btn" class="globe-mini-btn globe-reset" title="Reset View to Jordan">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 3v5h5" />
+                  </svg>
+                  <span>Reset</span>
+                </button>
+                <button id="globe-spin-toggle" aria-pressed="false" class="globe-mini-btn globe-spin" title="Toggle Auto-Rotation">
+                  <span class="spin-icon">●</span>
+                  <span>Auto-Spin</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Active Location HUD & Location Pills -->
+          <div class="globe-hud-col">
+            <!-- Active Location HUD Card -->
+            <div class="travel-hud-card globe-hud-card" id="globe-hud-card" aria-live="polite" aria-atomic="true">
+              <div class="hud-header">
+                <span class="hud-status-badge" id="hud-status-badge">
+                  <span class="hud-pulse-dot"></span>
+                  <span id="hud-category-label">Visited Destination</span>
+                </span>
+                <span class="hud-coords" id="hud-coords">31.9566° N, 35.9457° E</span>
+              </div>
+              <div class="hud-body">
+                <h3 class="hud-city" id="hud-city">Amman <span class="hud-flag" id="hud-flag">🇯🇴</span></h3>
+                <p class="hud-country" id="hud-country">Jordan (Spawn Point)</p>
+                <p class="hud-description" id="hud-description">My spawn point! The hills, the Roman Theater, the energy. Amman is home.</p>
+              </div>
+            </div>
+
+            <!-- Visited City Quick-Select Chips -->
+            <div class="globe-chips-wrapper">
+              <div class="globe-chips-title">
+                <h4>Select a destination to focus globe:</h4>
+                <span class="chips-count">10 Visited Places</span>
+              </div>
+              <div class="visited-quick-chips globe-chips-grid" id="globe-visited-chips">
+                <button class="globe-chip visited-chip place-tag active" data-id="amman" data-lat="31.9566"
+                  data-lon="35.9457" data-city="Amman" data-country="Jordan (Spawn Point)" data-flag="🇯🇴"
+                  data-desc="My spawn point! The hills, the Roman Theater, the energy. Amman is home."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Amman</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="zarqa" data-lat="32.0500" data-lon="36.1000"
+                  data-city="Zarqa" data-country="Jordan" data-flag="🇯🇴"
+                  data-desc="A lot of my childhood was here, with family and friends. My roots, basically."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Zarqa</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="aqaba" data-lat="29.5267" data-lon="35.0078"
+                  data-city="Aqaba" data-country="Jordan" data-flag="🇯🇴"
+                  data-desc="Red Sea, beach, no rush. A very good combination."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Aqaba</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="jarash" data-lat="32.2723" data-lon="35.8914"
+                  data-city="Jarash" data-country="Jordan" data-flag="🇯🇴"
+                  data-desc="Walking between those ancient columns really does feel like going back in time."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Jarash</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="ajloun" data-lat="32.3333" data-lon="35.7500"
+                  data-city="Ajloun" data-country="Jordan" data-flag="🇯🇴"
+                  data-desc="Pine forests and an old castle. I loved how green it was."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Ajloun</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="deadsea" data-lat="31.5000"
+                  data-lon="35.5000" data-city="Dead Sea" data-country="Jordan" data-flag="🇯🇴"
+                  data-desc="Lowest elevation on Earth (-430m), can't go lower!"><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Dead Sea</span>
+                  <span class="visited-chip-flag">🇯🇴</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="istanbul" data-lat="41.0082"
+                  data-lon="28.9784" data-city="Istanbul" data-country="Turkey" data-flag="🇹🇷"
+                  data-desc="A week that felt very different from home. I loved the scenery too."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Istanbul</span>
+                  <span class="visited-chip-flag">🇹🇷</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="jeddah" data-lat="21.4858" data-lon="39.1925"
+                  data-city="Jeddah" data-country="Saudi Arabia" data-flag="🇸🇦"
+                  data-desc="Walking along the Red Sea felt like being in a movie."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Jeddah</span>
+                  <span class="visited-chip-flag">🇸🇦</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="medina" data-lat="24.4672" data-lon="39.6111"
+                  data-city="Medina" data-country="Saudi Arabia" data-flag="🇸🇦" data-desc="Such a peaceful city"><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Medina</span>
+                  <span class="visited-chip-flag">🇸🇦</span></button>
+                <button class="globe-chip visited-chip place-tag" data-id="sharm" data-lat="27.9158" data-lon="34.3299"
+                  data-city="Sharm El Sheikh" data-country="Egypt" data-flag="🇪🇬"
+                  data-desc="Great hospitality, and conversations with people from all over the world. That was my favorite part."><span
+                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Sharm
+                    Elshikh</span> <span class="visited-chip-flag">🇪🇬</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <noscript><h3>Places I have visited</h3><ul><li><strong>Amman</strong> — My spawn point! The hills, the Roman Theater, the energy. Amman is home.</li><li><strong>Zarqa</strong> — A lot of my childhood was here, with family and friends. My roots, basically.</li><li><strong>Aqaba</strong> — Red Sea, beach, no rush. A very good combination.</li><li><strong>Jarash</strong> — Walking between those ancient columns really does feel like going back in time.</li><li><strong>Ajloun</strong> — Pine forests and an old castle. I loved how green it was.</li><li><strong>Dead Sea</strong> — Lowest elevation on Earth (-430m), can't go lower!</li><li><strong>Istanbul</strong> — A week that felt very different from home. I loved the scenery too.</li><li><strong>Jeddah</strong> — Walking along the Red Sea felt like being in a movie.</li><li><strong>Medina</strong> — Such a peaceful city</li><li><strong>Sharm El Sheikh</strong> — Great hospitality, and conversations with people from all over the world. That was my favorite part.</li></ul></noscript>
+        <!-- Planning to Explore Subsection -->
+        <div class="travel-subsection" style="margin-top: 3rem;">
+          <div class="subsection-header">
+            <h3>The someday list</h3>
+            <span class="subsection-count">8 Destinations</span>
+          </div>
+          <p class="subsection-desc">Not booked. Just a list that keeps getting longer.
+          </p>
+
+          <div class="bucket-list-grid">
+            <!-- 1. SF -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
+              data-city="SF" data-country="USA 🇺🇸"
+              data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">SF</span>
+                <span class="bucket-card-badge">USA 🇺🇸</span>
+              </span>
+              <span class="bucket-card-reason">I spend enough time reading about Silicon Valley. I want to see it in person.
+              </span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>San Francisco, California</span>
+              </span>
+            </button>
+
+            <!-- 2. Germany -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="germany" data-lat="52.5200" data-lon="13.4050"
+              data-city="Germany" data-country="EU 🇩🇪"
+              data-desc="I want to see the engineering scene, and a bit of the country around it."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">Germany</span>
+                <span class="bucket-card-badge">EU 🇩🇪</span>
+              </span>
+              <span class="bucket-card-reason">The tech hub of the EU—really want to explore the engineering scene and
+                culture.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>European Engineering Center</span>
+              </span>
+            </button>
+
+            <!-- 3. UK -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="uk" data-lat="51.5074" data-lon="-0.1278"
+              data-city="UK" data-country="Europe 🇬🇧"
+              data-desc="London in winter. Rain included."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">UK</span>
+                <span class="bucket-card-badge">Europe 🇬🇧</span>
+              </span>
+              <span class="bucket-card-reason">London in winter. Rain included.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>London Winter Cityscapes</span>
+              </span>
+            </button>
+
+            <!-- 4. Texas -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="texas" data-lat="30.2672" data-lon="-97.7431"
+              data-city="Texas" data-country="USA 🇺🇸"
+              data-desc="There is a friend I really want to visit here."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">Texas</span>
+                <span class="bucket-card-badge">USA 🇺🇸</span>
+              </span>
+              <span class="bucket-card-reason">There is a friend I really want to visit here.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>Personal Reunion &amp; Travel</span>
+              </span>
+            </button>
+
+            <!-- 5. New York -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="newyork" data-lat="40.7128" data-lon="-74.0060"
+              data-city="New York" data-country="USA 🇺🇸"
+              data-desc="The Spider-Man city. Obviously I have to go."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">New York</span>
+                <span class="bucket-card-badge">USA 🇺🇸</span>
+              </span>
+              <span class="bucket-card-reason">The Spider-Man city. Obviously I have to go.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>NYC Skyline &amp; Culture</span>
+              </span>
+            </button>
+
+            <!-- 6. Detroit -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="detroit" data-lat="42.3314" data-lon="-83.0458"
+              data-city="Detroit" data-country="USA 🇺🇸"
+              data-desc="Mostly because of Detroit: Become Human. Yes, a game made the travel list."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">Detroit</span>
+                <span class="bucket-card-badge">USA 🇺🇸</span>
+              </span>
+              <span class="bucket-card-reason">Mostly because of Detroit: Become Human. Yes, a game made the travel list.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>Cyberpunk &amp; Sci-Fi Lore</span>
+              </span>
+            </button>
+
+            <!-- 7. Japan -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="japan" data-lat="35.6762" data-lon="139.6503"
+              data-city="Japan" data-country="Asia 🇯🇵"
+              data-desc="I want to see the sakura in person, then get lost in the tech and culture."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">Japan</span>
+                <span class="bucket-card-badge">Asia 🇯🇵</span>
+              </span>
+              <span class="bucket-card-reason">I want to see the sakura in person, then get lost in the tech and culture.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>Cherry Blossoms &amp; Architecture</span>
+              </span>
+            </button>
+
+            <!-- 8. Riyadh -->
+            <button type="button" class="bucket-card globe-bucket-trigger" data-id="riyadh" data-lat="24.7136" data-lon="46.6753"
+              data-city="Riyadh" data-country="Saudi Arabia 🇸🇦"
+              data-desc="Black Hat and a chance to meet more people working in security."
+             >
+              <span class="bucket-card-header">
+                <span class="bucket-card-destination">Riyadh</span>
+                <span class="bucket-card-badge">Saudi Arabia 🇸🇦</span>
+              </span>
+              <span class="bucket-card-reason">Want to attend BlackHat MENA and tech events to connect with security
+                researchers.</span>
+              <span class="bucket-card-icon-pill">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                    stroke="currentColor" stroke-width="1.5" />
+                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span>Cybersecurity &amp; Tech Conferences</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: FUN FACTS -->
+      <section id="fun-facts" class="fun-facts-section">
+        <div class="section-header">
+          <h2>Fun Facts &amp; Stories<span class="accent-dot">.</span></h2>
+          <p class="section-intro">A few things that explain a lot about me.</p>
+        </div>
+
+        <div class="fun-facts-list">
+          <!-- Story 1: Tech Curiosity -->
+          <article class="fact-card story-card">
+            <span class="fact-card-watermark" aria-hidden="true">01</span>
+            <div class="fact-card-header">
+              <span class="fact-index">Story #1</span>
+              <h3 class="fact-title">So, how does that work?</h3>
+            </div>
+            <blockquote class="story-quote">
+              <p class="fact-body quote-text">I have been the curious tech kid for as long as I can remember. My dad is a computer engineer, so he got ALL the questions. If I asked what a driver was, the answer usually involved reinstalling a computer and finding out for myself. I loved learning that way.</p>
+            </blockquote>
+          </article>
+
+          <!-- Story 2: Growing Up -->
+          <article class="fact-card story-card">
+            <span class="fact-card-watermark" aria-hidden="true">02</span>
+            <div class="fact-card-header">
+              <span class="fact-index">Story #2</span>
+              <h3 class="fact-title">The less fun part of growing up</h3>
+            </div>
+            <blockquote class="story-quote">
+              <p class="fact-body quote-text">I got bullied at school for some strange things. Being clean, even my skin color. Racism is bad for everyone. Those experiences were not easy, but they are part of what shaped me.
+              </p>
+            </blockquote>
+          </article>
+
+          <!-- Story 3: The Robot Compliment -->
+          <article class="fact-card story-card">
+            <span class="fact-card-watermark" aria-hidden="true">03</span>
+            <div class="fact-card-header">
+              <span class="fact-index">Story #3</span>
+              <h3 class="fact-title">Apparently, I am a robot</h3>
+            </div>
+            <blockquote class="story-quote">
+              <p class="fact-body quote-text">People sometimes call me a robot, or say I am like ChatGPT. They insist it is a compliment. I am still deciding, lol.
+              </p>
+            </blockquote>
+          </article>
+        </div>
+      </section>
+
+
+
+      <!-- SECTION 3: TECH STACK -->
+      <section id="tech-stack" class="tech-stack-section">
+        <div class="section-header">
+          <h2>What I actually use<span class="accent-dot">.</span></h2>
+          <p class="section-intro">The tools I keep coming back to. Personal preferences, not sponsored recommendations.</p>
+        </div>
+
+        <div class="tech-stack-grid">
+          <!-- 1. Fedora Linux -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M12 3v5M12 16v5M3 12h5M16 12h5" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Daily Driver OS</span>
+              </div>
+              <h3 class="tech-card-title">Fedora Linux</h3>
+              <p class="tech-card-desc">My daily driver. I like a clean GNOME desktop and a Linux system that stays current.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 2. Tailscale -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="18" cy="12" r="3" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="12" cy="6" r="3" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="12" cy="18" r="3" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M8.5 10.5l7 7M8.5 13.5l7-7" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Zero-Config Mesh VPN</span>
+              </div>
+              <h3 class="tech-card-title">Tailscale</h3>
+              <p class="tech-card-desc">How I connect my devices and homelab without turning the network setup into another project.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 3. OpenWrt -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Network Sovereignty</span>
+              </div>
+              <h3 class="tech-card-title">OpenWrt</h3>
+              <p class="tech-card-desc">My router, my settings. I use it for DNS blocking, traffic management, and more control over my network.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 4. FOSS -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor"
+                      stroke-width="1.5" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Software Philosophy</span>
+              </div>
+              <h3 class="tech-card-title">FOSS</h3>
+              <p class="tech-card-desc">I like being able to see how my tools work, change them, and leave when I want to.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 5. LuLu -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Outbound Firewall</span>
+              </div>
+              <h3 class="tech-card-title">LuLu</h3>
+              <p class="tech-card-desc">On macOS, I use LuLu to see which apps are trying to talk to the internet. Some of them have a lot to say.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 6. UTM -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="20" height="8" rx="2" stroke="currentColor" stroke-width="1.5" />
+                    <rect x="2" y="14" width="20" height="8" rx="2" stroke="currentColor" stroke-width="1.5" />
+                    <circle cx="6" cy="6" r="1" fill="currentColor" />
+                    <circle cx="6" cy="18" r="1" fill="currentColor" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Local Virtualization</span>
+              </div>
+              <h3 class="tech-card-title">UTM</h3>
+              <p class="tech-card-desc">For running Linux environments on my Mac without borrowing another machine.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+
+          <!-- 7. Hammerspoon -->
+          <article class="tech-card">
+            <div>
+              <div class="tech-card-top">
+                <div class="tech-card-icon-wrap" aria-hidden="true">
+                  <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="4 17 10 11 4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <line x1="12" y1="19" x2="20" y2="19" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" />
+                  </svg>
+                </div>
+                <span class="tech-card-badge">Lua Automation Bridge</span>
+              </div>
+              <h3 class="tech-card-title">Hammerspoon</h3>
+              <p class="tech-card-desc">Little bits of Lua that make my Mac behave the way I want. Window management, hotkeys, that kind of thing.</p>
+            </div>
+            <div class="tech-card-footer">
+              <span class="tech-card-rec">In my setup</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+
+
+      <!-- SECTION 5: GAMING — a short route into the dedicated shelf -->
+      <section id="gaming" class="gaming-section">
+        <div class="section-heading-row">
+          <div><h2>Games I keep coming back to<span class="accent-dot">.</span></h2><p>Good stories, strange worlds, and one more attempt.</p></div>
+          <a class="text-link" href="/games/">My games shelf →</a>
+        </div>
+        <div class="gaming-grid">
+          {% for game in games %}
+          <a class="game-card-life game-card game-life-link" href="/games/#{{ game.id }}">
+            <span class="game-card-genre">{{ game.genre }}</span>
+            <h3 class="game-card-title">{{ game.shortTitle }} <span aria-hidden="true">↗</span></h3>
+            <span class="game-card-badge">{{ game.studio }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        <p class="muted" style="margin-top:24px">Also on my favorites list: Elden Ring, Cyberpunk 2077, and Red Dead Redemption 2.</p>
+      </section>
+    </main>
+  </div>

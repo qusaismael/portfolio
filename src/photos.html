@@ -1,0 +1,43 @@
+---
+layout: base
+title: "Photos – Qusai Ismael"
+description: "Personal photography collection by Qusai Ismael – capturing moments, memories, and the beauty in everyday life."
+permalink: "/photos/"
+customStyles: "/css/gallery.css"
+customScripts: "/gallery.js"
+---
+<div class="container"><main class="main-content" id="main-content"><header class="page-heading"><p class="eyebrow">Proof I go outside</p><h1>A few moments<span class="accent-dot">.</span></h1><p class="page-lede">Places, people, and things I wanted to remember.<br> The latest from my camera roll, via Instagram.</p><div class="button-row"><a class="text-link" href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer">@qusai.pro on Instagram ↗</a><a class="text-link" href="/life/">← Back to Life</a></div></header><div id="photo-gallery">
+                <div class="under-construction-card" data-aos="fade-up">
+                    <div class="under-construction-badge">
+                        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        <span>INSTAGRAM ARCHIVE</span>
+                    </div>
+                    <h2>A few moments from Instagram<span class="accent-dot">.</span></h2>
+                    <p>The gallery loads from Instagram. If it cannot load here, you can still see the photos on my profile.</p>
+                    <div class="construction-actions">
+                        <a href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer" class="see-more instagram-btn">Visit @qusai.pro on Instagram ↗</a>
+                        <a href="/life/" class="see-more">Explore Life &amp; Interests →</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+        <button class="photo-modal-close" id="photo-modal-close" type="button" aria-label="Close photo">&times;</button>
+        <button class="photo-modal-nav photo-modal-prev" id="photo-modal-prev" type="button" aria-label="Previous photo">
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="photo-modal-nav photo-modal-next" id="photo-modal-next" type="button" aria-label="Next photo">
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <div class="photo-modal-content">
+            <img id="modal-image" alt="">
+            <div id="modal-meta" class="photo-modal-meta">
+                <div id="modal-quote" class="photo-modal-quote"></div>
+                <div id="modal-caption" class="photo-modal-caption"></div>
+                <a id="modal-original" class="text-link" target="_blank" rel="noopener noreferrer" hidden>View original on Instagram ↗</a>
+            </div>
+        </div>
+    </div>

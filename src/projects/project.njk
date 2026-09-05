@@ -1,0 +1,18 @@
+---
+layout: base
+pagination:
+  data: featuredProjects
+  size: 1
+  alias: project
+eleventyComputed:
+  title: "{{ project.name }} — Qusai Ismael"
+  description: "{{ project.description }}"
+  permalink: "/projects/{{ project.slug }}/"
+bodyClass: "project-page"
+---
+<main class="container reading-width" id="main-content">
+    <header class="page-heading"><a class="text-link back-link" href="/sites/">← All work</a><p class="eyebrow">{{ project.type }}</p><h1>{{ project.name }}<span class="accent-dot">.</span></h1><p class="page-lede">{{ project.description }}</p><div class="tags">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div><div class="button-row">{% if project.live %}<a class="button button-primary" href="{{ project.live }}" target="_blank" rel="noopener noreferrer">Try {{ project.name }} ↗</a>{% endif %}{% if project.source %}<a class="button button-secondary" href="{{ project.source }}" target="_blank" rel="noopener noreferrer">Read the source ↗</a>{% endif %}</div></header>
+    <div class="project-story"><section><h2>Why I made it</h2><p>{{ project.problem }}</p></section><section><h2>What I built</h2><p>{{ project.built }}</p></section><section><h2>The interesting part</h2><p>{{ project.learned }}</p></section><aside class="project-status"><h2>Where it stands</h2><p>{{ project.status }}</p></aside></div>
+    {% if project.evidenceImage %}<figure class="project-evidence"><img src="{{ project.evidenceImage }}" alt="{{ project.evidenceAlt }}" width="960" height="600" loading="lazy"><figcaption>{{ project.evidenceAlt }}</figcaption></figure>{% elif project.image %}<figure class="project-evidence"><img src="{{ project.image }}" alt="{{ project.imageAlt }}" width="960" height="600" loading="lazy"><figcaption>{{ project.imageAlt }}</figcaption></figure>{% endif %}
+    <section class="project-end"><h2>Want to talk about it?</h2><p>I'm happy to get into the details. Especially the parts that took a few attempts.</p><a class="button button-primary" href="mailto:{{ site.email }}?subject={{ project.name | urlencode }}">Ask me about {{ project.name }} ↗</a></section>
+</main>

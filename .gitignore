@@ -1,2 +1,6 @@
 /.DS_Store
 /pics/.DS_Store
+/.Trash-*/
+/new-portfolio/
+/node_modules/
+/_site/

@@ -1,0 +1,59 @@
+---
+layout: base
+title: "Games — Qusai Ismael"
+description: "Good stories, strange worlds, and one more attempt. A few games on Qusai Ismael's favorites shelf."
+permalink: "/games/"
+bodyClass: "games-page"
+customStyles: "/css/games.css"
+customScripts: "/js/games.js"
+---
+<main class="container games-main" id="main-content">
+    <header class="games-heading">
+        <a class="text-link" href="/life/#gaming">← Back to Life</a>
+        <div class="games-heading-copy">
+            <div>
+                <p class="eyebrow">Off the clock / Games</p>
+                <h1>Okay, one more try<span class="accent-dot">.</span></h1>
+                <p class="page-lede">Good stories, strange worlds, and the occasional boss fight that becomes a personal matter.</p>
+            </div>
+            <p class="games-margin-note">Not everything needs<br> to be productive.</p>
+        </div>
+    </header>
+
+    <section class="games-collection" aria-labelledby="shelf-title">
+        <div class="games-shelf-heading">
+            <h2 id="shelf-title">On my shelf</h2>
+            <p>Favorites, not a ranking.</p>
+        </div>
+        <fieldset class="games-filters" data-game-filters hidden>
+            <legend>What kind of evening?</legend>
+            <div class="games-filter-options">
+                <label><input type="radio" name="game-mood" value="all" checked><span>Everything</span></label>
+                <label><input type="radio" name="game-mood" value="worlds"><span>Get a little lost</span></label>
+                <label><input type="radio" name="game-mood" value="challenge"><span>One more try</span></label>
+                <label><input type="radio" name="game-mood" value="company"><span>Bring someone</span></label>
+            </div>
+        </fieldset>
+        <p class="games-result-count" data-game-count role="status" aria-live="polite" aria-atomic="true">{{ games.length }} games on the shelf.</p>
+        <div class="games-shelf" data-game-shelf>
+            {% for game in games %}
+            <article class="shelf-game{% if loop.first %} shelf-game-featured{% endif %}" id="{{ game.id }}" data-game-moods="{{ game.moods | join(' ') }}" aria-labelledby="{{ game.id }}-title">
+                <div class="shelf-game-top"><span class="shelf-game-number" aria-hidden="true">0{{ loop.index }}</span><span class="shelf-game-genre">{{ game.genre }}</span></div>
+                <div class="shelf-game-body">
+                    <h3 id="{{ game.id }}-title">{{ game.title }}</h3>
+                    <p class="shelf-game-note">{{ game.note }}</p>
+                    {% if game.aside %}<p class="shelf-game-aside">{{ game.aside }} <a href="/life/#travel">Places →</a></p>{% endif %}
+                </div>
+                <div class="shelf-game-bottom"><span>{{ game.studio }}</span></div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="games-shelf-footnote"><span class="eyebrow">Also on the shelf</span><p>Elden Ring, Cyberpunk 2077, and Red Dead Redemption 2.</p></div>
+    </section>
+
+    <div class="games-signoff">
+        <p>Something missing from this list?</p>
+        <a class="text-link" href="mailto:{{ site.email }}?subject=A%20game%20for%20your%20list">Tell me what I should play →</a>
+    </div>
+    <p class="games-rights-note">A personal favorites list, not an official game site. Game names belong to their respective owners; no affiliation or endorsement is implied. No game artwork, logos, screenshots, or music are reproduced here.</p>
+</main>

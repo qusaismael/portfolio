@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#1A0F0A">
+    <script>
+        document.documentElement.classList.add('js');
+        try { document.documentElement.dataset.theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'; }
+        catch (_) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <title>{{ title | default(site.name) }}</title>
+    <meta name="description" content="{{ description | default('Security, privacy, local AI, and whatever else I am figuring out. Qusai Ismael, from Jordan.') }}">
+    <meta name="robots" content="{{ robots | default('index, follow, max-image-preview:large') }}">
+    <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+    <link rel="icon" type="image/webp" href="/pfp.webp">
+    <link rel="apple-touch-icon" href="/pfp.webp">
+    <meta property="og:type" content="{{ ogType | default('website') }}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta property="og:title" content="{{ title | default(site.name) }}">
+    <meta property="og:description" content="{{ description | default('Security, privacy, local AI, and whatever else I am figuring out.') }}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:image" content="{{ site.url }}/pics/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Qusai Ismael — security, privacy, and things I build.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title | default(site.name) }}">
+    <meta name="twitter:description" content="{{ description | default('Security, privacy, local AI, and whatever else I am figuring out.') }}">
+    <meta name="twitter:image" content="{{ site.url }}/pics/social-card.png">
+    <link rel="stylesheet" href="/css/style.css?v=20260905">
+    <link rel="stylesheet" href="/css/personality.css?v=20260905-soul">
+    <link rel="stylesheet" href="/css/terminal.css?v=20260905">
+    {% if page.url == '/' %}<link rel="stylesheet" href="/css/contributions.css?v=20260905-icons">{% endif %}
+    <link rel="stylesheet" href="/css/print.css?v=20260905" media="print">
+    {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v=20260905">{% endif %}
+    {% if page.url == '/' or page.url == '/portfolio/' or page.url == '/connect/' %}
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":"Qusai Ismael","url":"https://www.qusai.pro","image":"https://www.qusai.pro/pfp.webp","jobTitle":"Privacy & GRC Engineer","sameAs":["https://github.com/qusaismael","https://www.linkedin.com/in/qusaismaeel/","https://medium.com/@qusaismael"]}
+    </script>
+    {% endif %}
+</head>
+<body class="{{ bodyClass | default('') }}">
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <header class="site-header" id="site-header">
+        <div class="site-header-inner">
+            <a class="brand" href="/" aria-label="Qusai Ismael — home"><span class="brand-mark" aria-hidden="true">QI<span>.</span></span><span class="brand-name">Qusai Ismael</span></a>
+            {% include "nav.njk" %}
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false"><span class="menu-label">Menu</span><svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+            </div>
+            <div class="header-location" role="group" aria-label="Location and local time">
+                <span class="header-location-label">Based in {{ site.location }}</span>
+                <span class="header-clock-line"><time id="header-time" hidden></time><span id="header-timezone">GMT +03:00</span></span>
+            </div>
+        </div>
+    </header>
+    {{ content | safe }}
+    <footer class="site-footer">
+        <div class="footer-top"><a class="brand" href="/" aria-label="Qusai Ismael — home">QI<span class="accent-dot">.</span></a><p>Built with curiosity.</p><a href="mailto:{{ site.email }}">{{ site.email }} ↗</a></div>
+        <div class="footer-bottom"><span>© 2026 Qusai Ismael</span><div class="footer-links"><a href="/photos/">Photos</a><a href="{{ site.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/connect/">Say hi</a><button class="terminal-opener" type="button" data-terminal-open aria-controls="command-dialog" aria-haspopup="dialog" title="Open terminal (backtick)" hidden><span aria-hidden="true">&gt;_</span> Terminal</button></div></div>
+    </footer>
+    <button class="progress-wrap" id="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
+    <p class="status-toast" id="copy-status" role="status" aria-live="polite"></p>
+    <dialog id="profile-dialog" class="profile-dialog" aria-label="Qusai's profile photo">
+        <button type="button" class="dialog-close" data-close-dialog aria-label="Close photo">×</button>
+        <img src="/pfp.webp" width="600" height="600" alt="Qusai Ismael">
+    </dialog>
+    <dialog id="memory-dialog" class="memory-dialog" aria-labelledby="memory-caption">
+        <button type="button" class="dialog-close" data-close-dialog aria-label="Close photo">×</button>
+        <img id="memory-image" alt="">
+        <p id="memory-caption"></p>
+    </dialog>
+    <script src="/script.js?v=20260905" defer></script>
+    <script src="/js/personality.js?v=20260905-soul" defer></script>
+    {% include "terminal.njk" %}
+    <script src="/js/terminal.js?v=20260905" defer></script>
+    {% if customScripts %}<script src="{{ customScripts }}?v=20260905" defer></script>{% endif %}
+    {% if page.url == '/' %}<script src="/js/contributions.js?v=20260905-icons" defer></script>{% endif %}
+</body>
+</html>

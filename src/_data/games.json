@@ -1,0 +1,73 @@
+[
+  {
+    "id": "spider-man",
+    "title": "Marvel's Spider-Man",
+    "shortTitle": "Spider-Man",
+    "studio": "Insomniac Games",
+    "genre": "Action-Adventure / Open World",
+    "moods": ["worlds"],
+    "note": "New York is on my travel list. This probably explains part of that.",
+    "aside": "Yes, the travel page and the games page are connected.",
+    "link": "https://www.playstation.com/en-us/games/marvels-spider-man/"
+  },
+  {
+    "id": "expedition-33",
+    "title": "Clair Obscur: Expedition 33",
+    "shortTitle": "Expedition 33",
+    "studio": "Sandfall Interactive",
+    "genre": "Turn-Based RPG",
+    "moods": ["worlds"],
+    "note": "Turn-based, but don't get too comfortable. Your timing still matters.",
+    "link": "https://www.expedition33.com/"
+  },
+  {
+    "id": "cuphead",
+    "title": "Cuphead",
+    "shortTitle": "Cuphead",
+    "studio": "Studio MDHR",
+    "genre": "Run & Gun / Boss Rush",
+    "moods": ["challenge", "company"],
+    "note": "Looks like a cartoon. Plays like a very personal argument with a boss.",
+    "link": "https://cupheadgame.com/"
+  },
+  {
+    "id": "hollow-knight",
+    "title": "Hollow Knight",
+    "shortTitle": "Hollow Knight",
+    "studio": "Team Cherry",
+    "genre": "Metroidvania / Action",
+    "moods": ["worlds", "challenge"],
+    "note": "Get lost. Find something strange. Decide to check just one more corner.",
+    "link": "https://www.hollowknight.com/"
+  },
+  {
+    "id": "resident-evil",
+    "title": "Resident Evil",
+    "shortTitle": "Resident Evil",
+    "studio": "Capcom",
+    "genre": "Survival Horror",
+    "moods": ["challenge"],
+    "note": "A very different interpretation of “a relaxing evening.”",
+    "link": "https://game.capcom.com/residentevil/en/"
+  },
+  {
+    "id": "fortnite",
+    "title": "Fortnite",
+    "shortTitle": "Fortnite",
+    "studio": "Epic Games",
+    "genre": "Battle Royale / Multiplayer",
+    "moods": ["company"],
+    "note": "For when the plan is just one match. Sure.",
+    "link": "https://www.fortnite.com/"
+  },
+  {
+    "id": "as-dusk-falls",
+    "title": "As Dusk Falls",
+    "shortTitle": "As Dusk Falls",
+    "studio": "INTERIOR/NIGHT",
+    "genre": "Interactive Narrative",
+    "moods": ["worlds", "company"],
+    "note": "The difficult part isn't pressing a button. It's choosing which one.",
+    "link": "https://www.asduskfalls.com/"
+  }
+]

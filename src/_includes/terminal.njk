@@ -1,0 +1,21 @@
+<dialog id="command-dialog" class="qi-terminal" aria-labelledby="terminal-title" aria-describedby="terminal-description" data-name="{{ site.name }}" data-role="{{ site.role }}" data-email="{{ site.email }}" data-github="{{ site.github }}" data-fingerprint="{{ site.fingerprint }}">
+    <div class="terminal-bar"><h2 id="terminal-title"><span aria-hidden="true">&gt;_</span> qusai.pro / terminal</h2><button type="button" class="terminal-close" data-close-dialog aria-label="Close terminal">×</button></div>
+    <div class="terminal-body">
+        <p id="terminal-description">You found it. A little shortcut shell for this website.<br>No server, no real shell commands. Just have a look around.</p>
+        <div class="terminal-transcript" id="terminal-output" role="log" aria-label="Terminal history" aria-live="polite" aria-relevant="additions text" tabindex="0"><div class="terminal-entry terminal-welcome">Type help to see what this thing can do.</div></div>
+        <form id="terminal-form" class="terminal-form">
+            <label class="terminal-prompt" for="terminal-input"><span aria-hidden="true">guest@qusai:~ $</span><span class="sr-only">Terminal command</span></label>
+            <input id="terminal-input" name="command" type="text" maxlength="200" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="send" aria-describedby="terminal-key-help" autofocus>
+            <button type="submit" class="terminal-run" aria-label="Run terminal command">↵</button>
+        </form>
+        <p id="terminal-key-help" class="terminal-key-help">↑ ↓ history · Tab completes a command · Esc closes</p>
+        <div class="terminal-suggestions" role="group" aria-label="Try a terminal command">
+            <button type="button" data-terminal-command="help">help</button>
+            <button type="button" data-terminal-command="whoami">whoami</button>
+            <button type="button" data-terminal-command="ls">ls</button>
+            <button type="button" data-terminal-command="cat">cat</button>
+            <button type="button" data-terminal-command="theme">theme</button>
+            <button type="button" data-terminal-command="clear">clear</button>
+        </div>
+    </div>
+</dialog>

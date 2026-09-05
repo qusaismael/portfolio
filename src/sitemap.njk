@@ -1,0 +1,10 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{% for route in ['', 'sites/', 'portfolio/', 'blog/', 'life/', 'games/', 'photos/', 'connect/', 'resume/'] %}<url><loc>{{ site.url }}/{{ route }}</loc></url>{% endfor %}
+{% for project in featuredProjects %}<url><loc>{{ site.url }}/projects/{{ project.slug }}/</loc></url>{% endfor %}
+{% for post in writing %}<url><loc>{{ site.url }}/writing/{{ post.slug }}/</loc></url>{% endfor %}
+</urlset>

@@ -1,0 +1,107 @@
+---
+layout: base
+title: "Qusai Ismael — security, privacy & things I build"
+description: "I'm Qusai, a privacy and GRC engineer from Jordan. I build security tools, work with local AI, and
+probably have a Linux terminal open."
+permalink: "/"
+bodyClass: "home-page"
+customStyles: "/css/life-preview.css"
+---
+<main class="container" id="main-content">
+    <section class="home-hero" id="about" aria-labelledby="hero-title">
+        <div class="hero-copy">
+            <p class="hero-system-line"><span class="status-dot" aria-hidden="true"></span><span aria-hidden="true">i
+                    <span class="hero-word-rotator" data-word-rotator>build</span> systems<span
+                        class="terminal-caret">_</span></span><span class="sr-only">I build, secure, and govern
+                    systems.</span></p>
+            <h1 id="hero-title">Hi, I'm <button class="name-tip" type="button" data-note-toggle="name-note"
+                    aria-expanded="false" aria-controls="name-note">Qusai</button><span class="accent-dot">.</span></h1>
+            <div class="personal-note" id="name-note" hidden><span lang="ar" dir="rtl">القصي</span> — “The Far Away.”
+                You can also call me QI. Not IQ. Same letters… maybe it stands for Intelligent Qusai.</div>
+            <p class="hero-role">Part security, part software,<br><button class="name-tip" type="button"
+                    data-note-toggle="quasi-note" aria-expanded="false" aria-controls="quasi-note">quasi</button>
+                everything in between.</p>
+            <div class="personal-note" id="quasi-note" hidden>Latin for “seemingly.” Also suspiciously close to my name.
+            </div>
+            <p class="hero-intro">I'm a privacy &amp; GRC engineer from Jordan. I build things, break things down to
+                understand them, and usually have a Linux terminal open.</p>
+            <p class="hero-intro">I love being in diverse rooms. Different people, completely different ways of
+                thinking. That's where the interesting stuff happens.</p>
+            <div class="button-row"><a class="button button-primary" href="/portfolio/">More about me <span
+                        aria-hidden="true">→</span></a><a class="button button-secondary" href="/connect/">Say hi <span
+                        aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="hero-aside"><button class="portrait-button" type="button" data-profile-photo
+                aria-label="Expand Qusai's profile photo"><img src="/pfp.webp" alt="Qusai Ismael" width="220"
+                    height="220" fetchpriority="high" decoding="async"></button>
+            <p class="portrait-caption">Qusai Ismael<br><span>Jordan, Earth.</span></p><span class="portrait-annotation"
+                aria-hidden="true">↖ just a human trying to learn</span>
+        </div>
+        {% include "cat.njk" %}
+    </section>
+
+    <section id="life-teasers">
+        <div class="section-heading-row">
+            <div>
+                <h2>Off the keyboard<span class="accent-dot">.</span></h2>
+            </div><a class="text-link" href="/life/">More about my life →</a>
+        </div>
+        {% include "life-preview.njk" %}
+        <div class="personal-moment">
+            <figure><a href="/pics/freshmen-speech.webp" data-view-photo
+                    data-photo-caption="Speaking to IT freshmen at university"
+                    aria-label="Enlarge photo of Qusai speaking at university"><img src="/pics/freshmen-speech.webp"
+                        alt="Qusai speaking to freshmen at university" width="872" height="419" loading="lazy"></a>
+                <figcaption>One room. A lot of freshmen. One piece of advice.</figcaption>
+            </figure>
+            <div>
+                <blockquote>“You can't protect what you don't understand.”</blockquote>
+                <p>I got asked to give the IT freshmen one piece of advice. Picking just one was the hard part.</p><a
+                    class="text-link" href="/writing/stop-letting-your-college-major-define-you-61db61c6e640/">Here's
+                    what I told them →</a>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="blog">
+        <div class="section-heading-row">
+            <div>
+                <p class="eyebrow">Things I've been thinking about</p>
+                <h2>From my notes<span class="accent-dot">.</span></h2>
+            </div><a class="text-link" href="/blog/">All writing →</a>
+        </div>
+        <div id="recent-medium-posts" class="recent-blog-list">{% for post in writing %}{% if loop.index <= 3 %}<a
+                class="recent-blog-item" href="/writing/{{ post.slug }}/"><time datetime="{{ post.date }}">{{
+                    post.dateLabel }}</time>
+                <h3>{{ post.title }}</h3><span aria-hidden="true">↗</span></a>{% endif %}{% endfor %}</div>
+    </section>
+
+    {% include "contributions.njk" %}
+
+    <section id="experience" class="experience-summary">
+        <div>
+            <p class="eyebrow">What I'm working on</p>
+            <h2>{{ experience[0].role }} at {{ experience[0].company }}<span class="accent-dot">.</span></h2>
+            <p>{{ experience[0].summary }}</p><a class="text-link" href="/portfolio/#experience">The longer version
+                →</a>
+        </div>
+        <div class="experience-summary-meta"><span>{{ experience[0].dates }}</span><span>{{ experience[0].location
+                }}</span><span>Previously ScanWave &amp; Zain Jordan</span></div>
+    </section>
+
+    <section id="projects">
+        <div class="section-heading-row">
+            <div>
+                <h2>A few things I've built<span class="accent-dot">.</span></h2>
+                <p>Some started as a question. Some as “okay, let me try something.”</p>
+            </div><a class="text-link" href="/sites/">All work →</a>
+        </div>
+        <div class="project-grid-enhanced selected-work-grid">{% for project in projects %}{% if project.featured %}{%
+            include "project-card.njk" %}{% endif %}{% endfor %}</div>
+    </section>
+
+
+
+    {% include "contact-section.njk" %}
+</main>

@@ -1,0 +1,25 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio UI/UX with Experience Side-Tabs and PRs Showcase",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve"
+  },
+  "main": "gallery.js",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "sharp-cli": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qusaismael/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qusaismael/portfolio/issues"
+  },
+  "homepage": "https://github.com/qusaismael/portfolio#readme"
+}

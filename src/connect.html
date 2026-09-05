@@ -1,0 +1,13 @@
+---
+layout: base
+title: "Say hi — Qusai Ismael"
+description: "A project, a question, or just saying hi. Here's where to find me."
+permalink: "/connect/"
+bodyClass: "connect-page"
+---
+<main class="container contact-container" id="main-content">
+    <header class="page-heading"><p class="eyebrow">There is a person on the other end</p><h1>Let's talk<span class="accent-dot">.</span></h1><p class="page-lede">A project, a question, something you think I'd find interesting. Or just hi. That works too.</p></header>
+    <section class="contact-card" aria-labelledby="contact-title"><div class="contact-identity"><button class="portrait-button" type="button" data-profile-photo aria-label="Expand Qusai's profile photo"><img src="/pfp.webp" alt="Qusai Ismael" width="96" height="96" decoding="async"></button><div><h2 id="contact-title">{{ site.name }}</h2><p>Privacy &amp; GRC Engineer · Jordan</p></div></div><a class="contact-email" href="mailto:{{ site.email }}">{{ site.email }} <span aria-hidden="true">↗</span></a><button class="button button-secondary" type="button" data-copy="{{ site.email }}" data-copy-label="Email address">Copy email</button><div class="contact-socials"><a href="{{ site.linkedin }}" target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong><span>Work and professional things ↗</span></a><a href="{{ site.github }}" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>What I'm building ↗</span></a><a href="{{ site.x }}" target="_blank" rel="noopener noreferrer"><strong>X</strong><span>Thoughts, sometimes finished ↗</span></a><a href="{{ site.instagram }}" target="_blank" rel="noopener noreferrer"><strong>Instagram</strong><span>Life outside the terminal ↗</span></a><a href="{{ site.medium }}" target="_blank" rel="noopener noreferrer"><strong>Medium</strong><span>The longer thoughts ↗</span></a><a href="/life/"><strong>A little about me</strong><span>Games, travel, and the setup →</span></a></div></section>
+    <section class="contact-key"><h2>For the encrypted version</h2><p>Here's my GPG fingerprint. You can get the public key from the keyserver.</p><code class="fingerprint">{{ site.fingerprint }}</code><div class="button-row"><button type="button" class="button button-secondary" data-copy="{{ site.fingerprint }}" data-copy-label="GPG fingerprint">Copy fingerprint</button><a class="text-link" href="https://keys.openpgp.org/search?q=hi%40qusai.pro" target="_blank" rel="noopener noreferrer">Get public key ↗</a></div></section>
+    {% include "cat.njk" %}
+</main>

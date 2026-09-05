@@ -1,0 +1,109 @@
+[
+  {
+    "id": "nournet",
+    "company": "NourNet",
+    "role": "GRC Engineer",
+    "shortRole": "GRC Engineer",
+    "dates": "Aug 2026 – Present",
+    "start": "2026-08",
+    "location": "Amman, Jordan · Full-time",
+    "summary": "I work on governance, risk, and compliance.",
+    "bullets": [],
+    "tags": [
+      "GRC",
+      "Risk assessment",
+      "IT governance"
+    ]
+  },
+  {
+    "id": "scanwave",
+    "company": "ScanWave",
+    "role": "AI Security Intern",
+    "shortRole": "AI Security Intern",
+    "dates": "Jan – Feb 2026",
+    "start": "2026-01",
+    "location": "Amman, Jordan · Internship",
+    "summary": "Local AI, sensitive data, and hardware that needed a little convincing.",
+    "bullets": [
+      "Set up an air-gapped AI pipeline so sensitive company data could be processed without leaving the network.",
+      "Compiled and tuned open-source inference engines for the hardware we had, including work with ROCm."
+    ],
+    "tags": [
+      "Local AI",
+      "ROCm",
+      "Air-gapped systems"
+    ]
+  },
+  {
+    "id": "zain",
+    "company": "Zain Jordan",
+    "role": "GRC & Threat Management Intern",
+    "shortRole": "GRC & Threat Management",
+    "dates": "Jul – Sep 2025",
+    "start": "2025-07",
+    "location": "Amman, Jordan · Internship",
+    "summary": "My introduction to security at telecom scale: policies, vulnerabilities, and the people responsible for fixing them.",
+    "bullets": [
+      "Wrote data-sharing and retention policies aligned with ISO 27001, ISO 27701, and Jordan's data protection law.",
+      "Ran vulnerability assessments and worked with data owners across departments on remediation.",
+      "Helped investigate security events, analyze threat intelligence, and review configurations with the threat management team."
+    ],
+    "tags": [
+      "GRC",
+      "ISO 27001",
+      "ISO 27701",
+      "SIEM"
+    ],
+    "photo": {
+      "src": "/pics/qusaiatzain.webp",
+      "alt": "Qusai presenting during his internship at Zain Jordan",
+      "caption": "A little of what the internship looked like."
+    }
+  },
+  {
+    "id": "freelance-devops",
+    "company": "Freelance",
+    "role": "Cloud Security, DevOps & Web Development",
+    "shortRole": "Cloud Security & DevOps",
+    "dates": "Dec 2022 – Jul 2025",
+    "start": "2022-12",
+    "location": "Remote · During university",
+    "summary": "The university years involved a lot of Linux terminals and figuring things out for real clients.",
+    "bullets": [
+      "Set up and hardened Ubuntu servers with Fail2Ban, SSH keys, passwords and TOTP, OpenVPN, and automated backups.",
+      "Built Python authentication bots, managed real-time databases, and tested WordPress sites for security issues.",
+      "Deployed online stores on Shopify, Zid, and Salla, including payments and technical SEO."
+    ],
+    "tags": [
+      "Linux",
+      "Server hardening",
+      "Python",
+      "DevOps"
+    ],
+    "photo": {
+      "src": "/pics/devops.webp",
+      "alt": "Ubuntu server terminal displaying its system configuration",
+      "caption": "A familiar sight from the server days."
+    }
+  },
+  {
+    "id": "freelance-pc",
+    "company": "Freelance",
+    "role": "PC Performance Optimization",
+    "shortRole": "PC Optimization",
+    "dates": "2020",
+    "start": "2020",
+    "location": "Remote",
+    "summary": "Before the servers, there were gaming PCs. I cared a lot about those last few milliseconds.",
+    "bullets": [
+      "Tuned Windows services, power plans, and settings to reduce latency.",
+      "Configured BIOS settings, overclocked and undervolted hardware, and stress-tested CPU, GPU, and RAM stability.",
+      "Tracked down driver problems and used clean installations to resolve performance issues."
+    ],
+    "tags": [
+      "Windows",
+      "BIOS / UEFI",
+      "Hardware diagnostics"
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+<article class="project-card-enhanced">
+    {% if project.featured %}{% set projectUrl = '/projects/' + project.slug + '/' %}{% else %}{% set projectUrl = project.live %}{% endif %}
+    <a class="project-preview{% if page.url != '/' and project.previewPhoto %} has-personal-photo{% endif %}" href="{{ projectUrl }}" tabindex="-1" aria-hidden="true" {% if page.url != '/' and project.previewPhoto %}style="--photo-position:{{ project.photoPosition }}"{% endif %} {% if not project.featured %}target="_blank" rel="noopener noreferrer"{% endif %}>
+        {% if page.url != '/' and project.previewPhoto %}
+        <img src="{{ project.previewPhoto }}" alt="" width="800" height="450" loading="lazy" decoding="async">
+        {% elif page.url != '/' and project.image %}
+        <img src="{{ project.image }}" alt="" width="800" height="450" loading="lazy" decoding="async">
+        {% else %}
+        <div class="project-diagram diagram-{{ project.visual }}">
+            {% if project.visual == 'chain' %}<span class="diagram-label">TAMPER-EVIDENT LOGGING</span><div class="chain-nodes"><span>record 01<small>hash →</small></span><span>record 02<small>hash →</small></span><span>record 03<small>verify ✓</small></span></div><span class="diagram-note">A trail you can check.</span>
+            {% elif project.visual == 'local' %}<span class="diagram-label">ON YOUR MACHINE</span><div class="local-flow"><span>Browser</span><b>↔</b><span>Flask</span><b>↔</b><span>Ollama</span></div><span class="diagram-note">Your model. Your conversations.</span>
+            {% elif project.visual == 'policy' %}<span class="diagram-label">GRC + LOCAL AI</span><div class="policy-flow"><span>Policy documents</span><b>↓</b><span>Local model</span><b>↓</b><span>Human review</span></div>
+            {% elif project.slug == 'grc-check' %}<span class="diagram-label">PRIVATE SELF-ASSESSMENT</span><div class="policy-flow"><span>Requirements</span><b>↓</b><span>Your answers</span><b>↓</b><span>Review on your device</span></div>
+            {% else %}<span class="diagram-label">BROWSER PRIVACY</span><div class="privacy-fields"><span>Browser</span><span>Screen</span><span>Timezone</span><span>Language</span></div><span class="diagram-note">What does your browser give away?</span>{% endif %}
+        </div>
+        {% endif %}
+    </a>
+    {% if page.url != '/' and project.previewCaption %}<span class="project-photo-caption">{{ project.previewCaption }}</span>{% endif %}
+    <div class="project-content">
+        <span class="eyebrow">{{ project.type }}</span>
+        <h3><a href="{{ projectUrl }}" {% if not project.featured %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ project.name }} <span class="project-title-arrow" aria-hidden="true">↗</span></a></h3>
+        <p>{{ project.description }}</p>
+        <div class="tags">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div>
+        <div class="project-actions">
+            {% if project.featured %}<a href="{{ projectUrl }}">About the project <span aria-hidden="true">→</span></a>{% endif %}
+            {% if project.live %}<a href="{{ project.live }}" target="_blank" rel="noopener noreferrer" aria-label="Open {{ project.name }}">Open tool ↗</a>{% endif %}
+            {% if project.source %}<a href="{{ project.source }}" target="_blank" rel="noopener noreferrer" aria-label="Read {{ project.name }} source on GitHub">Source ↗</a>{% endif %}
+        </div>
+    </div>
+</article>

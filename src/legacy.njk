@@ -1,0 +1,10 @@
+---
+pagination:
+  data: legacy
+  size: 1
+  alias: route
+eleventyComputed:
+  permalink: "{{ route.from }}"
+  destination: "{{ route.to }}"
+---
+{% include "redirect.njk" %}

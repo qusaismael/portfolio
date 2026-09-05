@@ -1,0 +1,149 @@
+[
+  {
+    "slug": "tamperlog",
+    "name": "TamperLog",
+    "type": "Graduation research",
+    "featured": true,
+    "description": "If someone edits the audit trail, the audit trail should tell you. That was the idea behind my graduation project.",
+    "tags": [
+      "Cryptography",
+      "Python",
+      "Flask"
+    ],
+    "visual": "chain",
+    "problem": "An audit log is only useful if you can trust it. I wanted to explore how to detect changes to earlier records instead of relying on the log server alone.",
+    "built": "I built a prototype that links log entries with SHA-256 hashes and checks them against distributed checkpoints. It combines a Flask backend with a JavaScript interface and explores threshold signatures for checkpoint verification.",
+    "learned": "The interesting part was the trust model: what gets detected, who can verify a checkpoint, and what happens when one component is no longer trustworthy.",
+    "status": "Graduation project prototype. The implementation and trust model are research work, not a production security guarantee.",
+    "evidenceImage": "/pics/tamperlog.webp",
+    "evidenceAlt": "Presenting the TamperLog graduation project",
+    "previewPhoto": "/pics/tamperlog.webp",
+    "previewCaption": "Me, explaining why a log should be able to tell on itself.",
+    "photoPosition": "25% 45%"
+  },
+  {
+    "slug": "grc-ai",
+    "name": "GRC AI",
+    "type": "Hackathon prototype",
+    "featured": true,
+    "description": "A team project exploring whether local AI can make policy reviews less painful.",
+    "tags": [
+      "Local AI",
+      "GRC",
+      "Team lead"
+    ],
+    "visual": "policy",
+    "problem": "Reviewing policies against several compliance frameworks involves a lot of reading, cross-referencing, and handling documents that may be sensitive.",
+    "built": "I led a team building a prototype that uses local AI to analyze policy documents against multiple compliance frameworks. We used Ollama and Gemma 2 2B to explore the workflow without relying on a hosted model.",
+    "learned": "The useful question was where AI could support a review and where a person still needed to make the decision. A model's answer is a starting point, not proof of compliance.",
+    "status": "Hackathon prototype; the team placed in the national top five.",
+    "evidenceImage": "/pics/grc-ai.webp",
+    "evidenceAlt": "Presenting the GRC AI team project",
+    "previewPhoto": "/pics/grc-ai.webp",
+    "previewCaption": "GRC AI · the hackathon presentation",
+    "photoPosition": "50% 28%"
+  },
+  {
+    "slug": "localllm",
+    "name": "LocalLLM",
+    "type": "Open source",
+    "featured": true,
+    "description": "A small Flask interface for Ollama. Run a model on your own machine, open your browser, and start talking.",
+    "tags": [
+      "Local AI",
+      "Flask",
+      "Ollama"
+    ],
+    "visual": "local",
+    "source": "https://github.com/qusaismael/localllm",
+    "problem": "I wanted a straightforward way to use local language models without making every conversation someone else's data.",
+    "built": "I made a Flask web interface for running Ollama models locally. Once a model is downloaded, the application can run offline.",
+    "learned": "Making local AI approachable means paying attention to the setup and the interface, as well as the model. Open source also gives other people a way to inspect and improve that work.",
+    "status": "Open-source project. Hardware requirements and behavior depend on the model you choose.",
+    "evidenceImage": "/pics/locallm.webp",
+    "evidenceAlt": "The merged pull request adding LocalLLM to Ollama's community integrations",
+    "image": "/pics/locallm.webp",
+    "imageAlt": "The LocalLLM community integration pull request on Ollama"
+  },
+  {
+    "slug": "grc-check",
+    "name": "GRC Check",
+    "type": "Web tool",
+    "featured": true,
+    "description": "Work through a privacy and security self-assessment without sending your answers to a server.",
+    "tags": [
+      "Compliance",
+      "Privacy"
+    ],
+    "image": "/pics/grc-check.webp",
+    "imageAlt": "GRC Check self-assessment interface",
+    "live": "https://grc.qusai.pro/",
+    "problem": "Compliance frameworks can be difficult to work through, especially when the answers describe how an organization handles sensitive data.",
+    "built": "I built a local-first self-assessment around Jordan's data protection law and ISO 27001. The tool keeps the answers on the device.",
+    "learned": "The challenge was turning long requirements into questions someone could actually work through, while keeping their answers private.",
+    "status": "A self-assessment tool to help organize your thinking. It does not certify compliance or replace a professional assessment."
+  },
+  {
+    "slug": "privacy-check",
+    "name": "Privacy Check",
+    "type": "Web tool",
+    "visual": "privacy",
+    "description": "A look at what your browser can reveal about you, and what you can do about it.",
+    "tags": [
+      "Privacy",
+      "Browser security"
+    ],
+    "live": "https://privacy.qusai.pro/"
+  },
+  {
+    "slug": "30-days",
+    "name": "30 Days From Today",
+    "type": "Web tool",
+    "image": "/pics/30daysfromtoday.webp",
+    "imageAlt": "The recurring-payment tracker interface",
+    "description": "A little tracker for recurring payments. Because remembering every renewal date is not a skill I want to develop.",
+    "tags": [
+      "Productivity"
+    ],
+    "live": "https://30daysfromtoday.qusai.pro/"
+  },
+  {
+    "slug": "rss-ai",
+    "name": "RSS AI",
+    "type": "Web tool",
+    "image": "/pics/rss-ai.webp",
+    "imageAlt": "RSS AI feed reader interface",
+    "description": "RSS feeds, summarized with local AI. A way to catch up without opening every tab.",
+    "tags": [
+      "RSS",
+      "Local AI"
+    ],
+    "live": "https://rss.qusai.pro/"
+  },
+  {
+    "slug": "token-speed",
+    "name": "Token Speed",
+    "type": "Web tool",
+    "image": "/pics/token-speed.webp",
+    "imageAlt": "Token generation speed comparison",
+    "description": "What does a token-per-second number actually feel like? This makes the difference visible.",
+    "tags": [
+      "AI",
+      "Benchmarking"
+    ],
+    "live": "https://token.qusai.pro/"
+  },
+  {
+    "slug": "clipguard",
+    "name": "ClipGuard",
+    "type": "Web tool",
+    "image": "/pics/clipguard.webp",
+    "imageAlt": "ClipGuard clipboard interface",
+    "description": "A clipboard utility built around a simple rule: what you copy should stay on your device.",
+    "tags": [
+      "Privacy",
+      "Clipboard"
+    ],
+    "live": "https://clipguard.qusai.pro/"
+  }
+]

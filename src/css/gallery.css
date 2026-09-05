@@ -1,0 +1,333 @@
+/* ============================================
+   Accessible Photo Gallery
+   ============================================ */
+.under-construction-card { padding:32px; margin:24px 0 56px; background:var(--card-background); border:1px solid var(--border-color); border-radius:10px; }
+.under-construction-card p { max-width:650px; color:var(--muted-text); }
+.under-construction-badge { display:flex; gap:10px; align-items:center; color:var(--accent-color); font: .75rem var(--font-mono); margin-bottom:20px; }
+.construction-actions { display:flex; flex-wrap:wrap; gap:16px 28px; }
+.photo-modal #modal-original { color:#f5eddb; margin-top:12px; }
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 0.75rem;
+    margin: 2rem 0;
+}
+
+.gallery-card {
+    appearance: none;
+    display: grid;
+    gap: 0.6rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-3px);
+}
+
+.gallery-card:focus-visible {
+    outline: 3px solid var(--accent-color, #d2b48c);
+    outline-offset: 4px;
+    border-radius: 14px;
+}
+
+.gallery-card-media {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    border-radius: 14px;
+    background: var(--card-background);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    transition: box-shadow 0.3s ease;
+}
+
+.gallery-card:hover .gallery-card-media,
+.gallery-card:focus-visible .gallery-card-media {
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.38);
+}
+
+.gallery-card-media > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.03) contrast(1.04) saturate(1.06);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-card-media > img,
+.gallery-card:focus-visible .gallery-card-media > img {
+    filter: brightness(1.1) contrast(1.08) saturate(1.12);
+    transform: scale(1.02);
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.7));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .card-overlay,
+.gallery-card:focus-visible .card-overlay {
+    opacity: 1;
+}
+
+.card-overlay-text {
+    color: #fff;
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.4;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.card-caption {
+    display: block;
+    min-height: 1.35em;
+    padding: 0 0.25rem;
+}
+
+.card-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--heading-color, #faf0e6);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.photo-modal {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.92);
+}
+
+.photo-modal.active {
+    display: flex;
+}
+
+.photo-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: calc(100% - 4rem);
+    max-height: calc(100% - 4rem);
+}
+
+.photo-modal-content > img {
+    display: block;
+    max-width: calc(100vw - 6rem);
+    max-height: calc(100vh - 10rem);
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.photo-modal-close {
+    position: fixed;
+    z-index: 1001;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease;
+}
+
+.photo-modal-close:hover,
+.photo-modal-close:focus-visible {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.photo-modal-close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.photo-modal-meta {
+    width: 100%;
+    max-width: 600px;
+    padding: 1.25rem 1rem 0.5rem;
+    text-align: center;
+}
+
+.photo-modal-quote {
+    margin-bottom: 0.4rem;
+    color: #fff;
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.photo-modal-caption {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.media-indicator {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.media-indicator svg {
+    width: 14px;
+    height: 14px;
+}
+
+.photo-modal-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 1001;
+}
+
+.photo-modal-nav:hover,
+.photo-modal-nav:focus-visible {
+    background: rgba(0, 0, 0, 0.85);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.photo-modal-nav:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+
+.photo-modal-prev {
+    left: 2rem;
+}
+
+.photo-modal-next {
+    right: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .photo-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 0.5rem;
+    }
+
+    .card-overlay {
+        display: none;
+    }
+
+    .card-title {
+        font-size: 0.8rem;
+    }
+
+    .photo-modal {
+        padding: 1rem;
+    }
+
+    .photo-modal-content {
+        max-width: calc(100% - 2rem);
+    }
+
+    .photo-modal-content > img {
+        max-width: calc(100vw - 3rem);
+        max-height: calc(100vh - 8rem);
+    }
+
+    .photo-modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 1.5rem;
+    }
+
+    .photo-modal-nav {
+        width: 36px;
+        height: 36px;
+    }
+    .photo-modal-prev { left: 0.5rem; }
+    .photo-modal-next { right: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-card,
+    .gallery-card-media,
+    .gallery-card-media > img,
+    .card-overlay,
+    .photo-modal-close,
+    .photo-modal-nav,
+    .instagram-btn {
+        transition: none !important;
+    }
+
+    .gallery-card:hover,
+    .gallery-card:hover .gallery-card-media > img,
+    .gallery-card:focus-visible .gallery-card-media > img,
+    .photo-modal-nav:hover,
+    .instagram-btn:hover {
+        transform: none !important;
+    }
+}
+
+
+/* The fallback uses the same palette and contrast as the rest of the site. */
+.instagram-btn { color:var(--text-color); min-height:44px; text-decoration:underline; }
+.under-construction-card h2 { font-size:1.8rem; }

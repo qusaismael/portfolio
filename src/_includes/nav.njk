@@ -1,0 +1,8 @@
+<nav id="main-nav" aria-label="Main navigation">
+    <a href="/portfolio/" {% if page.url == '/portfolio/' %}aria-current="page"{% endif %}>About</a>
+    <a href="/life/" {% if page.url == '/life/' or page.url == '/games/' %}aria-current="page"{% endif %}>Life</a>
+    <a href="/photos/" {% if page.url == '/photos/' %}aria-current="page"{% endif %}>Photos</a>
+    <a href="/blog/" {% if page.url == '/blog/' or '/writing/' in page.url %}aria-current="page"{% endif %}>Writing</a>
+    <a href="/sites/" {% if page.url == '/sites/' or '/projects/' in page.url %}aria-current="page"{% endif %}>Work</a>
+    <a class="nav-contact" href="/connect/" {% if page.url == '/connect/' %}aria-current="page"{% endif %}>Say hi <span aria-hidden="true">↗</span></a>
+</nav>

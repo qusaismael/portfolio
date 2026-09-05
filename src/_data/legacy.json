@@ -1,0 +1,34 @@
+[
+  {
+    "from": "/portfolio.html",
+    "to": "/portfolio/"
+  },
+  {
+    "from": "/sites.html",
+    "to": "/sites/"
+  },
+  {
+    "from": "/blog.html",
+    "to": "/blog/"
+  },
+  {
+    "from": "/connect.html",
+    "to": "/connect/"
+  },
+  {
+    "from": "/life.html",
+    "to": "/life/"
+  },
+  {
+    "from": "/photos.html",
+    "to": "/photos/"
+  },
+  {
+    "from": "/games.html",
+    "to": "/games/"
+  },
+  {
+    "from": "/recommendations.html",
+    "to": "/portfolio/#references"
+  }
+]

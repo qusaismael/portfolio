@@ -1,0 +1,8 @@
+---
+layout: base
+title: "Résumé — Qusai Ismael"
+description: "Qusai Ismael's experience in GRC, privacy, AI security, and software development."
+permalink: "/resume/"
+bodyClass: "resume-page"
+---
+<main class="container reading-width" id="main-content"><header class="page-heading"><p class="eyebrow">Résumé</p><h1>{{ site.name }}</h1><p class="page-lede">Privacy, GRC &amp; AI security · Jordan</p><p><a href="mailto:{{ site.email }}">{{ site.email }}</a> · <a href="{{ site.github }}">github.com/qusaismael</a></p><div class="button-row print-hide"><button type="button" class="button button-primary" data-print>Print / save as PDF</button><a class="text-link" href="/portfolio/">← Back to About</a></div></header><section><h2>Experience</h2>{% for job in experience %}<article class="resume-entry"><h3>{{ job.role }} · {{ job.company }}</h3><p class="muted">{{ job.dates }} · {{ job.location }}</p><p>{{ job.summary }}</p>{% if job.bullets.length %}<ul>{% for bullet in job.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}</article>{% endfor %}</section><section><h2>Education</h2><h3>The Hashemite University</h3><p>Bachelor's degree in Cyber Security · Excellence · Oct 2022 – Jun 2026</p><h3>Cyber Shield Academy</h3><p>100-hour cybersecurity upskilling program · Score: 92% · Dec 2025</p></section></main>

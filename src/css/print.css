@@ -1,0 +1,15 @@
+@media print {
+ :root{color-scheme:light;--text-color:#222;--heading-color:#111;--background-color:#fff;--card-background:#fff;--muted-text:#444;--accent-color:#333;--border-color:#ccc}
+ @page{margin:15mm}
+ html,body{background:#fff!important;color:#222!important;font-size:10pt}
+ .site-header,.site-footer,.skip-to-content,.progress-wrap,.status-toast,dialog,.exp-tablist,.portrait-button,.button-row,.cat-corner,.section-jumps,.print-hide,#contact,.project-preview{display:none!important}
+ .container{width:100%;max-width:none}.page-heading{padding:0 0 16px}
+ h1{font-size:24pt}h2{font-size:16pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}
+ main>section{padding:16px 0}.exp-tabs-container,.reference-grid{display:block}
+ .exp-panel,.exp-panel[hidden]{display:block!important;opacity:1!important;visibility:visible!important;margin:0 0 20px!important;padding:12px 0;border:0;break-inside:avoid}
+ .exp-panel-header .eyebrow{font-size:9pt}
+ .resume-entry{margin:16px 0;break-inside:avoid}.resume-entry p,.resume-entry li{font-size:10pt;line-height:1.45}.resume-entry li+li{margin-top:4px}
+ .project-card-enhanced,.reference-card{break-inside:avoid;margin-bottom:16px;box-shadow:none}
+ a{color:#222;text-decoration:none}img{max-height:200px}
+ section{content-visibility:visible!important}.tags{margin-top:8px}.tags span{font-size:8pt}
+}

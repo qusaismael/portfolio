@@ -1,0 +1,12 @@
+---
+layout: base
+title: "Things I've built — Qusai Ismael"
+description: "Security research, local AI, and small tools for problems I wanted to solve."
+permalink: "/sites/"
+---
+<main class="container" id="main-content">
+    <header class="page-heading"><p class="eyebrow">A few ideas that became code</p><h1>Things I've built<span class="accent-dot">.</span></h1><p class="page-lede">Some started with a security question.<br>Others started with “surely I can make a tool for that.”</p></header>
+    <section id="selected-work"><h2>Selected projects<span class="accent-dot">.</span></h2><div class="project-grid-enhanced">{% for project in projects %}{% if project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
+    <section id="sites"><h2>Small tools, real uses<span class="accent-dot">.</span></h2><p>A collection of little web apps. Open one and have a look around.</p><div class="project-grid-enhanced">{% for project in projects %}{% if not project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
+    {% include "contact-section.njk" %}
+</main>
