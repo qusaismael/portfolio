@@ -1,9 +1,9 @@
 <article class="project-card-enhanced">
     {% if project.featured %}{% set projectUrl = '/projects/' + project.slug + '/' %}{% else %}{% set projectUrl = project.live %}{% endif %}
     <a class="project-preview{% if page.url != '/' and project.previewPhoto %} has-personal-photo{% endif %}" href="{{ projectUrl }}" tabindex="-1" aria-hidden="true" {% if page.url != '/' and project.previewPhoto %}style="--photo-position:{{ project.photoPosition }}"{% endif %} {% if not project.featured %}target="_blank" rel="noopener noreferrer"{% endif %}>
-        {% if page.url != '/' and project.previewPhoto %}
+        {% if project.previewPhoto %}
         <img src="{{ project.previewPhoto }}" alt="" width="800" height="450" loading="lazy" decoding="async">
-        {% elif page.url != '/' and project.image %}
+        {% elif project.image %}
         <img src="{{ project.image }}" alt="" width="800" height="450" loading="lazy" decoding="async">
         {% else %}
         <div class="project-diagram diagram-{{ project.visual }}">

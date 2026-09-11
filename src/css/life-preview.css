@@ -2,23 +2,21 @@
 .life-discoveries{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:28px 0 48px}
 .life-discovery{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid var(--border-color);border-radius:10px;background:var(--card-background);text-decoration:none;color:var(--text-color);transition:transform .2s ease,border-color .2s ease}
 .life-discovery:hover,.life-discovery:focus-visible{color:var(--text-color);border-color:var(--accent-color);transform:translateY(-3px)}
-.discovery-photo,.discovery-game-preview{position:relative;height:150px;border-bottom:1px solid var(--border-color);overflow:hidden}
+.discovery-photo,.discovery-game-preview{position:relative;height:250px;border-bottom:1px solid var(--border-color);overflow:hidden}
 .discovery-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .discovery-photo-graduation img{object-position:50% 30%}
 .discovery-photo>span{position:absolute;inset:auto 0 0;padding:36px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font:.75rem/1.6 var(--font-mono)}
 .discovery-game-preview{display:flex;flex-direction:column;justify-content:space-between;padding:16px 20px;background:linear-gradient(125deg,rgba(var(--accent-color-rgb),.1),transparent),var(--secondary-color)}
 .discovery-game-kicker{font:.75rem/1.6 var(--font-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent-color)}
-.discovery-game-preview strong{font-size:1.5rem;line-height:1;letter-spacing:-.04em;font-weight:650;color:var(--heading-color)}
+.discovery-game-preview strong{font-size:3.2rem;line-height:.98;letter-spacing:-.055em;font-weight:650;color:var(--heading-color)}
 .discovery-game-preview strong em{font-style:normal;color:var(--accent-color)}
 .discovery-game-titles{font:.8125rem/1.7 var(--font-mono);color:var(--text-color)}
 /* Games card: a glowing "console card" instead of a stock photo. */
 .discovery-game-preview{background:radial-gradient(120% 120% at 85% -10%,rgba(var(--accent-color-rgb),.28),transparent 55%),linear-gradient(125deg,rgba(var(--accent-color-rgb),.14),transparent 60%),var(--secondary-color)}
 .discovery-game-kicker{display:inline-flex;align-items:center;gap:8px}
 @media (prefers-reduced-motion: no-preference){.discovery-game-kicker::before{content:"⏸";font-size:.9em}}
-.discovery-game-preview strong{font-size:2.6rem;font-weight:700;letter-spacing:-.05em;line-height:1.02;text-wrap:balance}
 .life-discovery-games{border-color:rgba(var(--accent-color-rgb),.5)}
 @media (prefers-reduced-motion: no-preference){.life-discovery-games:hover{transform:translateY(-3px) rotate(-.4deg)}.life-discovery-games .discovery-game-preview{transition:filter .2s ease}.life-discovery-games:hover .discovery-game-preview,.life-discovery-games:focus-visible .discovery-game-preview{filter:brightness(1.07)}}
-@media(min-width:901px){.discovery-game-preview strong{font-size:2.6rem}}
 .discovery-copy{display:flex;flex-direction:column;flex:1;padding:20px}
 .discovery-copy>.eyebrow{margin-bottom:10px}
 .discovery-copy h3{font-size:1.25rem;line-height:1.25;margin:0 0 10px}
@@ -29,7 +27,7 @@
 @media(min-width:581px) and (max-width:900px){
  .life-discoveries{grid-template-columns:minmax(0,1fr)}
  .life-discovery{display:grid;grid-template-columns:.85fr 1fr}
- .discovery-photo,.discovery-game-preview{height:100%;min-height:170px;border-bottom:0;border-right:1px solid var(--border-color)}
+ .discovery-photo,.discovery-game-preview{height:100%;min-height:270px;border-bottom:0;border-right:1px solid var(--border-color)}
  .discovery-photo img{position:absolute;inset:0}
 }
 @media(max-width:580px){

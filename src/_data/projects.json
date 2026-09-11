@@ -19,7 +19,8 @@
     "evidenceAlt": "Presenting the TamperLog graduation project",
     "previewPhoto": "/pics/tamperlog.webp",
     "previewCaption": "Me, explaining why a log should be able to tell on itself.",
-    "photoPosition": "25% 45%"
+    "photoPosition": "25% 45%",
+    "image": "/pics/tamperlog.webp"
   },
   {
     "slug": "grc-ai",
@@ -41,7 +42,8 @@
     "evidenceAlt": "Presenting the GRC AI team project",
     "previewPhoto": "/pics/grc-ai.webp",
     "previewCaption": "GRC AI · the hackathon presentation",
-    "photoPosition": "50% 28%"
+    "photoPosition": "50% 28%",
+    "image": "/pics/grc-ai.webp"
   },
   {
     "slug": "localllm",
@@ -93,7 +95,8 @@
       "Privacy",
       "Browser security"
     ],
-    "live": "https://privacy.qusai.pro/"
+    "live": "https://privacy.qusai.pro/",
+    "image": "/pics/privacy-check.webp"
   },
   {
     "slug": "30-days",
