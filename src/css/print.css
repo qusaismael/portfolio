@@ -11,5 +11,6 @@
  .resume-entry{margin:16px 0;break-inside:avoid}.resume-entry p,.resume-entry li{font-size:10pt;line-height:1.45}.resume-entry li+li{margin-top:4px}
  .project-card-enhanced,.reference-card{break-inside:avoid;margin-bottom:16px;box-shadow:none}
  a{color:#222;text-decoration:none}img{max-height:200px}
+ .em-mark{background:transparent!important}
  section{content-visibility:visible!important}.tags{margin-top:8px}.tags span{font-size:8pt}
 }

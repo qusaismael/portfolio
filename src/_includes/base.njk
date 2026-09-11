@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#1A0F0A">
+    <meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)">
     <script>
         document.documentElement.classList.add('js');
         try { document.documentElement.dataset.theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'; }
@@ -29,12 +30,13 @@
     <meta name="twitter:title" content="{{ title | default(site.name) }}">
     <meta name="twitter:description" content="{{ description | default('Security, privacy, local AI, and whatever else I am figuring out.') }}">
     <meta name="twitter:image" content="{{ site.url }}/pics/social-card.png">
-    <link rel="stylesheet" href="/css/style.css?v=20260905">
-    <link rel="stylesheet" href="/css/personality.css?v=20260905-soul">
-    <link rel="stylesheet" href="/css/terminal.css?v=20260905">
-    {% if page.url == '/' %}<link rel="stylesheet" href="/css/contributions.css?v=20260905-icons">{% endif %}
-    <link rel="stylesheet" href="/css/print.css?v=20260905" media="print">
-    {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v=20260905">{% endif %}
+    <link rel="preload" as="image" href="/pfp-440.webp" fetchpriority="high">
+    <link rel="stylesheet" href="/css/style.css?v=20260911">
+    <link rel="stylesheet" href="/css/personality.css?v=20260911-soul">
+    <link rel="stylesheet" href="/css/terminal.css?v=20260911">
+    {% if page.url == '/' %}<link rel="stylesheet" href="/css/contributions.css?v=20260911">{% endif %}
+    <link rel="stylesheet" href="/css/print.css?v=20260911" media="print">
+    {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v=20260911">{% endif %}
     {% if page.url == '/' or page.url == '/portfolio/' or page.url == '/connect/' %}
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Person","name":"Qusai Ismael","url":"https://www.qusai.pro","image":"https://www.qusai.pro/pfp.webp","jobTitle":"Privacy & GRC Engineer","sameAs":["https://github.com/qusaismael","https://www.linkedin.com/in/qusaismaeel/","https://medium.com/@qusaismael"]}
@@ -73,11 +75,11 @@
         <img id="memory-image" alt="">
         <p id="memory-caption"></p>
     </dialog>
-    <script src="/script.js?v=20260905" defer></script>
-    <script src="/js/personality.js?v=20260905-soul" defer></script>
+    <script src="/script.js?v=20260911" defer></script>
+    <script src="/js/personality.js?v=20260911-soul" defer></script>
     {% include "terminal.njk" %}
-    <script src="/js/terminal.js?v=20260905" defer></script>
-    {% if customScripts %}<script src="{{ customScripts }}?v=20260905" defer></script>{% endif %}
-    {% if page.url == '/' %}<script src="/js/contributions.js?v=20260905-icons" defer></script>{% endif %}
+    <script src="/js/terminal.js?v=20260911" defer></script>
+    {% if customScripts %}<script src="{{ customScripts }}?v=20260911" defer></script>{% endif %}
+    {% if page.url == '/' %}<script src="/js/contributions.js?v=20260911" defer></script>{% endif %}
 </body>
 </html>
