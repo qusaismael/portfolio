@@ -1,41 +1,5 @@
-/* A compact contribution journal, separate from the portfolio project cards. */
-.contributions-section{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:56px;align-items:start}
-.contributions-intro{min-width:0;padding-top:8px}
-.contributions-intro h2{font-size:clamp(1.9rem,3.2vw,2.6rem);line-height:1.13;margin-bottom:22px}
-.contributions-intro>p:not(.eyebrow){font-size:1rem;line-height:1.8;color:var(--muted-text);max-width:38ch}
-.contributions-intro>.contributions-personal-note{font:italic .875rem/1.7 var(--font-mono);color:var(--accent-color);border-left:2px solid var(--border-color);padding-left:16px;margin:24px 0 14px}
-.contributions-intro .text-link{font-size:.875rem}
-.contributions-ledger{min-width:0;border:1px solid var(--border-color);border-radius:10px;background:var(--card-background);overflow:hidden}
-.contributions-ledger-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 24px;border-bottom:1px solid var(--border-color);font:.8125rem/1.6 var(--font-mono);color:var(--text-color)}
-.contributions-ledger-key{display:inline-flex;gap:8px;align-items:center;color:var(--accent-color);font-size:.75rem;white-space:nowrap}
-.contribution-list{list-style:none;margin:0;padding:0}
-.contribution-list>li+li{margin:0;border-top:1px solid var(--border-color)}
-.contribution-item{display:grid;grid-template-columns:56px minmax(0,1fr);grid-template-areas:"icon repo" "icon title" "icon date";column-gap:16px;padding:24px;min-width:0}
-.contribution-icon{grid-area:icon;align-self:start;position:relative;display:grid;place-items:center;width:56px;height:56px;overflow:hidden;border:1px solid var(--border-color);border-radius:12px;background:var(--background-color);color:var(--accent-color);font:600 1rem/1 var(--font-mono)}
-.contribution-icon img{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;border-radius:inherit;object-fit:contain;background:#fff;opacity:0}
-.contribution-icon img[data-loaded="true"]{opacity:1}
-.contribution-icon [hidden]{display:none}
-.contribution-repo{grid-area:repo;min-width:0;display:flex;justify-content:space-between;align-items:baseline;gap:10px 20px;margin:0 0 8px;font:.8125rem/1.6 var(--font-mono);color:var(--muted-text);overflow-wrap:anywhere}
-.contribution-repo>span:last-child{white-space:nowrap;color:var(--accent-color)}
-.contribution-item h3{grid-area:title;min-width:0;font-size:1rem;line-height:1.6;letter-spacing:0;margin:0 0 12px;overflow-wrap:anywhere}
-.contribution-item h3 a{display:block;color:var(--heading-color);text-decoration:none;min-height:44px}
-.contribution-item h3 a:hover{text-decoration:underline;text-underline-offset:4px;color:var(--accent-color)}
-.contribution-date{grid-area:date;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 12px;color:var(--muted-text);font:.75rem/1.6 var(--font-mono);margin:0}
-.contribution-date>span{color:var(--accent-color)}
-.contribution-verification{padding:13px 24px;margin:0;border-top:1px solid var(--border-color);color:var(--muted-text);font:.75rem/1.7 var(--font-mono)}
-.contribution-empty{padding:28px 24px;color:var(--muted-text)}
-.contribution-empty p{font-size:1rem;line-height:1.8;margin:0 0 12px}
-.contribution-empty>span{font:.8125rem/1.7 var(--font-mono)}
-@media(max-width:767px){
- .contributions-section{grid-template-columns:minmax(0,1fr);gap:24px}
- .contributions-intro{padding:0}.contributions-intro h2 br{display:none}
- .contributions-intro>p:not(.eyebrow){max-width:none}
- .contributions-intro>.contributions-personal-note{margin:18px 0 12px}
- .contributions-ledger-heading{padding:16px 18px;flex-wrap:wrap;gap:8px}
- .contribution-item{grid-template-columns:48px minmax(0,1fr);grid-template-areas:"icon repo" "title title" "date date";gap:12px 14px;padding:18px}
- .contribution-icon{width:48px;height:48px;border-radius:10px}
- .contribution-repo{align-self:center;flex-wrap:wrap;gap:4px 14px;margin:0}
- .contribution-item h3{margin:0}
- .contribution-verification,.contribution-empty{padding:18px}
-}
-@media print{.contributions-section{display:block}.contributions-ledger{margin-top:20px}.contribution-item{break-inside:avoid}}
+/* Home variant of the contributions section: one quiet line. */
+.contributions-home{padding-block:40px}
+.contributions-home-line{font-size:1.0625rem;line-height:1.8;color:var(--muted-text);max-width:60ch;margin:0}
+.contributions-home-line .text-link{white-space:nowrap}
+@media(max-width:767px){.contributions-home{padding-block:32px}}

@@ -6,7 +6,10 @@
 .hero-system-line{display:flex;align-items:center;margin:0 0 24px;font: .875rem/1.7 var(--font-mono);color:var(--muted-text)}
 .hero-word-rotator{display:inline-block;min-width:6ch;color:var(--accent-color);text-align:center;transition:opacity .32s ease,transform .32s ease}
 .hero-word-rotator.is-swapping{opacity:0;transform:translateY(.12em)}
-.terminal-caret{color:var(--accent-color);animation:qi-caret-blink 1.15s steps(2,start) infinite}
+.terminal-caret{color:var(--accent-color)}
+@media (prefers-reduced-motion: no-preference){
+ .terminal-caret{animation:qi-caret-blink 1.15s steps(2,start) infinite}
+}
 @keyframes qi-caret-blink{0%,100%{opacity:1}50%{opacity:0}}
 .hero-aside .portrait-button{width:218px;height:218px;border:3px solid var(--border-color);outline:1px solid var(--accent-color);outline-offset:7px;transition:transform .25s ease}
 .hero-aside .portrait-button:hover{transform:rotate(-3deg)}
@@ -36,14 +39,11 @@ html:not(.js) .wandering-cat{pointer-events:none}
 .project-card-enhanced{transition:border-color .2s ease,box-shadow .2s ease}
 .project-card-enhanced:hover{border-color:var(--accent-color);box-shadow:0 8px 24px var(--shadow-color)}
 .project-photo-caption{display:block;padding:9px 20px;border-bottom:1px solid var(--border-color);color:var(--muted-text);font:.75rem/1.6 var(--font-mono)}
-.personal-moment{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;margin:32px 0}
-.personal-moment figure,.memory-strip figure{margin:0;min-width:0}
-.personal-moment figure>a,.memory-strip figure>a{display:block;background:var(--card-background);padding:8px;border:1px solid var(--border-color);border-radius:4px}
-.personal-moment img,.memory-strip img{width:100%;height:auto;border-radius:2px}
-.personal-moment figcaption,.memory-strip figcaption{font:.75rem/1.7 var(--font-mono);padding:12px 4px 0}
-.personal-moment blockquote{font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.4;letter-spacing:-.025em;color:var(--heading-color);margin:0 0 20px}
-.personal-moment>div>p{color:var(--muted-text)}
 .memory-strip{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:32px 0 20px;padding:8px 4px}
+.memory-strip figure{margin:0;min-width:0}
+.memory-strip figure>a{display:block;background:var(--card-background);padding:8px;border:1px solid var(--border-color);border-radius:4px}
+.memory-strip img{width:100%;height:auto;border-radius:2px;aspect-ratio:1.85;object-fit:cover}
+.memory-strip figcaption{font:.75rem/1.7 var(--font-mono);padding:12px 4px 0}
 .memory-strip figure:nth-child(1){transform:rotate(-1deg)}
 .memory-strip figure:nth-child(2){transform:rotate(1deg)}
 .memory-strip img{aspect-ratio:1.85;object-fit:cover}
@@ -73,7 +73,6 @@ html:not(.js) .wandering-cat{pointer-events:none}
  .portrait-annotation{display:none}
  .cat-track{height:78px}.cat-frame{font-size:14px}
  .cat-caption{gap:10px;font-size:.75rem}
- .personal-moment{grid-template-columns:minmax(0,1fr);gap:26px}
  .memory-strip{gap:24px;grid-template-columns:minmax(0,1fr);padding-inline:4px}
  .memory-strip figure{max-width:540px}
  .personal-note{padding:14px 16px;font-size:.8125rem}
@@ -90,6 +89,6 @@ html:not(.js) .wandering-cat{pointer-events:none}
  .hero-aside .portrait-button:hover,.project-card-enhanced:hover .has-personal-photo>img{transform:none}
 }
 @media print{
- .cat-habitat,.hero-system-line,.portrait-annotation,.memory-strip,.personal-moment,.exp-photo,.project-photo-caption{display:none!important}
+ .cat-habitat,.hero-system-line,.portrait-annotation,.memory-strip,.exp-photo,.project-photo-caption{display:none!important}
  .name-tip{border:0}.personal-note{display:none!important}
 }
