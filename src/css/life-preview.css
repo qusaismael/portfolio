@@ -6,9 +6,9 @@
 .discovery-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .discovery-photo-graduation img{object-position:50% 30%}
 .discovery-photo>span{position:absolute;inset:auto 0 0;padding:36px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font:.75rem/1.6 var(--font-mono)}
-.discovery-game-preview{display:flex;flex-direction:column;justify-content:space-between;padding:22px 24px;background:linear-gradient(125deg,rgba(var(--accent-color-rgb),.1),transparent),var(--secondary-color)}
+.discovery-game-preview{display:flex;flex-direction:column;justify-content:space-between;padding:16px 20px;background:linear-gradient(125deg,rgba(var(--accent-color-rgb),.1),transparent),var(--secondary-color)}
 .discovery-game-kicker{font:.75rem/1.6 var(--font-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent-color)}
-.discovery-game-preview strong{font-size:2rem;line-height:1;letter-spacing:-.04em;font-weight:650;color:var(--heading-color)}
+.discovery-game-preview strong{font-size:1.5rem;line-height:1;letter-spacing:-.04em;font-weight:650;color:var(--heading-color)}
 .discovery-game-titles{font:.8125rem/1.7 var(--font-mono);color:var(--text-color)}
 .discovery-copy{display:flex;flex-direction:column;flex:1;padding:20px}
 .discovery-copy>.eyebrow{margin-bottom:10px}
@@ -20,13 +20,23 @@
 @media(min-width:581px) and (max-width:900px){
  .life-discoveries{grid-template-columns:minmax(0,1fr)}
  .life-discovery{display:grid;grid-template-columns:.85fr 1fr}
- .discovery-photo,.discovery-game-preview{height:100%;min-height:270px;border-bottom:0;border-right:1px solid var(--border-color)}
+ .discovery-photo,.discovery-game-preview{height:100%;min-height:170px;border-bottom:0;border-right:1px solid var(--border-color)}
  .discovery-photo img{position:absolute;inset:0}
 }
 @media(max-width:580px){
- .life-discoveries{grid-template-columns:minmax(0,1fr);gap:24px}
- .discovery-photo,.discovery-game-preview{height:240px}
- .discovery-copy{padding:22px}
+ .life-discoveries{grid-template-columns:minmax(0,1fr);gap:14px;margin:20px 0 32px}
+ .life-discovery{display:grid;grid-template-columns:88px minmax(0,1fr)}
+ .discovery-photo,.discovery-game-preview{height:100%;min-height:88px;border-bottom:0;border-right:1px solid var(--border-color)}
+ .discovery-photo img{position:absolute;inset:0}
+ .discovery-photo>span{display:none}
+ .discovery-game-preview{padding:12px;justify-content:center}
+ .discovery-game-preview strong{font-size:1rem}
+ .discovery-game-titles{display:none}
+ .discovery-game-kicker{font-size:.65rem}
+ .discovery-copy{padding:14px 16px;min-width:0}
+ .discovery-copy h3{font-size:1.05rem;margin:0 0 6px}
+ .discovery-copy p{font-size:.875rem;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+ .discovery-action{border-top:0;padding-top:6px;min-height:44px;font-size:.8125rem}
 }
 @media(prefers-reduced-motion:reduce){.life-discovery{transition:none}.life-discovery:hover,.life-discovery:focus-visible{transform:none}}
 @media print{.life-discoveries{display:block}.life-discovery{break-inside:avoid;margin:0 0 20px}.discovery-photo,.discovery-game-preview{display:none}}
