@@ -6,6 +6,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/script.js");
   eleventyConfig.addPassthroughCopy("src/gallery.js");
   eleventyConfig.addPassthroughCopy("src/pfp.webp");
+  eleventyConfig.addPassthroughCopy("src/pfp-440.webp");
   eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy("src/CNAME");
 
