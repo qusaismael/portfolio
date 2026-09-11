@@ -42,17 +42,17 @@
  memory?.addEventListener('click',event=>{if(event.target===memory)memory.close();});
  memory?.addEventListener('close',()=>memory.querySelector('img').removeAttribute('src'));
 
- // The old "i build / secure / govern systems" line, one short cycle.
+ // The "i build / secure / govern systems" line — a calm, continuous loop.
  const word=document.querySelector('[data-word-rotator]');
  if(word&&!motion.matches) {
+  const words=['build','secure','govern'];
   let index=0;
-  const words=['build','secure','govern','build'];
-  const timer=setInterval(()=>{
-   if(motion.matches){word.textContent='build';clearInterval(timer);return;}
+  setInterval(()=>{
+   if(motion.matches){word.textContent=words[0];word.classList.remove('is-swapping');return;}
    if(document.hidden)return;
-   word.textContent=words[++index];
-   if(index===words.length-1)clearInterval(timer);
-  },1400);
+   word.classList.add('is-swapping');
+   setTimeout(()=>{index=(index+1)%words.length;word.textContent=words[index];word.classList.remove('is-swapping');},320);
+  },2200);
  }
 
  const walkFrames=[
