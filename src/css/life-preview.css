@@ -9,7 +9,16 @@
 .discovery-game-preview{display:flex;flex-direction:column;justify-content:space-between;padding:16px 20px;background:linear-gradient(125deg,rgba(var(--accent-color-rgb),.1),transparent),var(--secondary-color)}
 .discovery-game-kicker{font:.75rem/1.6 var(--font-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent-color)}
 .discovery-game-preview strong{font-size:1.5rem;line-height:1;letter-spacing:-.04em;font-weight:650;color:var(--heading-color)}
+.discovery-game-preview strong em{font-style:normal;color:var(--accent-color)}
 .discovery-game-titles{font:.8125rem/1.7 var(--font-mono);color:var(--text-color)}
+/* Games card: a glowing "console card" instead of a stock photo. */
+.discovery-game-preview{background:radial-gradient(120% 120% at 85% -10%,rgba(var(--accent-color-rgb),.28),transparent 55%),linear-gradient(125deg,rgba(var(--accent-color-rgb),.14),transparent 60%),var(--secondary-color)}
+.discovery-game-kicker{display:inline-flex;align-items:center;gap:8px}
+@media (prefers-reduced-motion: no-preference){.discovery-game-kicker::before{content:"⏸";font-size:.9em}}
+.discovery-game-preview strong{font-size:2.6rem;font-weight:700;letter-spacing:-.05em;line-height:1.02;text-wrap:balance}
+.life-discovery-games{border-color:rgba(var(--accent-color-rgb),.5)}
+@media (prefers-reduced-motion: no-preference){.life-discovery-games:hover{transform:translateY(-3px) rotate(-.4deg)}.life-discovery-games .discovery-game-preview{transition:filter .2s ease}.life-discovery-games:hover .discovery-game-preview,.life-discovery-games:focus-visible .discovery-game-preview{filter:brightness(1.07)}}
+@media(min-width:901px){.discovery-game-preview strong{font-size:2.6rem}}
 .discovery-copy{display:flex;flex-direction:column;flex:1;padding:20px}
 .discovery-copy>.eyebrow{margin-bottom:10px}
 .discovery-copy h3{font-size:1.25rem;line-height:1.25;margin:0 0 10px}

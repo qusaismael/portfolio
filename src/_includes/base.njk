@@ -80,5 +80,6 @@
     {% include "terminal.njk" %}
     <script src="/js/terminal.js?v=20260911" defer></script>
     {% if customScripts %}<script src="{{ customScripts }}?v=20260911" defer></script>{% endif %}
+    {% if page.url == '/' %}<script src="/js/contributions.js?v=20260911" defer></script>{% endif %}
 </body>
 </html>
