@@ -4,3 +4,5 @@
 /new-portfolio/
 /node_modules/
 /_site/
+/test-results/
+/playwright-report/
