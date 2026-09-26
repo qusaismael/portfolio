@@ -4,7 +4,10 @@
   "description": "Portfolio UI/UX with Experience Side-Tabs and PRs Showcase",
   "scripts": {
     "build": "eleventy",
-    "dev": "eleventy --serve"
+    "dev": "eleventy --serve",
+    "test": "node --test tests/unit/*.test.cjs",
+    "test:site": "node --test tests/site/*.test.cjs",
+    "test:browser": "playwright test"
   },
   "main": "gallery.js",
   "devDependencies": {
