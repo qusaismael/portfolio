@@ -3,6 +3,8 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const root = path.resolve('_site');
+const captureHeaders = process.env.PORTFOLIO_CAPTURE_RUN
+  ? { 'X-Portfolio-Capture-Run': process.env.PORTFOLIO_CAPTURE_RUN } : {};
 const types = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',
@@ -17,18 +19,22 @@ const server = http.createServer(async (req, res) => {
     if (name.endsWith('/')) name += 'index.html';
     const file = path.resolve(root, '.' + name);
     if (!file.startsWith(root + path.sep)) {
-      res.writeHead(403); res.end('Forbidden'); return;
+      res.writeHead(403, captureHeaders); res.end('Forbidden'); return;
     }
     const body = await fs.readFile(file);
     res.writeHead(200, {
+      ...captureHeaders,
       'Content-Type': types[path.extname(file)] || 'application/octet-stream',
       'Cache-Control': 'no-store'
     });
     res.end(body);
   } catch (error) {
-    res.writeHead(error.code === 'ENOENT' ? 404 : 400);
+    res.writeHead(error.code === 'ENOENT' ? 404 : 400, captureHeaders);
     res.end(error.code === 'ENOENT' ? 'Not found' : 'Bad request');
   }
 });
-server.listen(4173, '127.0.0.1', () => console.log('Portfolio test server: http://127.0.0.1:4173'));
+server.listen(4173, '127.0.0.1', () => {
+  console.log('Portfolio test server: http://127.0.0.1:4173');
+  if (process.send) process.send({ type: 'ready' });
+});
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => process.exit(0)));

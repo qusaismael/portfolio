@@ -35,12 +35,9 @@
 html:not(.js) .cat-pause{display:none}
 html:not(.js) .wandering-cat{pointer-events:none}
 /* Photos belong in the story, not hidden behind it. */
-.project-preview.has-personal-photo{aspect-ratio:1.85}
-.project-preview.has-personal-photo>img{object-fit:cover;object-position:var(--photo-position,50% 35%);transition:transform .45s ease}
-.project-card-enhanced:hover .has-personal-photo>img{transform:scale(1.025)}
-.project-card-enhanced{transition:border-color .2s ease,box-shadow .2s ease}
-.project-card-enhanced:hover{border-color:var(--accent-color);box-shadow:0 8px 24px var(--shadow-color)}
-.project-photo-caption{display:block;padding:9px 20px;border-bottom:1px solid var(--border-color);color:var(--muted-text);font:.75rem/1.6 var(--font-mono)}
+.project-preview.has-personal-photo{aspect-ratio:16/9;padding:8px;background:var(--card-background)}
+.project-preview.has-personal-photo>img{object-fit:contain;transform:none;transition:none;box-shadow:none}
+.project-photo-caption{display:block;padding:10px 0 0;border:0;color:var(--muted-text);font:.8125rem/1.5 var(--font-mono)}
 .personal-moment{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;margin:32px 0}
 .personal-moment figure,.memory-strip figure{margin:0;min-width:0}
 .personal-moment figure>a,.memory-strip figure>a{display:block;background:var(--card-background);padding:8px;border:1px solid var(--border-color);border-radius:4px}
@@ -86,7 +83,6 @@ html:not(.js) .wandering-cat{pointer-events:none}
  .memory-strip{gap:24px;grid-template-columns:minmax(0,1fr);padding-inline:4px}
  .memory-strip figure{max-width:540px}
  .personal-note{padding:14px 16px;font-size:.8125rem}
- .project-photo-caption{padding-inline:18px}
  .about-heading .portrait-button{display:block;width:88px;height:88px}
 }
 @media(max-width:374px){
@@ -96,7 +92,7 @@ html:not(.js) .wandering-cat{pointer-events:none}
 }
 @media(prefers-reduced-motion:reduce){
  .wandering-cat{--cat-y:0px!important}
- .hero-aside .portrait-button:hover,.project-card-enhanced:hover .has-personal-photo>img{transform:none}
+ .hero-aside .portrait-button:hover{transform:none}
 }
 @media print{
  .cat-habitat,.hero-system-line,.portrait-annotation,.memory-strip,.personal-moment,.exp-photo,.project-photo-caption{display:none!important}

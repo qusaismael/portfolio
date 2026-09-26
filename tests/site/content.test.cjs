@@ -25,6 +25,17 @@ test('authored data and existing prose remain intact and in order', () => {
   }
 });
 
+test('changed stylesheets use fresh cache keys without loading Home-only CSS elsewhere', () => {
+  const home = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
+  const work = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
+  for (const asset of ['style.css', 'personality.css', 'terminal.css']) {
+    assert.equal(home(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
+    assert.equal(work(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
+  }
+  assert.equal(home('link[href="/css/life-preview.css?v=soul-gate-a"]').length, 1);
+  assert.equal(work('link[href*="life-preview.css"]').length, 0);
+});
+
 test('homepage retains its human-first section order', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
   assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
