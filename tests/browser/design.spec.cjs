@@ -65,3 +65,25 @@ test('hero portrait keeps its scale while the introduction gains a readable meas
   await page.setViewportSize({ width: 390, height: 844 });
   expect((await page.locator('.hero-aside .portrait-button').boundingBox()).width).toBe(120);
 });
+
+test('mobile life previews show every authored sentence and uncropped personal photos', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const boxes = await page.locator('.discovery-copy p').evaluateAll(nodes => nodes.map(el => ({
+    clipped: el.scrollHeight > el.clientHeight + 1,
+    clamp: getComputedStyle(el).webkitLineClamp
+  })));
+  expect(boxes.every(box => !box.clipped && (!box.clamp || box.clamp === 'none'))).toBe(true);
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    const frames = await page.locator('.discovery-photo').evaluateAll(nodes => nodes.map(el => {
+      const box = el.getBoundingClientRect();
+      return { width: box.width, card: el.parentElement.clientWidth, ratio: box.width / box.height,
+        fit: getComputedStyle(el.querySelector('img')).objectFit };
+    }));
+    expect(frames.every(frame => Math.abs(frame.width - frame.card) <= 1)).toBe(true);
+    expect(frames.every(frame => Math.abs(frame.ratio - 1) < 0.02 && frame.fit === 'contain')).toBe(true);
+    await expect(page.locator('.discovery-photo>span').first()).toBeVisible();
+    await expect(page.locator('.discovery-game-titles')).toBeVisible();
+  }
+});
