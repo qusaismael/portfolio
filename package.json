@@ -12,6 +12,10 @@
   "main": "gallery.js",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
+    "cheerio": "1.2.0",
+    "sharp": "0.35.4",
     "sharp-cli": "^6.0.0"
   },
   "repository": {
