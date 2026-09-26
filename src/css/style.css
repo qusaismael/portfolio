@@ -57,6 +57,9 @@ section,[id]{scroll-margin-top:calc(var(--header-offset,var(--header-height)) + 
 .footer-top p{margin:0;color:var(--muted-text);font-size:.9375rem}.footer-top>a:last-child{margin-left:auto;font-size:.9375rem;min-height:44px;display:inline-flex;align-items:center}
 .footer-bottom{justify-content:space-between;margin-top:20px;font-size:.8125rem;color:var(--muted-text)}
 .footer-links{display:flex;align-items:center;gap:24px;flex-wrap:wrap}.footer-links a{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+/* Expand small text links without moving the glyphs or overlapping their neighbors. */
+.site-header .brand,.site-footer .brand,.footer-links>a{position:relative}
+.site-header .brand::after,.site-footer .brand::after,.footer-links>a::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .footer-clock{font-family:var(--font-mono);font-size:.75rem}
 .progress-wrap{position:fixed;bottom:22px;right:22px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid var(--border-color);background:var(--card-background);color:var(--text-color);font-size:1.2rem;box-shadow:var(--shadow)}
 /* Page rhythm */
