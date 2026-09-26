@@ -91,25 +91,68 @@ test('hero portrait keeps its scale while the introduction gains a readable meas
   expect((await page.locator('.hero-aside .portrait-button').boundingBox()).width).toBe(120);
 });
 
-test('mobile life previews show every authored sentence and uncropped personal photos', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
-  const boxes = await page.locator('.discovery-copy p').evaluateAll(nodes => nodes.map(el => ({
-    clipped: el.scrollHeight > el.clientHeight + 1,
-    clamp: getComputedStyle(el).webkitLineClamp
-  })));
-  expect(boxes.every(box => !box.clipped && (!box.clamp || box.clamp === 'none'))).toBe(true);
+test('mobile Home photograph cards return to compact side-by-side previews', async ({ page }) => {
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
-    const frames = await page.locator('.discovery-photo').evaluateAll(nodes => nodes.map(el => {
-      const box = el.getBoundingClientRect();
-      return { width: box.width, card: el.parentElement.clientWidth, ratio: box.width / box.height,
-        fit: getComputedStyle(el.querySelector('img')).objectFit };
-    }));
-    expect(frames.every(frame => Math.abs(frame.width - frame.card) <= 1)).toBe(true);
-    expect(frames.every(frame => Math.abs(frame.ratio - 1) < 0.02 && frame.fit === 'contain')).toBe(true);
-    await expect(page.locator('.discovery-photo>span').first()).toBeVisible();
-    await expect(page.locator('.discovery-game-titles')).toBeVisible();
+    await page.goto('/');
+    const photos = page.locator('.life-discovery:has(.discovery-photo)');
+    await expect(photos).toHaveCount(2);
+    for (const card of await photos.all()) {
+      const frame = await card.evaluate(el => {
+        const photo = el.querySelector('.discovery-photo');
+        const image = photo.querySelector('img');
+        const description = el.querySelector('.discovery-copy p');
+        const box = photo.getBoundingClientRect();
+        const cardBox = el.getBoundingClientRect();
+        return {
+          display: getComputedStyle(el).display,
+          columns: getComputedStyle(el).gridTemplateColumns,
+          width: box.width,
+          height: box.height,
+          cardHeight: cardBox.height,
+          fit: getComputedStyle(image).objectFit,
+          captionVisible: getComputedStyle(photo.querySelector('span')).display !== 'none',
+          clamp: getComputedStyle(description).webkitLineClamp,
+          paragraphLines: description.getBoundingClientRect().height / parseFloat(getComputedStyle(description).lineHeight)
+        };
+      });
+      expect(frame.display).toBe('grid');
+      expect(parseFloat(frame.columns)).toBeCloseTo(88, 0);
+      expect(frame.width).toBeCloseTo(88, 0);
+      expect(frame.height).toBeGreaterThanOrEqual(88);
+      expect(frame.cardHeight).toBeLessThan(230);
+      expect(frame.fit).toBe('cover');
+      expect(frame.captionVisible).toBe(false);
+      expect(frame.clamp).toBe('1');
+      expect(frame.paragraphLines).toBeLessThan(1.1);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  }
+});
+
+test('mobile Games card keeps its expanded artwork and full description', async ({ page }) => {
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/');
+    const card = page.locator('.life-discovery-games');
+    const state = await card.evaluate(el => {
+      const photo = el.querySelector('.discovery-game-preview');
+      const paragraph = el.querySelector('.discovery-copy p');
+      const preview = photo.getBoundingClientRect();
+      return {
+        display: getComputedStyle(el).display,
+        previewWidth: preview.width,
+        cardWidth: el.getBoundingClientRect().width,
+        titlesVisible: getComputedStyle(el.querySelector('.discovery-game-titles')).display !== 'none',
+        clipped: paragraph.scrollHeight > paragraph.clientHeight + 1,
+        clamp: getComputedStyle(paragraph).webkitLineClamp
+      };
+    });
+    expect(state.display).toBe('flex');
+    expect(Math.abs(state.previewWidth - state.cardWidth)).toBeLessThanOrEqual(2);
+    expect(state.titlesVisible).toBe(true);
+    expect(state.clipped).toBe(false);
+    expect(['none', '']).toContain(state.clamp);
   }
 });
 

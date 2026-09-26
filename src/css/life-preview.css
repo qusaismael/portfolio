@@ -33,10 +33,6 @@
 @media(max-width:580px){
  .life-discoveries{grid-template-columns:minmax(0,1fr);gap:24px;margin:24px 0 40px}
  .life-discovery{display:flex;flex-direction:column}
- /* These two photographs are square: a wide crop cuts off the people. */
- .discovery-photo{height:auto;aspect-ratio:1;border-bottom:1px solid var(--border-color);background:var(--secondary-color)}
- .discovery-photo img{position:static;object-fit:contain}
- .discovery-photo>span{padding:32px 16px 12px}
  .discovery-game-preview{height:auto;aspect-ratio:16/9;min-height:180px;border-bottom:1px solid var(--border-color);padding:18px 20px}
  .discovery-game-preview strong{font-size:clamp(2rem,9vw,3.2rem)}
  .discovery-game-titles{display:block}
@@ -45,6 +41,15 @@
  .discovery-copy h3{font-size:1.25rem;margin:0 0 10px}
  .discovery-copy p{font-size:1rem;line-height:1.7;margin:0 0 16px;display:block;overflow:visible}
  .discovery-action{border-top:1px solid var(--border-color);padding-top:12px;min-height:44px;font-size:.875rem}
+ /* Keep only the two Home photograph cards in their original mobile format. */
+ .life-discovery:not(.life-discovery-games){display:grid;grid-template-columns:88px minmax(0,1fr)}
+ .discovery-photo{height:100%;min-height:88px;border-bottom:0;border-right:1px solid var(--border-color)}
+ .discovery-photo img{position:absolute;inset:0}
+ .discovery-photo>span{display:none}
+ .life-discovery:not(.life-discovery-games) .discovery-copy{padding:14px 16px}
+ .life-discovery:not(.life-discovery-games) .discovery-copy h3{font-size:1.05rem;margin:0 0 6px}
+ .life-discovery:not(.life-discovery-games) .discovery-copy p{font-size:.875rem;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+ .life-discovery:not(.life-discovery-games) .discovery-action{border-top:0;padding-top:6px;font-size:.8125rem}
 }
 @media(prefers-reduced-motion:reduce){.life-discovery{transition:none}.life-discovery:hover,.life-discovery:focus-visible{transform:none}}
 @media print{.life-discoveries{display:block}.life-discovery{break-inside:avoid;margin:0 0 20px}.discovery-photo,.discovery-game-preview{display:none}}

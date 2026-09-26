@@ -22,7 +22,7 @@ Home retains its voice and real photographs; article length is not a defect. Ass
 
 ### Mobile ergonomics
 
-At 390px the closed baseline header uses two rows (brand/location above, theme/Menu below). Personal Life previews reduce imagery to narrow strips and clamp the descriptions. At 320px one hero CTA wraps to a second row; do not hide it or force it into tiny text merely to fit. Proposed Gate A: compact header with full location/time and image-led, complete-description Life cards. Taller cards are intentional.
+At 390px the closed baseline header uses two rows (brand/location above, theme/Menu below). Personal Life previews reduce imagery to narrow strips and clamp the descriptions. At 320px one hero CTA wraps to a second row; do not hide it or force it into tiny text merely to fit. The initial Gate A proposal tried a compact header with full location/time and image-led, complete-description Life cards. The owner preferred the original compact photo cards, so only those two mobile cards have been restored.
 
 ### Image treatment
 
@@ -38,11 +38,11 @@ Preserve Qusai's authored prose and section order, Arabic name, photographs, wan
 
 ### Specific changes requested by the owner
 
-UI/UX quality is the priority. Gate A must show clear visual gains on Home, Work, and article at desktop/mobile in both themes **before** propagating changes to interior pages. No changes have been deployed; owner review pending.
+UI/UX quality is the priority. Gate A covers Home, Work, and article at desktop/mobile in both themes **before** propagating changes to interior pages. The owner approved the other refinements and requested that the mobile Home photo cards return to their original treatment. No changes have been deployed.
 
-## After / Gate A findings — owner approval pending
+## After / Gate A findings — mobile photo-card revision
 
-The after set is `preview/after/` (24 PNGs and 24 matching metric records); the interaction samples are in `preview/states/`. Built output, not the live domain. `npm run build`, `npm test`, `npm run test:site`, and all ten design browser tests plus the smoke test passed. The capture recorded **zero horizontal overflow, broken loaded images, and uncaught page errors** at all 24 route/theme/viewport combinations. Every metric height matches its PNG, with no dark/light height mismatch at a paired width. This does not measure Lighthouse, network transfers, or every interactive state.
+The after set is `preview/after/` (24 PNGs and 24 matching metric records); the interaction samples are in `preview/states/`. Built output, not the live domain. `npm run build`, `npm test`, `npm run test:site`, and all 11 design browser tests plus the smoke test passed. The capture recorded **zero horizontal overflow, broken loaded images, and uncaught page errors** at all 24 route/theme/viewport combinations. Every metric height matches its PNG, with no dark/light height mismatch at a paired width. This does not measure Lighthouse, network transfers, or every interactive state.
 
 ### Composition
 
@@ -54,11 +54,11 @@ The archived article body is 18px with a 1.8 line-height and a bounded measure; 
 
 ### Mobile ergonomics
 
-At 390px, the closed header now puts QI, the theme switch and Menu on one row, and Jordan/time on the second; the menu opens to complete, 48px-tall destinations. At 320px the location label remains within the viewport; the focus ring is visible in both themes and Escape returns focus to Menu. See [dark open menu](states/menu-390-dark.png) and [light focused control](states/focus-390-light.png). Life previews now show complete descriptions and captions instead of one-line truncation. Home height at 390px grows **7,249 → 8,409px** (+1,160px), primarily because the authentic square photographs are shown full width. That extra scroll is a deliberate tradeoff to judge, not a speed gain. Compare [old Home](before/home-390-light.png) with [new Home](after/home-390-light.png).
+At 390px, the closed header now puts QI, the theme switch and Menu on one row, and Jordan/time on the second; the menu opens to complete, 48px-tall destinations. At 320px the location label remains within the viewport; the focus ring is visible in both themes and Escape returns focus to Menu. See [dark open menu](states/menu-390-dark.png) and [light focused control](states/focus-390-light.png). The two photo cards are compact again, with their original 88px side images and one-line descriptions; the Games card retains its expanded artwork and complete description. Home height at 390px is **7,598px** (baseline 7,249px; original Gate A capture 8,409px). Compare [old Home](before/home-390-light.png) with [revised Home](after/home-390-light.png).
 
 ### Image treatment
 
-The two square Life photographs keep their full frames on mobile; the people and captions are visible. Work photographs and interface screenshots use `object-fit: contain`; all nine Work previews loaded in the 1440/390 browser test. The smaller human photographs sit inside theme-aware matte on Work, leaving side space but avoiding cropped people. The light screenshot matte remains warm paper. Project detail evidence now opens in the existing native image dialog, with its original image URL as a fallback link.
+The two Life photographs use the original narrow mobile crops and hidden overlay captions, as requested; their underlying authored text remains intact. Work photographs and interface screenshots still use `object-fit: contain`; all nine Work previews loaded in the 1440/390 browser test. The smaller human photographs sit inside theme-aware matte on Work, leaving side space but avoiding cropped people. The light screenshot matte remains warm paper. Project detail evidence still opens in the existing native image dialog, with its original image URL as a fallback link.
 
 ### Dark and light parity
 
@@ -70,4 +70,4 @@ The cat, terminal, name jokes and Arabic note, Jordan clock, real presentation/t
 
 ### Specific changes requested by the owner
 
-The gate covers visual quality, mobile feel and recognizable personality. The new treatment reads as a warmer editorial portfolio instead of an app landing page, but **aesthetic approval belongs to Qusai**. In particular: approve or reject the taller full-photo mobile Life cards, the open Work entries (including the photo side matte), and the compact two-row header. Do not extend the treatment to interior-page cards or merge/deploy until this decision. The site remains unchanged publicly.
+The owner approved the broader Gate A treatment and asked for one exception: restore the mobile Home photo cards. The revision does that at 320px and 390px while retaining the expanded Games card, open Work entries, and compact header. Do not extend the treatment to interior-page cards or merge/deploy without an explicit go-ahead. The public site remains unchanged.

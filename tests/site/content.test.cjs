@@ -32,7 +32,7 @@ test('changed stylesheets use fresh cache keys without loading Home-only CSS els
     assert.equal(home(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
     assert.equal(work(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
   }
-  assert.equal(home('link[href="/css/life-preview.css?v=soul-gate-a"]').length, 1);
+  assert.equal(home('link[href="/css/life-preview.css?v=soul-gate-a-mobile-photos"]').length, 1);
   assert.equal(work('link[href*="life-preview.css"]').length, 0);
 });
 
