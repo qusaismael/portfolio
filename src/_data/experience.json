@@ -16,6 +16,21 @@
     ]
   },
   {
+    "id": "protech",
+    "company": "PROTECH",
+    "role": "DevOps Intern",
+    "shortRole": "DevOps Intern",
+    "dates": "Jul 2026",
+    "start": "2026-07",
+    "location": "Amman, Jordan · Internship",
+    "summary": "A learning experience on Enterprise Linux.",
+    "bullets": [],
+    "tags": [
+      "Enterprise Linux",
+      "DevOps"
+    ]
+  },
+  {
     "id": "scanwave",
     "company": "ScanWave",
     "role": "AI Security Intern",
