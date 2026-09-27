@@ -4,50 +4,89 @@ Branch: `ux/human-readable` (worktree `/opt/data/repos/portfolio-readable`).
 
 ## Commits
 
-- Baseline (proposed diff base): `f995e1cf68a59a4450236e32021faa9db6f9a051` — "fix: restore compact mobile Home photo cards" (Gate A state the owner approved, minus the mobile photo-card revert).
-- Proposed code head: `e56bcc5` — "chore: verify and export readability before/after captures" (this record rides in the next commit).
+- Baseline (diff base): `f995e1cf68a59a4450236e32021faa9db6f9a051` — "fix: restore compact mobile Home photo cards". This commit **is** the compact-card restore; it is the Gate A state the owner approved.
+- Proposed code head: `6afc2b4` — "fix: correct accessible names and harden readability guards" (this record rides in the follow-up docs commit).
 
-## Tests actually run (2026-09-27)
+## Tests actually run (2026-09-27, after final fixes)
 
 | Command | Result |
 | --- | --- |
 | `node --test tests/unit/*.test.cjs` | 4/4 pass |
-| `npm run test:site` | 37/37 pass |
-| `flock … npm run test:browser -- tests/browser/readability.spec.cjs --workers=1` | 14/14 pass |
-| `flock … npm run test:browser -- tests/browser/design.spec.cjs tests/browser/smoke.spec.cjs --workers=1` | 12/12 pass |
+| `npm run test:site` | 38/38 pass |
+| `flock … test:browser -- tests/browser/readability.spec.cjs --workers=1` | 15/15 pass |
+| `flock … test:browser -- tests/browser/design.spec.cjs tests/browser/smoke.spec.cjs --workers=1` | 12/12 pass |
 | `npm run build` | clean |
 
-Total: 67 tests, 0 failures. Browser runs serialized behind `/opt/data/repos/.site-browser.lock`, one worker (host memory limits).
+Total: 69 tests, 0 failures. Three readability tests hit 30s navigation timeouts during one run under host memory pressure (first three of that run; all three passed in <1s on immediate re-run) — flake, not behavior. Browser runs serialized behind `/opt/data/repos/.site-browser.lock`, one worker.
 
 ## Capture evidence
 
 - `preview/readability-before/` and `preview/readability-after/`: each **88/88** captures (11 routes × 4 widths × 2 themes), verified complete by `scripts/verify-readability-captures.cjs`: no horizontal overflow, no broken loaded images, no page errors, PNG dimensions match recorded metrics.
 - Comparison pack: `preview/readability/README.md` — 88 matched before/after WebP pairs (`scripts/export-readability-review.cjs`, resumable).
-- External feed status: the Behold gallery feed fetched live during the after-capture (Photos renders its full grid, 4648px desktop height, both identical in both themes). No third-party feed failure was present in the recorded run; gallery/map failure paths are separately tested (`gallery failure explains the next action`, `Life stories stay visible when the map script fails`, `photo feed marks readiness only after a result or fallback`).
-- Artifact-size decision: the 176-image WebP pack is **29 MB** and stays **local** (gitignored) as a one-time review pack; only this record is committed. Say the word if you want the pack in the branch.
+- External feeds: the Behold gallery feed fetched live during the after-capture; no feed failure in the recorded run. Failure paths are tested separately (gallery fallback, map-script failure, feed-readiness gating).
+- Artifact-size decision: the 176-image WebP pack is **29 MB**, kept **local** (gitignored) as a one-time review pack; only this record is committed.
 
-## Independent review findings (deleg_3651a464) — disposition
+## Independent review findings — disposition
+
+First batch (deleg_3651a464):
 
 | Finding | Disposition |
 | --- | --- |
-| [P1] Cache-version change breaks existing suite (`content.test.cjs:28-37`) | Fixed in `ddb8bf9`; `changed stylesheets use fresh cache keys…` green |
+| [P1] Cache-version change breaks existing suite | Fixed (`ddb8bf9`); cache-key test green |
 | [P1] Fact guard omitted education/testimonial attribution | Fixed; `education and testimonial attribution remain intact` green |
-| [P2] Destination guard misses header/footer + multi-link project cards | Covered by `navigation, footer, and project actions retain distinct links` green |
-| [P2] Mobile gallery `.card-title` `.8rem` override | Removed in `ab98e39`; single-column ≤520px added |
-| [P2] ClipGuard copy overclaim | Not shipped: description keeps the qualified "built around a simple rule: what you copy **should** stay on your device" (matches `tests/fixtures/readability-project-copy.json`) |
-| "One room… one piece of advice" figcaption setup | Restored in `index.html`; `small personal details survive the editorial cut` green |
-| Plan's proposed "Explore places →" cue / "the Red Sea" wording | **Intentionally not applied** — new microcopy needs owner approval; original "Explore my map →" and "Jordan, Istanbul and Egypt." kept |
-| Egypt photo caption hidden on mobile | Deliberate: it is part of the compact 88px mobile photo-card form the owner explicitly liked (`f995e1c`); caption stays visible on desktop |
-| Mobile-card approval needs visual judgment | Visually checked at 320 and 390 in dark and light (clean, no clipping/overlap; `design.spec.cjs` compact-card tests green) |
+| [P2] Destination guard misses header/footer + multi-link cards | Covered by `navigation, footer, and project actions retain distinct links` green |
+| [P2] Mobile gallery `.card-title` `.8rem` override | Removed (`ab98e39`) |
+| [P2] ClipGuard copy overclaim | Not shipped; copy keeps "built around a simple rule: what you copy **should** stay on your device" |
+| Plan's proposed "Explore places →" cue / "the Red Sea" wording | Not applied (see teaser table: other teaser strings were drafted and await sign-off) |
+| Egypt photo caption hidden on mobile | Deliberate: part of the compact 88px mobile photo-card form the owner explicitly liked (`f995e1c`); caption stays visible on desktop |
+| Mobile-card visual judgment | Checked at 320/390, dark+light: compact form clean, no clipping/overlap; `design.spec.cjs` compact-card tests green |
 
-## Copy changes proposed (all awaiting owner B1/B2 sign-off)
+Second batch (deleg_889401b0 code + visual audit):
 
-Home hero + section intros; Work (`/sites/`) intro; About (tabs → visible job stories, less throat-clearing); Life intro + visible place stories/setup notes; Photos intro + hover-free captions + honest gallery failure message; Connect directness; Games margin-note removed; project descriptions + `cardNote` caveats; article standfirsts + section outlines. Originals are recoverable from the baseline commit.
+| Finding | Disposition |
+| --- | --- |
+| [P2] Prior review.md falsely claimed teaser strings were originals | **Corrected in this revision** — see the drafted-copy table |
+| [P2] `A small fix still counts.` kept against plan; test flipped to match | **Fixed** (`0999db9`): note removed per plan (Task 04 lines 391/408), test asserts the plan's exact expectations, content-contract snapshot updated with a reviewed 1-line diff |
+| [P2] Project-copy fixture encodes kept originals for 30-days/rss-ai/token-speed/clipguard | Deliberate preservation: plan's proposed rewrites of owner copy not applied; owner originals kept. Fixture freezes implemented copy; owner can approve plan versions at B1 |
+| [P2] About has 4 paragraphs vs plan's 3; interior ledes differ from plan strings | Unapproved drafts — listed for owner sign-off |
+| [P3] Duplicate figcaption assertion | Fixed (single assertion; drafted teasers moved to their own honestly-named freeze test) |
+| [P3] Readiness test race (300ms heuristic) | Fixed: deterministic promise-gated route |
+| [P3] No-clip guard missed job bullets; ellipsis would pass | Fixed: `.experience-entry li` in scope; flat `text-overflow:ellipsis` ban + horizontal `scrollWidth>clientWidth` check on essential text |
+| [P3] Gallery `aria-label` ignored visible caption (WCAG 2.5.3) | Fixed (`6afc2b4`): accessible name = visible label, verified by new test |
+| [P3] Article nav landmark duplicated its heading | Fixed: `aria-label="Article sections"`; visible heading "In this article" stays |
+| [Visual] Two typos in kernel-panic article ("a your", "memroy") | **Not fixed** — article bodies are frozen published copy; owner decision (below) |
+| [Visual] About Education→Training gap "noticeably larger" | **False lead, dismissed with evidence**: DOM geometry at 390px shows all four section gaps exactly 77px (38+39 around each border); pixel-band scan agrees (heading-to-heading 115–119px, uniform) |
+| [Visual] Work light-theme labels/tags "borderline contrast" | **False lead, measured**: `#6c5a49` on `#fffdf8` = **6.47:1**, passes WCAG AA for small text |
+| [Visual] Photos at 320 = long single-column scroll | Deliberate (visible captions need full width). Option: 2-up at ≤320 — owner taste question (below) |
+
+## Copy changes on the branch (all pending owner sign-off)
+
+**Drafted (originals frozen in `tests/site/readability.test.cjs` comments and the baseline commit):**
+
+| Location | Drafted | Was |
+| --- | --- | --- |
+| Home travel teaser title | `Places I've been.` | `A little further from home.` |
+| Home travel teaser note | `Jordan, Istanbul and Egypt.` | `From Amman's hills to a week in Istanbul. The places, and the bits I remember.` |
+| Home photos teaser note | `Trips and graduation, from my camera roll.` | `Graduation, trips, and whatever made it onto my Instagram.` |
+| Home photos teaser action | `View photos →` | `Take a look around →` |
+| About opening | 4 paragraphs, first one rewritten (`I work in privacy and GRC…`) | plan's exact 3-paragraph replacement not fully applied |
+| Interior ledes (/sites/, /blog/, /life/, /photos/, /connect/) | shortened drafts on each page | longer originals |
+| Gallery failure message | `The gallery could not load. You can still view the photos on Instagram.` | longer variant |
+
+**Kept-original (deliberately unchanged):** figcaption `One room. A lot of freshmen. One piece of advice.`, `Explore my map →` action, `The camera roll.` title, project descriptions for 30-days/rss-ai/token-speed/clipguard, all article bodies, all experience/games/site data.
+
+**Removed per plan:** blog/projects eyebrow preambles, contributions eyebrow + `A small fix still counts.`, Games margin-note, About throat-clearing, experience tabs (visible job stories instead).
+
+## Owner decisions still open
+
+1. **Two typos in the kernel-panic article body** (`src/_data/writing.json`): "a direct threat to **a your** workflow" (extra "a") and "Cannot allocate **memroy**". Bodies are frozen by policy — say the word and I'll fix exactly these two tokens, nothing else.
+2. **Teaser drafts above** — approve, or send any row back to its original (one command each).
+3. **Photos at 320:** keep single-column or go 2-up?
 
 ## Gates
 
-- **B1 (Home/Work/one project)** — pending owner. Questions: does the shorter copy still sound like Qusai? More modern without losing the warm theme? Compact side-by-side mobile photo cards unchanged? Can a visitor identify what he does, find work/contact, and see prototype caveats in a short scan?
-- **B2 (About/reading/Life/Photos)** — pending owner. Automated/manual checks green: ten-second scan, five-second section scan, article measure + outlines, JS-off readability (all jobs, project status, article links, place stories), gallery/map failure fallbacks, print (About + Resume), no new animations (reduced-motion untouched). **Owner items not verifiable here:** real phone look, actual browser zoom at 200%, keyboard walkthrough on a real device.
+- **B1 (Home/Work/one project)** — pending owner: does the shorter copy still sound like Qusai? More modern without losing the warm theme? Compact side-by-side mobile photo cards unchanged? Prototype caveats visible in a short scan?
+- **B2 (About/reading/Life/Photos)** — pending owner. Automated/manual checks green: ten-second scan, five-second scan, article measure + outlines, JS-off readability, failure fallbacks, print (About + Resume), no new animations. **Not verifiable here:** real phone, actual 200% browser zoom, on-device keyboard walkthrough.
 
 ## Not deployed
 
