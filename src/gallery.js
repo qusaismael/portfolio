@@ -181,7 +181,7 @@
                     <span>INSTAGRAM ARCHIVE</span>
                 </div>
                 <h2>The gallery couldn't load this time<span class="accent-dot">.</span></h2>
-                <p>The photos are still there. Instagram is just taking the scenic route. You can see them directly on my profile.</p>
+                <p>The gallery could not load. You can still view the photos on Instagram.</p>
                 <div class="construction-actions">
                     <a href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer" class="see-more instagram-btn">Visit @qusai.pro on Instagram ↗</a>
                     <a href="/life/" class="see-more">Explore Life &amp; Interests →</a>
