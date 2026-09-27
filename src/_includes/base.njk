@@ -31,12 +31,12 @@
     <meta name="twitter:description" content="{{ description | default('Security, privacy, local AI, and whatever else I am figuring out.') }}">
     <meta name="twitter:image" content="{{ site.url }}/pics/social-card.png">
     <link rel="preload" as="image" href="/pfp-440.webp" fetchpriority="high">
-    <link rel="stylesheet" href="/css/style.css?v=soul-gate-a">
+    <link rel="stylesheet" href="/css/style.css?v=20260926-readability">
     <link rel="stylesheet" href="/css/personality.css?v=soul-gate-a">
     <link rel="stylesheet" href="/css/terminal.css?v=soul-gate-a">
     {% if page.url == '/' %}<link rel="stylesheet" href="/css/contributions.css?v=20260911">{% endif %}
-    <link rel="stylesheet" href="/css/print.css?v=20260911" media="print">
-    {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v={% if page.url == '/' %}soul-gate-a-mobile-photos{% else %}20260911{% endif %}">{% endif %}
+    <link rel="stylesheet" href="/css/print.css?v=20260926-readability" media="print">
+    {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v={% if customStyles == '/css/life-preview.css' or customStyles == '/css/life.css' or customStyles == '/css/gallery.css' %}20260926-readability{% else %}20260911{% endif %}">{% endif %}
     {% if page.url == '/' or page.url == '/portfolio/' or page.url == '/connect/' %}
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Person","name":"Qusai Ismael","url":"https://www.qusai.pro","image":"https://www.qusai.pro/pfp.webp","jobTitle":"Privacy & GRC Engineer","sameAs":["https://github.com/qusaismael","https://www.linkedin.com/in/qusaismaeel/","https://medium.com/@qusaismael"]}
@@ -75,11 +75,11 @@
         <img id="memory-image" alt="">
         <p id="memory-caption"></p>
     </dialog>
-    <script src="/script.js?v=20260911" defer></script>
+    <script src="/script.js?v=20260926-readability" defer></script>
     <script src="/js/personality.js?v=20260911-soul" defer></script>
     {% include "terminal.njk" %}
     <script src="/js/terminal.js?v=20260911" defer></script>
-    {% if customScripts %}<script src="{{ customScripts }}?v=20260911" defer></script>{% endif %}
+    {% if customScripts %}<script src="{{ customScripts }}?v={% if customScripts == '/gallery.js' %}20260926-readability{% else %}20260911{% endif %}" defer></script>{% endif %}
     {% if page.url == '/' %}<script src="/js/contributions.js?v=20260911" defer></script>{% endif %}
 </body>
 </html>
