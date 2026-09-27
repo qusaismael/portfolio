@@ -1,0 +1,33 @@
+{
+  "tamperlog": {
+    "description": "My graduation project: a prototype for detecting changes to audit logs.",
+    "cardNote": "Research prototype; not a production security guarantee."
+  },
+  "grc-ai": {
+    "description": "I led a team building a local-AI prototype for reviewing policies against compliance frameworks.",
+    "cardNote": "Hackathon prototype; national top five. AI output still needs human review."
+  },
+  "localllm": {
+    "description": "A Flask interface for running Ollama models on your own machine.",
+    "cardNote": "Runs offline after model download. Hardware needs depend on the model."
+  },
+  "grc-check": {
+    "description": "A privacy and security self-assessment that keeps your answers on your device.",
+    "cardNote": "Self-assessment only; not a compliance certification or professional assessment."
+  },
+  "privacy-check": {
+    "description": "See what your browser reveals about you and what you can change."
+  },
+  "30-days": {
+    "description": "A little tracker for recurring payments. Because remembering every renewal date is not a skill I want to develop."
+  },
+  "rss-ai": {
+    "description": "RSS feeds, summarized with local AI. A way to catch up without opening every tab."
+  },
+  "token-speed": {
+    "description": "What does a token-per-second number actually feel like? This makes the difference visible."
+  },
+  "clipguard": {
+    "description": "A clipboard utility built around a simple rule: what you copy should stay on your device."
+  }
+}

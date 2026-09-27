@@ -37,3 +37,12 @@ test('small personal details survive the editorial cut', () => {
   assert.equal(norm($('#discover-travel-note').text()), 'Jordan, Istanbul and Egypt.');
   assert.equal(norm($('#discover-travel-title').text()), "Places I've been.");
 });
+
+test('project summaries match the reviewed copy without losing their caveats', () => {
+  const expected = require('../fixtures/readability-project-copy.json');
+  const projects = require('../../src/_data/projects.json');
+  assert.deepEqual(Object.keys(expected).sort(), projects.map(p => p.slug).sort());
+  for (const project of projects) {
+    for (const [field, text] of Object.entries(expected[project.slug])) assert.equal(project[field], text, `${project.slug}.${field}`);
+  }
+});
