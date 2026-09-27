@@ -4,5 +4,6 @@
 /new-portfolio/
 /node_modules/
 /_site/
+/preview/
 /test-results/
 /playwright-report/
