@@ -230,16 +230,14 @@
                     '</svg></div>';
             }
 
-            card.innerHTML = 
-                '<div class="gallery-card-media">' +
+            card.innerHTML =
+                '<span class="gallery-card-media">' +
                     '<img src="' + escapeHTML(photo.src) + '" alt="' + escapeHTML(photo.alt) + '" loading="lazy" decoding="async">' +
                     mediaIndicator +
-                    '<div class="card-overlay">' +
-                        '<div class="card-caption">' +
-                            '<span class="card-title">' + escapeHTML(photo.caption || photo.quote) + '</span>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+                '</span>' +
+                '<span class="card-caption"><span class="card-title">' +
+                    escapeHTML(photo.caption || photo.quote || 'Open photo') +
+                '</span></span>';
 
             gallery.appendChild(card);
         });

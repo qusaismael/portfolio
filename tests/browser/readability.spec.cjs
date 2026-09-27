@@ -113,3 +113,46 @@ test('Life stories stay visible when the map script fails', async ({ page }) => 
   expect(style.transform).toBe('none');
   expect(style.blur).toBe('none');
 });
+
+test('photo captions are visible without hover in both themes', async ({ page }) => {
+  const caption = 'A test caption with enough words to occupy several lines at phone width. The full sentence stays readable without hovering over a photo or opening a separate control.';
+  await page.route('https://feeds.behold.so/**', route => route.fulfill({
+    contentType: 'application/json',
+    body: JSON.stringify([{ id: 'readability-fixture', mediaType: 'IMAGE', caption,
+      mediaUrl: '/pics/instagram-egypt.jpg', permalink: 'https://www.instagram.com/p/TEST/' }])
+  }));
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const theme of ['dark', 'light']) {
+    await page.goto('/photos/');
+    await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+    const card = page.locator('.gallery-card').first();
+    await expect(card.locator('.card-title')).toHaveText(caption);
+    const state = await card.evaluate(el => {
+      const p = el.querySelector('.card-caption');
+      const title = p.querySelector('.card-title');
+      const media = el.querySelector('.gallery-card-media');
+      return {
+        below: p.getBoundingClientRect().top >= media.getBoundingClientRect().bottom,
+        opacity: getComputedStyle(p).opacity,
+        font: parseFloat(getComputedStyle(title).fontSize),
+        clipped: title.scrollHeight > title.clientHeight + 1,
+        clamp: getComputedStyle(title).webkitLineClamp
+      };
+    });
+    expect(state.below).toBe(true);
+    expect(state.opacity).toBe('1');
+    expect(state.font).toBeGreaterThanOrEqual(14);
+    expect(state.clipped).toBe(false);
+    expect(['none', '']).toContain(state.clamp);
+    await card.click();
+    await expect(page.locator('#modal-caption')).toHaveText(caption);
+    await page.keyboard.press('Escape');
+  }
+});
+
+test('gallery failure explains the next action without a made-up cause', async ({ page }) => {
+  await page.route('https://feeds.behold.so/**', route => route.abort());
+  await page.goto('/photos/');
+  await expect(page.locator('.under-construction-card p')).toHaveText('The gallery could not load. You can still view the photos on Instagram.');
+  await expect(page.locator('.construction-actions a[href="https://instagram.com/qusai.pro"]')).toBeVisible();
+});
