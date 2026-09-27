@@ -367,7 +367,8 @@
     "/writing/attackers-are-evolving-so-should-we-c67ab9bb5a0b/": [
       "May 12, 2026 · Qusai Ismael",
       "attackers are evolving. so should WE!!!",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Attackers are using AI. That is not a good reason to replace the humans defending the network.",
+      "Originally published on Medium ↗.",
       "Source: Google Threat Intel Group",
       "yeah, that’s real. if you look at the latest from the google threat intelligence group (gtig), the reality is scary: threat actors aren’t playing around. they are scaling up fast, and the bar for entry has never been lower.",
       "state actors are already using AI to hunt for vulnerabilities in embedded devices and routers. cybercriminals are using generative ai to spot high-level semantic logic flaws… like the recent zero-day 2FA bypass on an open-source admin tool that traditional static scanners completely missed. they are actively building autonomous malware like PROMPTSPY and polymorphic evasion tools just to bypass detection.",
@@ -378,13 +379,18 @@
       "we need human intuition augmented by ai, not an empty SOC run by a language model.",
       "DEAR CTOs, INVEST IN YOUR SECURITY BEFORE IT IS TOO LATE.",
       "hire more. the bar to hack has never been this low.THERE ARE MORE THREAT ACTORS THAN EVER, and they have AI too.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/": [
       "Mar 22, 2026 · Qusai Ismael",
       "Tracing a Kernel Panic: What Actually Happens When You Hit “Sleep”?",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "What actually happens when you put a Linux machine to sleep? I followed a kernel panic to find out.",
+      "Originally published on Medium ↗.",
+      "In this article",
+      "The Problem:",
+      "Under the Hood:",
+      "The Fix:",
+      "The Lesson:",
       "Is it as simple as “Closing your eyes”? and what happens to RAM/VRAM?",
       "There is BSOD in Linux too… Source of the image: r/linux_gaming",
       "Usually we don’t think about it.We click a button, the screens go black, the fans spin down, and we walk away. But underneath, a massive, high-stakes logistical operation is happening in milliseconds.",
@@ -411,13 +417,22 @@
       "When building a complex system, you have to look at the entire board.",
       "A GPU crash wasn’t actually a GPU problem; it was a file system and memory allocation bottleneck.You can’t troubleshoot hardware in a vacuum.Everything is interconnected.",
       "Use the logs, find the mechanical truth, fix the root cause, and get back to building.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/the-math-of-success-if-you-are-smart-hardworking-why-aren-t-you-rich-3bdc28d16cd7/": [
       "Feb 27, 2026 · Qusai Ismael",
       "The Math of Success: If you are smart/hardworking, why aren’t you rich?",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Being smart and working hard matter. They just are not the entire equation.",
+      "Originally published on Medium ↗.",
+      "In this article",
+      "The Meritocracy Myth (The Talent vs. Luck Paper)",
+      "The Simulation",
+      "Why “Sacrificing Your 20s” is a Terrible Mathematical Bet",
+      "The Sustainable Life Protocol",
+      "1. The Baseline Rule (Protect the Floor)",
+      "2. Maximize “Luck Surface Area” (Stop Grinding, Start Attracting)",
+      "3. The Anti-Burnout Schedule",
+      "The Final Verdict",
       "We’ve all heard the same advice from social media gurus:",
       "“Sacrifice your 20s. Grind 100 hours a week. Sleep when you’re dead. If you aren’t rich, you just aren’t working hard enough man.”",
       "I bought into this entirely. From age 18 to 20, I operated at absolute maximum capacity. I doubled down on health… hitting the gym daily in university-off months, and eating a hyper-strict diet… I spent every waking hour optimizing my tech stack, mastering Linux, and working as hard as I can.",
@@ -466,13 +481,20 @@
       "The real winners are the ones who get a stable job, try to win small wins that they can affoard to lose, take Fridays off to hang out with their friends, and stay healthy.",
       "If a lucky lightning bolt strikes, your net is wide open to catch it. And if it doesn’t? You have a great job, You are physically healthy, and You get to build what you love. In the worst-case scenario, You still win.",
       "*Note: 0.5 -avg- talent score catches 50% of the good events… and so on.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/static-weights-in-a-dynamic-world-the-case-for-artificial-information-596787d69547/": [
       "Jan 11, 2026 · Qusai Ismael",
       "Static Weights in a Dynamic World: The Case for “Artificial Information”",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "A model can know a lot and still be working with yesterday's world. A few thoughts on that gap.",
+      "Originally published on Medium ↗.",
+      "In this article",
+      "It is Artificial Information, not Artificial Intelligence.",
+      "Here is why the “Intelligence” label is a lie:",
+      "1. The Static Trap",
+      "2. Simulation vs. Reasoning",
+      "3. The Novelty Wall",
+      "But let’s be real about what this is:",
       "It is Artificial Information, not Artificial Intelligence.",
       "We need to stop confusing a massive database with a working mind.",
       "We haven’t built a digital brain — we’ve built the world’s most efficient archive.",
@@ -493,13 +515,13 @@
       "But let’s be real about what this is:",
       "Artificial Information.",
       "Until a machine can rewrite its own code in response to a new stimulus without a human holding its hand, it’s just a glorified encyclopedia.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/don-t-be-a-fan-use-the-tools-not-vice-versa-cea616577eb2/": [
       "Nov 25, 2025 · Qusai Ismael",
       "Don’t be a fan, Use the tools, not vice versa",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Tools are here to serve you. You do not owe a brand your loyalty.",
+      "Originally published on Medium ↗.",
       "Apple Fanboy, Google Fanboy, Linux Fanboy, etc…",
       "I decide to be me instead, I decide to USE the tools instead of being used by them.",
       "Being a linux fanboy is the least destructive of them all,at least you are not an advertising mechanisim to a BigTech that do not care about you at all…",
@@ -507,13 +529,13 @@
       "Use the best tool at the specific problem you want to solve, no matter what kind of tool it is.",
       "A fanboy to a spoon will never be able to cut orange perfectly.Be adaptable. Be a human. Use THE BRAIN.",
       "You can use both Android and iOS at the same time if you need to.It is not an either-or situation.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/stop-letting-your-college-major-define-you-61db61c6e640/": [
       "Nov 11, 2025 · Qusai Ismael",
       "Stop Letting Your College Major Define You",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "The major you chose at 18 is a starting point, not a life sentence.",
+      "Originally published on Medium ↗.",
       "I had a task, which was “You have to speak to +100 freshmen to the IT college, give them ONE advice.”",
       "It was a hard decision to filter out what is my most important advice to this specific type of audience, and it was this…",
       "The major you chose at 18 is a starting point, not a life sentence.",
@@ -529,25 +551,25 @@
       "The most valuable and successful professionals are not the ones who stay in their lane.",
       "They are the ones who are curious enough to look over the fence, learn the language of other disciplines, and connect the dots.",
       "Never, ever let your major be the limit of your ambition.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/writing-it-self-is-a-form-of-art-d0ef5f6563f7/": [
       "Nov 3, 2025 · Qusai Ismael",
       "Writing it self, is a form of art.",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Putting something into words is more than reporting what you think. Sometimes it is how you find out.",
+      "Originally published on Medium ↗.",
       "The way you write.",
       "The way you choose the words to transform your ideas into pixels on a screen.",
       "The way you move the PEN to let it go through space and time to the brain of the reader.",
       "Handwriting is such an another form of writing.",
       "You can really sense the emotions of the writer by just looking at the curves between the lines.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/reject-arm-embrace-x86-79a57093db0f/": [
       "Oct 29, 2025 · Qusai Ismael",
       "Reject ARM, Embrace x86.",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "A slightly opinionated look at ARM, x86, and choosing hardware for what you actually need.",
+      "Originally published on Medium ↗.",
       "Reject Modernity, Embrace Tradition.",
       "When I first unboxed my new ARM laptop, I thought it was the end of an era.This thin, silent machine was a monster.The performance was incredible, the battery lasted forever.“This is it,” I thought.“I can do all my work on this.”",
       "So I sold my x86 desktop.Why be chained to a desk when I have this beast in my backpack?",
@@ -562,13 +584,13 @@
       "My next machine will definitely be an x86 one, inshallah.ONE… Not TWO.",
       "They say a smart person learns from their mistakes.A genius learns from others’.",
       "Have you learned the lesson?",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/ai-bubble-4b16d482a2d8/": [
       "Oct 26, 2025 · Qusai Ismael",
       "AI Bubble.",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Some thoughts on the AI hype, the money behind it, and what might actually last.",
+      "Originally published on Medium ↗.",
       "AI.. AI.. AI…Two characters that get repeated over and over again every day…",
       "All of us have been impressed by the revolution of GPT 3.5 at 2022,,, like“Wow I can speak to him directly????? an answer tailored to ME from HIM????? and HE CAN ANSWER SPECIFIC TOPICS TOO???”",
       "Then GPT 4 came out at 2023,,, and it went like…“WOW, I can send him photos now and he can very well analyze it without needing any text on it??? just like a human????”",
@@ -579,13 +601,13 @@
       "GPT-5 released this year, and honestly…It didn’t manage to impress me more than the previous GPT-4o model.",
       "People don’t care about numeric evaluation of things, People care about tangible improvements of things.",
       "The photo speaks of it self.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ],
     "/writing/you-should-quit-coffee-but-not-caffeine-8cc7e862bb72/": [
       "Oct 24, 2025 · Qusai Ismael",
       "You Should Quit Coffee,,, But Not Caffeine",
-      "Originally published on Medium ↗. Archived here so you can read it without leaving.",
+      "Coffee and caffeine are not the same conversation. Here is why I separate them.",
+      "Originally published on Medium ↗.",
       "There is a simple solution for your energy.",
       "Mostly it will not be an ugly one,,, unless you chose the wrong solution, just to chase the trend.",
       "For a person who wants a bright smile, a daily cup of brown liquid is not the only way.",
@@ -610,8 +632,7 @@
       "Just pure, clean energy.",
       "TAILORED for YOU.",
       "#NOT_AN_AD.",
-      "Want to talk about it?",
-      "I'm always up for a good question, or a different way of looking at something."
+      "Questions or corrections?"
     ]
   }
 }

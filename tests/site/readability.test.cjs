@@ -126,3 +126,21 @@ test('game notes stay even after the duplicated slogan goes', () => {
   assert.equal($('.games-margin-note').length, 0);
   for (const game of require('../../src/_data/games.json')) assert.ok(norm($('main').text()).includes(game.title));
 });
+
+test('articles have visible standfirsts and outlines only where useful', () => {
+  const posts = require('../../src/_data/writing.json');
+  for (const post of posts) {
+    const $ = load(`/writing/${post.slug}/`);
+    assert.equal(norm($('.article-summary').text()), post.excerpt);
+    const headings = $('.article-body h2,.article-body h3').toArray().filter(el => norm($(el).text()));
+    const links = $('.article-outline a').toArray();
+    assert.equal(links.length, headings.length >= 3 ? headings.length : 0);
+    links.forEach((el, i) => {
+      assert.equal($(el).attr('href'), `#${$(headings[i]).attr('id')}`);
+      assert.equal(norm($(el).text()), norm($(headings[i]).text()));
+    });
+    const cheerio = require('cheerio');
+    const original = cheerio.load(post.body, null, false);
+    assert.equal(norm($('.article-body').text()), norm(original.root().text()));
+  }
+});

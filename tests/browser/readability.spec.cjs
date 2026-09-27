@@ -81,3 +81,20 @@ test('all experience remains visible with JavaScript disabled', async ({ browser
     await expect(page.locator('#experience .experience-entry')).toHaveCount(experience.length);
   } finally { await context.close(); }
 });
+
+test('article section links work with JavaScript disabled', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  try {
+    const page = await context.newPage();
+    const post = writing.find(p => p.slug.startsWith('tracing-a-kernel-panic-'));
+    await page.goto(`http://127.0.0.1:4173/writing/${post.slug}/`);
+    await expect(page.locator('.article-summary')).toHaveText(post.excerpt);
+    const first = page.locator('.article-outline a').first();
+    const href = await first.getAttribute('href');
+    await first.click();
+    expect(new URL(page.url()).hash).toBe(href);
+    const top = await page.locator(href).evaluate(el => el.getBoundingClientRect().top);
+    const headerBottom = await page.locator('.site-header').evaluate(el => el.getBoundingClientRect().bottom);
+    expect(top).toBeGreaterThanOrEqual(headerBottom);
+  } finally { await context.close(); }
+});
