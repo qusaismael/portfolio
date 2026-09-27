@@ -70,3 +70,22 @@ test('case study status comes before the full project story', () => {
     for (const field of ['problem', 'built', 'learned']) assert.ok(norm($('.project-story').text()).includes(project[field]));
   }
 });
+
+test('every job story is visible without tabs on About; Home links to the longer version', () => {
+  const jobs = require('../../src/_data/experience.json');
+  for (const route of ['/portfolio/']) {
+    const $ = load(route);
+    assert.equal($('#experience .experience-entry').length, jobs.length);
+    assert.equal($('#experience [role=tablist], #experience [role=tabpanel]').length, 0);
+    const entries = $('#experience .experience-entry').toArray();
+    jobs.forEach((job, index) => {
+      const entry = $(entries[index]);
+      assert.equal(norm(entry.find('h3').first().text()), job.role);
+      for (const text of [job.company, job.dates, job.summary, ...job.bullets]) assert.ok(norm(entry.text()).includes(text));
+      assert.equal(entry.attr('hidden'), undefined);
+    });
+  }
+  const home = load('/');
+  assert.ok(norm(home('#experience h2').text()).includes(`${jobs[0].role} at ${jobs[0].company}`));
+  assert.ok(home('#experience a[href="/portfolio/#experience"]').length);
+});

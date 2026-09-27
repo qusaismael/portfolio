@@ -95,37 +95,6 @@
   $$('[data-close-dialog]').forEach(button => button.addEventListener('click', () => button.closest('dialog')?.close()));
   portrait?.addEventListener('click', e => { if (e.target === portrait) portrait.close(); });
 
-  $$('.exp-tabs-container').forEach(root => {
-    const tabs = [...root.querySelectorAll('[role=tab]')];
-    const panels = [...root.querySelectorAll('[role=tabpanel]')];
-    const mobile = matchMedia('(max-width: 767px)');
-    const setOrientation = () => root.querySelector('[role=tablist]')?.setAttribute('aria-orientation', mobile.matches ? 'horizontal' : 'vertical');
-    mobile.addEventListener('change', setOrientation);
-    setOrientation();
-    function activate(tab, focus = false) {
-      tabs.forEach(t => {
-        const active = t === tab;
-        t.setAttribute('aria-selected', String(active));
-        t.tabIndex = active ? 0 : -1;
-      });
-      panels.forEach(panel => { panel.hidden = panel.id !== tab.getAttribute('aria-controls'); });
-      if (focus) tab.focus();
-    }
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => activate(tab));
-      tab.addEventListener('keydown', e => {
-        let next = index;
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (index + 1) % tabs.length;
-        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
-        else if (e.key === 'Home') next = 0;
-        else if (e.key === 'End') next = tabs.length - 1;
-        else return;
-        e.preventDefault();
-        activate(tabs[next], true);
-      });
-    });
-    if (tabs.length) activate(tabs[0]);
-  });
   $$('[data-print]').forEach(button => button.addEventListener('click', () => window.print()));
 
   const top = $('#back-to-top');

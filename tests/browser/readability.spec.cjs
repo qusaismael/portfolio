@@ -52,3 +52,14 @@ test('metadata is readable without decorative badges', async ({ page }) => {
   expect(values.tagBorder).toBe('0px');
   expect(values.tagSize).toBeGreaterThanOrEqual(13);
 });
+
+test('every experience stays visible on narrow and wide screens', async ({ page }) => {
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/portfolio/');
+    const entries = page.locator('#experience .experience-entry');
+    await expect(entries).toHaveCount(6);
+    for (const entry of await entries.all()) await expect(entry).toBeVisible();
+    await expect(page.locator('#experience [role="tablist"]')).toHaveCount(0);
+  }
+});
