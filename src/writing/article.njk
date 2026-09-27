@@ -21,7 +21,7 @@ ogType: article
   </header>
   <div class="article-layout{% if article.items.length >= 3 %} has-outline{% endif %}">
     {% if article.items.length >= 3 %}
-    <nav class="article-outline" aria-label="In this article">
+    <nav class="article-outline" aria-label="Article sections">
       <h2>In this article</h2>
       <ul>{% for item in article.items %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}</ul>
     </nav>

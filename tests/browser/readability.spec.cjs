@@ -89,6 +89,8 @@ test('article section links work with JavaScript disabled', async ({ browser }) 
     const post = writing.find(p => p.slug.startsWith('tracing-a-kernel-panic-'));
     await page.goto(`http://127.0.0.1:4173/writing/${post.slug}/`);
     await expect(page.locator('.article-summary')).toHaveText(post.excerpt);
+    await expect(page.locator('nav.article-outline')).toHaveAttribute('aria-label', 'Article sections');
+    await expect(page.locator('nav.article-outline h2')).toHaveText('In this article');
     const first = page.locator('.article-outline a').first();
     const href = await first.getAttribute('href');
     await first.click();
@@ -158,8 +160,10 @@ test('gallery failure explains the next action without a made-up cause', async (
 });
 
 test('photo feed marks readiness only after a result or fallback', async ({ page }) => {
+  let release;
+  const feedGate = new Promise(resolve => { release = resolve; });
   await page.route('https://feeds.behold.so/**', async route => {
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await feedGate;
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify([
       { id: 'ready-fixture', mediaType: 'IMAGE', caption: 'Ready after fetch.', mediaUrl: '/pics/instagram-egypt.jpg' }
     ]) });
@@ -167,6 +171,7 @@ test('photo feed marks readiness only after a result or fallback', async ({ page
   await page.goto('/photos/');
   const gallery = page.locator('#photo-gallery');
   await expect(gallery).not.toHaveAttribute('data-feed-ready', 'true');
+  release();
   await expect(gallery).toHaveAttribute('data-feed-ready', 'true');
   await expect(gallery.locator('.gallery-card')).toHaveCount(1);
   await page.unrouteAll();
@@ -176,10 +181,24 @@ test('photo feed marks readiness only after a result or fallback', async ({ page
   await expect(gallery.locator('.under-construction-card')).toBeVisible();
 });
 
+test('gallery card names include their visible labels', async ({ page }) => {
+  await page.route('https://feeds.behold.so/**', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify([
+    { id: 'label-fixture', mediaType: 'IMAGE', caption: 'A visible caption line.', mediaUrl: '/pics/instagram-egypt.jpg' },
+    { id: 'label-fixture-2', mediaType: 'IMAGE', mediaUrl: '/pics/instagram-graduation.jpg' }
+  ]) }));
+  await page.goto('/photos/');
+  const cards = page.locator('.gallery-card');
+  await expect(cards).toHaveCount(2);
+  await expect(cards.nth(0)).toHaveAttribute('aria-label', /A visible caption line\./);
+  const secondLabel = await cards.nth(1).getAttribute('aria-label');
+  const secondVisible = (await cards.nth(1).locator('.card-title').innerText()).trim();
+  expect(secondLabel).toContain(secondVisible);
+});
+
 const essentialText = [
   ['/', '.hero-intro,.hero-current,.discovery-copy p,.project-note'],
   ['/sites/', '.project-content > p:not(.eyebrow)'],
-  ['/portfolio/', '.experience-entry>p,.experience-entry-meta'],
+  ['/portfolio/', '.experience-entry>p,.experience-entry-meta,.experience-entry li'],
   ['/life/', '.visited-stories p,.fact-body']
 ];
 for (const [route, selector] of essentialText) {
@@ -200,11 +219,16 @@ for (const [route, selector] of essentialText) {
               clamp: css.webkitLineClamp,
               hiddenOverflow: ['hidden', 'clip'].includes(css.overflowY),
               tallerThanBox: el.scrollHeight > el.clientHeight + 1,
+              hiddenOverflowX: ['hidden', 'clip'].includes(css.overflowX),
+              widerThanBox: el.scrollWidth > el.clientWidth + 1,
+              ellipsized: css.textOverflow === 'ellipsis',
               left: rect.left, right: rect.right, width: innerWidth
             };
           });
           expect(['none', '']).toContain(state.clamp);
+          expect(state.ellipsized).toBe(false);
           expect(state.hiddenOverflow && state.tallerThanBox).toBe(false);
+          expect(state.hiddenOverflowX && state.widerThanBox).toBe(false);
           expect(state.left).toBeGreaterThanOrEqual(-1);
           expect(state.right).toBeLessThanOrEqual(state.width + 1);
         }

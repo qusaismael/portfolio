@@ -211,7 +211,11 @@
             card.className = 'gallery-card';
             card.setAttribute('data-index', String(index));
             card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('aria-label', (photo.isVideo ? 'Video preview · ' : '') + (photo.alt || ('View photo ' + (index + 1))));
+            var visibleLabel = photo.caption || photo.quote || 'Open photo';
+            var cardLabel = visibleLabel;
+            if (photo.alt && photo.alt.indexOf(visibleLabel) === -1) cardLabel += ' — ' + photo.alt;
+            if (photo.isVideo) cardLabel = 'Video preview · ' + cardLabel;
+            card.setAttribute('aria-label', cardLabel);
             card.addEventListener('click', function () {
                 openPhotoModal(index);
             });
