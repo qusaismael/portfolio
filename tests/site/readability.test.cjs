@@ -17,3 +17,14 @@ test('home introduces a person and shows the current role directly', () => {
   assert.equal($('.hero-copy a[href="/portfolio/"]').length, 1);
   assert.equal($('.hero-copy a[href="/connect/"]').length, 1);
 });
+
+test('home removes redundant preambles and keeps the useful invitations', () => {
+  const $ = load('/');
+  assert.equal($('#blog .eyebrow').length, 0);
+  assert.equal($('#projects .section-heading-row p').length, 0);
+  assert.equal($('.contributions-personal-note').length, 0);
+  assert.equal(norm($('.contributions-intro > p').text()), "Changes I've sent to open-source projects I use.");
+  assert.equal(norm($('#contact > p').text()), 'Email me about a project, a question, or a good Linux story.');
+  assert.equal(norm($('.personal-moment figcaption').text()), 'Speaking to IT freshmen at university.');
+  assert.equal($('.footer-top p').length, 0);
+});
