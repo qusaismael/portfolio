@@ -4,8 +4,9 @@ Branch: `ux/human-readable` (worktree `/opt/data/repos/portfolio-readable`).
 
 ## Commits
 
-- Baseline (diff base): `f995e1cf68a59a4450236e32021faa9db6f9a051` — "fix: restore compact mobile Home photo cards". This commit **is** the compact-card restore; it is the Gate A state the owner approved.
-- Proposed code head: `6afc2b4` — "fix: correct accessible names and harden readability guards" (this record rides in the follow-up docs commit).
+- Original readability diff base: `f995e1cf68a59a4450236e32021faa9db6f9a051` — "fix: restore compact mobile Home photo cards". This commit **is** the compact-card restore and the merge commit for Gate A PR #2.
+- Current integrated baseline: `7121ef4341c7bde7ed6e6be65d23f9f62a6954e2` (`origin/main` when integrated on 2026-09-27), including the compact mobile Games-card fix and capture-metric verification.
+- Proposed integrated code head: `df9314c` — "test: preserve intentional Games teaser clamp after main merge" (this record rides in the follow-up docs commit).
 
 ## Tests actually run (2026-09-27, after final fixes)
 
@@ -17,12 +18,13 @@ Branch: `ux/human-readable` (worktree `/opt/data/repos/portfolio-readable`).
 | `flock … test:browser -- tests/browser/design.spec.cjs tests/browser/smoke.spec.cjs --workers=1` | 12/12 pass |
 | `npm run build` | clean |
 
-Total: 69 tests, 0 failures. Three readability tests hit 30s navigation timeouts during one run under host memory pressure (first three of that run; all three passed in <1s on immediate re-run) — flake, not behavior. Browser runs serialized behind `/opt/data/repos/.site-browser.lock`, one worker.
+Total after integration: 70 tests, 0 failures (4 unit, 39 site, 27 browser). Browser runs serialized behind `/opt/data/repos/.site-browser.lock`, one worker.
 
 ## Capture evidence
 
-- `preview/readability-before/` and `preview/readability-after/`: each **88/88** captures (11 routes × 4 widths × 2 themes), verified complete by `scripts/verify-readability-captures.cjs`: no horizontal overflow, no broken loaded images, no page errors, PNG dimensions match recorded metrics.
-- Comparison pack: `preview/readability/README.md` — 88 matched before/after WebP pairs (`scripts/export-readability-review.cjs`, resumable).
+- `preview/readability-before/`: **88/88** fresh baseline captures generated from integrated `origin/main` commit `7121ef4` in an isolated worktree. `preview/readability-after/`: **88/88** captures generated from the integrated readability branch. Each set covers 11 routes × 4 widths × 2 themes.
+- Both sets pass `scripts/verify-readability-captures.cjs`: no horizontal overflow, no broken loaded images, no page errors, and PNG dimensions match recorded metrics.
+- Comparison pack regenerated after integration: `preview/readability/README.md` — 88 matched current-main/proposed WebP pairs (`scripts/export-readability-review.cjs`, resumable).
 - External feeds: the Behold gallery feed fetched live during the after-capture; no feed failure in the recorded run. Failure paths are tested separately (gallery fallback, map-script failure, feed-readiness gating).
 - Artifact-size decision: the 176-image WebP pack is **29 MB**, kept **local** (gitignored) as a one-time review pack; only this record is committed.
 
@@ -88,6 +90,6 @@ Second batch (deleg_889401b0 code + visual audit):
 - **B1 (Home/Work/one project)** — pending owner: does the shorter copy still sound like Qusai? More modern without losing the warm theme? Compact side-by-side mobile photo cards unchanged? Prototype caveats visible in a short scan?
 - **B2 (About/reading/Life/Photos)** — pending owner. Automated/manual checks green: ten-second scan, five-second scan, article measure + outlines, JS-off readability, failure fallbacks, print (About + Resume), no new animations. **Not verifiable here:** real phone, actual 200% browser zoom, on-device keyboard walkthrough.
 
-## Not deployed
+## Release state
 
-No push, no merge, no live deploy. Live site unchanged. PR #2 (https://github.com/qusaismael/portfolio/pull/2) is still the Gate A draft; this branch is un-pushed.
+PR #2 (https://github.com/qusaismael/portfolio/pull/2) was merged at `2026-09-27T07:22:57Z`; it contains Gate A, not this readability branch. `ux/human-readable` remains local and unpushed, so these readability changes have not been submitted through a new PR. Deployment/live-site state was not independently verified and is intentionally not claimed here.
