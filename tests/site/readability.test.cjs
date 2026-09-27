@@ -158,3 +158,12 @@ test('place notes are in ordinary HTML and agree with the map controls', () => {
     assert.equal($(`#place-story-${place.id}`).parents('noscript,details,[hidden]').length, 0);
   }
 });
+
+test('Life stories and setup notes keep their substance without numbered decoration', () => {
+  const $ = load('/life/');
+  assert.equal($('.fact-card').length, 3);
+  assert.equal($('.fact-index,.fact-card-watermark,.tech-card-footer').length, 0);
+  assert.deepEqual($('.tech-card-badge').map((_, el) => norm($(el).text())).get(), [
+    'Daily driver OS', 'VPN', 'Router', 'Open source', 'macOS firewall', 'Virtual machines', 'macOS automation'
+  ]);
+});

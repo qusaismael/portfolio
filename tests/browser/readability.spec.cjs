@@ -98,3 +98,18 @@ test('article section links work with JavaScript disabled', async ({ browser }) 
     expect(top).toBeGreaterThanOrEqual(headerBottom);
   } finally { await context.close(); }
 });
+
+test('Life stories stay visible when the map script fails', async ({ page }) => {
+  await page.route('**/js/globe.js*', route => route.abort());
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto('/life/');
+  const places = require('../../src/_data/visitedPlaces.json');
+  for (const place of places) await expect(page.locator(`#place-story-${place.id} p`)).toHaveText(place.note);
+  await expect(page.locator('.visited-stories')).toBeVisible();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const story = page.locator('.fact-card').first();
+  await story.hover();
+  const style = await story.evaluate(el => ({ transform: getComputedStyle(el).transform, blur: getComputedStyle(el).backdropFilter }));
+  expect(style.transform).toBe('none');
+  expect(style.blur).toBe('none');
+});
