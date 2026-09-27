@@ -92,4 +92,4 @@ Second batch (deleg_889401b0 code + visual audit):
 
 ## Release state
 
-PR #2 (https://github.com/qusaismael/portfolio/pull/2) was merged at `2026-09-27T07:22:57Z`; it contains Gate A, not this readability branch. `ux/human-readable` remains local and unpushed, so these readability changes have not been submitted through a new PR. Deployment/live-site state was not independently verified and is intentionally not claimed here.
+PR #2 (https://github.com/qusaismael/portfolio/pull/2) was merged at `2026-09-27T07:22:57Z`; it contains Gate A, not this readability branch. This branch is published as **draft PR #3** (https://github.com/qusaismael/portfolio/pull/3) at head `57b6db0`; CI run [36322754699](https://github.com/qusaismael/portfolio/actions/runs/36322754699) passed (build, site, unit, browser). Open as a draft for owner review — **not merged, nothing live changed**. Deployment happens only on merge to `main`.
