@@ -257,12 +257,11 @@
       "The gallery loads from Instagram. If it cannot load here, you can still see the photos on my profile."
     ],
     "/connect/": [
-      "There is a person on the other end",
-      "Let's talk.",
-      "A project, a question, something you think I'd find interesting. Or just hi. That works too.",
+      "Say hi.",
+      "Email is the easiest way to reach me.",
       "Qusai Ismael",
       "Privacy & GRC Engineer · Jordan",
-      "For the encrypted version",
+      "Encrypted email",
       "Here's my GPG fingerprint. You can get the public key from the keyserver."
     ],
     "/resume/": [
