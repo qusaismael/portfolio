@@ -46,3 +46,16 @@ test('project summaries match the reviewed copy without losing their caveats', (
     for (const [field, text] of Object.entries(expected[project.slug])) assert.equal(project[field], text, `${project.slug}.${field}`);
   }
 });
+
+test('project caveats appear on Home and Work cards', () => {
+  const projects = require('../../src/_data/projects.json');
+  for (const route of ['/', '/sites/']) {
+    const $ = load(route);
+    const cards = $('.project-card-enhanced').toArray();
+    const expected = route === '/' ? projects.filter(p => p.featured) : projects;
+    assert.equal(cards.length, expected.length);
+    expected.forEach((project, index) => {
+      assert.equal(norm($(cards[index]).find('.project-note').text()), project.cardNote || '');
+    });
+  }
+});

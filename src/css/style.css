@@ -101,6 +101,7 @@ section,[id]{scroll-margin-top:calc(var(--header-offset,var(--header-height)) + 
 .project-content h3 a:hover,.project-content h3 a:focus-visible{text-decoration:underline;text-underline-offset:.2em}
 .project-content h3 a{text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:44px}
 .project-title-arrow{font-size:1.25rem;color:var(--accent-color)}.project-content>p{color:var(--muted-text);font-size:1rem;line-height:1.7;max-width:52ch}
+.project-content>.project-note{font-size:.875rem;line-height:1.6;color:var(--text-color);margin:0 0 16px;max-width:52ch}
 .tags{display:flex;flex-wrap:wrap;gap:6px 16px}.tags span{display:inline-flex;align-items:center;min-height:26px;border:0;border-radius:0;padding:0;font:.8125rem/1.5 var(--font-mono);color:var(--muted-text)}
 .project-actions{display:flex;gap:20px;flex-wrap:wrap;padding-top:20px;margin-top:auto}
 .project-actions a{font-size:.875rem;font-weight:550;min-height:44px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}.project-actions a:hover{text-decoration:underline}
