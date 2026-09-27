@@ -104,3 +104,25 @@ test('About keeps the personal story but drops generic throat-clearing', () => {
   assert.equal($('#references .eyebrow').length, 0);
   assert.equal($('#references blockquote').length, 2);
 });
+
+const interiorCopy = [
+  ['/sites/', 'Security projects, local AI and small web tools.', "Things I've built."],
+  ['/blog/', "Notes on security, software and whatever I'm trying to understand.", 'Notes & rabbit holes.'],
+  ['/life/', "Places I've been, games I love and the tools I use.", 'A little more life.'],
+  ['/photos/', 'Trips and graduation photos from @qusai.pro.', 'The camera roll.'],
+  ['/connect/', 'Email is the easiest way to reach me.', 'Say hi.']
+];
+for (const [route, lede, title] of interiorCopy) {
+  test(`plain introduction ${route}`, () => {
+    const $ = load(route);
+    assert.equal(norm($('h1').text()), title);
+    assert.equal(norm($('.page-heading .page-lede').text()), lede);
+    assert.equal($('.page-heading .eyebrow').length, 0);
+  });
+}
+
+test('game notes stay even after the duplicated slogan goes', () => {
+  const $ = load('/games/');
+  assert.equal($('.games-margin-note').length, 0);
+  for (const game of require('../../src/_data/games.json')) assert.ok(norm($('main').text()).includes(game.title));
+});

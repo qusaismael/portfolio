@@ -54,9 +54,8 @@
       "My GPG fingerprint:"
     ],
     "/sites/": [
-      "A few ideas that became code",
       "Things I've built.",
-      "Some started with a security question.Others started with “surely I can make a tool for that.”",
+      "Security projects, local AI and small web tools.",
       "Selected projects.",
       "TamperLog ↗",
       "My graduation project: a prototype for detecting changes to audit logs.",
@@ -70,8 +69,7 @@
       "GRC Check ↗",
       "A privacy and security self-assessment that keeps your answers on your device.",
       "Self-assessment only; not a compliance certification or professional assessment.",
-      "Small tools, real uses.",
-      "A collection of little web apps. Open one and have a look around.",
+      "Tools.",
       "Privacy Check ↗",
       "See what your browser reveals about you and what you can change.",
       "30 Days From Today ↗",
