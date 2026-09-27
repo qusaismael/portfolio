@@ -130,29 +130,35 @@ test('mobile Home photograph cards return to compact side-by-side previews', asy
   }
 });
 
-test('mobile Games card keeps its expanded artwork and full description', async ({ page }) => {
+test('mobile Games card matches the compact format of the photo cards', async ({ page }) => {
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/');
+    const photoWidth = await page.locator('.discovery-photo').first().evaluate(el => el.getBoundingClientRect().width);
     const card = page.locator('.life-discovery-games');
     const state = await card.evaluate(el => {
-      const photo = el.querySelector('.discovery-game-preview');
-      const paragraph = el.querySelector('.discovery-copy p');
-      const preview = photo.getBoundingClientRect();
+      const media = el.querySelector('.discovery-game-preview');
+      const description = el.querySelector('.discovery-copy p');
+      const box = media.getBoundingClientRect();
       return {
         display: getComputedStyle(el).display,
-        previewWidth: preview.width,
-        cardWidth: el.getBoundingClientRect().width,
+        columns: getComputedStyle(el).gridTemplateColumns,
+        mediaWidth: box.width,
+        mediaHeight: box.height,
+        cardHeight: el.getBoundingClientRect().height,
         titlesVisible: getComputedStyle(el.querySelector('.discovery-game-titles')).display !== 'none',
-        clipped: paragraph.scrollHeight > paragraph.clientHeight + 1,
-        clamp: getComputedStyle(paragraph).webkitLineClamp
+        clamp: getComputedStyle(description).webkitLineClamp,
+        paragraphLines: description.getBoundingClientRect().height / parseFloat(getComputedStyle(description).lineHeight)
       };
     });
-    expect(state.display).toBe('flex');
-    expect(Math.abs(state.previewWidth - state.cardWidth)).toBeLessThanOrEqual(2);
-    expect(state.titlesVisible).toBe(true);
-    expect(state.clipped).toBe(false);
-    expect(['none', '']).toContain(state.clamp);
+    expect(state.display).toBe('grid');
+    expect(parseFloat(state.columns)).toBeCloseTo(88, 0);
+    expect(state.mediaWidth).toBeCloseTo(photoWidth, 0);
+    expect(state.mediaHeight).toBeGreaterThanOrEqual(88);
+    expect(state.cardHeight).toBeLessThan(230);
+    expect(state.titlesVisible).toBe(false);
+    expect(state.clamp).toBe('1');
+    expect(state.paragraphLines).toBeLessThan(1.1);
   }
 });
 

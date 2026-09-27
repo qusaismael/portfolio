@@ -4,7 +4,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { waitForReady, stopServer, verifyCaptureResponse } = require('./capture-server.cjs');
-const { publishCapture } = require('./capture-files.cjs');
+const { publishCapture, verifyCaptureMetrics } = require('./capture-files.cjs');
 
 const origin = 'http://127.0.0.1:4173';
 const article = '/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/';
@@ -103,6 +103,7 @@ const fullRoutes = ['/', '/portfolio/', '/sites/', '/projects/localllm/', '/blog
       }
     }
     if (server.exitCode !== null || server.signalCode !== null) throw new Error('Preview server exited before publication');
+    await verifyCaptureMetrics(staging);
     await publishCapture(staging, directory);
     staging = undefined;
     console.log(`Captured ${metrics.length} page/theme/viewport combinations in ${directory}`);
