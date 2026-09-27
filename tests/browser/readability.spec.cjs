@@ -156,3 +156,41 @@ test('gallery failure explains the next action without a made-up cause', async (
   await expect(page.locator('.under-construction-card p')).toHaveText('The gallery could not load. You can still view the photos on Instagram.');
   await expect(page.locator('.construction-actions a[href="https://instagram.com/qusai.pro"]')).toBeVisible();
 });
+
+const essentialText = [
+  ['/', '.hero-intro,.hero-current,.discovery-copy p,.project-note'],
+  ['/sites/', '.project-content > p:not(.eyebrow)'],
+  ['/portfolio/', '.experience-entry>p,.experience-entry-meta'],
+  ['/life/', '.visited-stories p,.fact-body']
+];
+for (const [route, selector] of essentialText) {
+  test(`essential text is never clipped on ${route}`, async ({ page }) => {
+    for (const width of [320, 390, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(route);
+      for (const theme of ['dark', 'light']) {
+        await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+        const nodes = page.locator(selector);
+        expect(await nodes.count()).toBeGreaterThan(0);
+        for (const node of await nodes.all()) {
+          await expect(node).toBeVisible();
+          const state = await node.evaluate(el => {
+            const css = getComputedStyle(el);
+            const rect = el.getBoundingClientRect();
+            return {
+              clamp: css.webkitLineClamp,
+              hiddenOverflow: ['hidden', 'clip'].includes(css.overflowY),
+              tallerThanBox: el.scrollHeight > el.clientHeight + 1,
+              left: rect.left, right: rect.right, width: innerWidth
+            };
+          });
+          expect(['none', '']).toContain(state.clamp);
+          expect(state.hiddenOverflow && state.tallerThanBox).toBe(false);
+          expect(state.left).toBeGreaterThanOrEqual(-1);
+          expect(state.right).toBeLessThanOrEqual(state.width + 1);
+        }
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+      }
+    }
+  });
+}
