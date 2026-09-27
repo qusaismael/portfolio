@@ -53,6 +53,9 @@ const fullRoutes = ['/', '/portfolio/', '/sites/', '/projects/localllm/', '/blog
               const response = await page.goto(origin + route, { waitUntil: 'domcontentloaded', timeout: 60000 });
               verifyCaptureResponse(response, marker);
               if (!response.ok()) throw new Error(`${route}: HTTP ${response.status()}`);
+              if (route === '/photos/') {
+                await page.locator('#photo-gallery[data-feed-ready="true"]').waitFor({ timeout: 15000 });
+              }
               await page.evaluate(async () => {
                 await document.fonts.ready;
                 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));

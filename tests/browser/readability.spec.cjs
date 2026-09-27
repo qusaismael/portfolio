@@ -157,6 +157,25 @@ test('gallery failure explains the next action without a made-up cause', async (
   await expect(page.locator('.construction-actions a[href="https://instagram.com/qusai.pro"]')).toBeVisible();
 });
 
+test('photo feed marks readiness only after a result or fallback', async ({ page }) => {
+  await page.route('https://feeds.behold.so/**', async route => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await route.fulfill({ contentType: 'application/json', body: JSON.stringify([
+      { id: 'ready-fixture', mediaType: 'IMAGE', caption: 'Ready after fetch.', mediaUrl: '/pics/instagram-egypt.jpg' }
+    ]) });
+  });
+  await page.goto('/photos/');
+  const gallery = page.locator('#photo-gallery');
+  await expect(gallery).not.toHaveAttribute('data-feed-ready', 'true');
+  await expect(gallery).toHaveAttribute('data-feed-ready', 'true');
+  await expect(gallery.locator('.gallery-card')).toHaveCount(1);
+  await page.unrouteAll();
+  await page.route('https://feeds.behold.so/**', route => route.abort());
+  await page.reload();
+  await expect(gallery).toHaveAttribute('data-feed-ready', 'true');
+  await expect(gallery.locator('.under-construction-card')).toBeVisible();
+});
+
 const essentialText = [
   ['/', '.hero-intro,.hero-current,.discovery-copy p,.project-note'],
   ['/sites/', '.project-content > p:not(.eyebrow)'],

@@ -276,6 +276,7 @@
             renderFallback(gallery);
         } finally {
             if (timeout) clearTimeout(timeout);
+            gallery.dataset.feedReady = 'true';
         }
     }
 
