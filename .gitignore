@@ -7,3 +7,7 @@
 /preview/
 /test-results/
 /playwright-report/
+/preview/readability-before/
+/preview/readability-after/
+/preview/readability/*.webp
+/preview/readability/README.md

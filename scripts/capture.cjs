@@ -13,7 +13,9 @@ const fullRoutes = ['/', '/portfolio/', '/sites/', '/projects/localllm/', '/blog
   '/life/', '/games/', '/photos/', '/connect/', '/resume/'];
 (async () => {
   const phase = process.argv[2];
-  if (!['before', 'after'].includes(phase)) throw new Error('Use: node scripts/capture.cjs before|after [--full]');
+  if (!['before', 'after', 'readability-before', 'readability-after'].includes(phase)) {
+    throw new Error('Use: node scripts/capture.cjs before|after|readability-before|readability-after [--full]');
+  }
   const routes = process.argv.includes('--full') ? fullRoutes : coreRoutes;
   const directory = path.join('preview', phase);
   const marker = randomUUID();
@@ -51,6 +53,9 @@ const fullRoutes = ['/', '/portfolio/', '/sites/', '/projects/localllm/', '/blog
               const response = await page.goto(origin + route, { waitUntil: 'domcontentloaded', timeout: 60000 });
               verifyCaptureResponse(response, marker);
               if (!response.ok()) throw new Error(`${route}: HTTP ${response.status()}`);
+              if (route === '/photos/') {
+                await page.locator('#photo-gallery[data-feed-ready="true"]').waitFor({ timeout: 15000 });
+              }
               await page.evaluate(async () => {
                 await document.fonts.ready;
                 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));

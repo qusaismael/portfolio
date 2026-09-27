@@ -43,7 +43,9 @@
  .discovery-game-kicker{font-size:.65rem}
  .discovery-copy{padding:14px 16px;min-width:0}
  .discovery-copy h3{font-size:1.05rem;margin:0 0 6px}
- .discovery-copy p{font-size:.875rem;margin:0 0 8px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+ .discovery-copy p{font-size:.875rem;line-height:1.7;margin:0 0 8px}
+ .life-discovery:not(.life-discovery-games) .discovery-copy p{display:block;overflow:visible;-webkit-line-clamp:none}
+ .life-discovery-games .discovery-copy p{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
  .discovery-action{border-top:0;padding-top:6px;min-height:44px;font-size:.8125rem}
 }
 @media(prefers-reduced-motion:reduce){.life-discovery{transition:none}.life-discovery:hover,.life-discovery:focus-visible{transform:none}}

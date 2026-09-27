@@ -1,0 +1,12 @@
+[
+  {"id":"amman","city":"Amman","country":"Jordan (Spawn Point)","flag":"🇯🇴","lat":"31.9566","lon":"35.9457","note":"My spawn point! The hills, the Roman Theater, the energy. Amman is home."},
+  {"id":"zarqa","city":"Zarqa","country":"Jordan","flag":"🇯🇴","lat":"32.0500","lon":"36.1000","note":"A lot of my childhood was here, with family and friends. My roots, basically."},
+  {"id":"aqaba","city":"Aqaba","country":"Jordan","flag":"🇯🇴","lat":"29.5267","lon":"35.0078","note":"Red Sea, beach, no rush. A very good combination."},
+  {"id":"jarash","city":"Jarash","country":"Jordan","flag":"🇯🇴","lat":"32.2723","lon":"35.8914","note":"Walking between those ancient columns really does feel like going back in time."},
+  {"id":"ajloun","city":"Ajloun","country":"Jordan","flag":"🇯🇴","lat":"32.3333","lon":"35.7500","note":"Pine forests and an old castle. I loved how green it was."},
+  {"id":"deadsea","city":"Dead Sea","country":"Jordan","flag":"🇯🇴","lat":"31.5000","lon":"35.5000","note":"Lowest elevation on Earth (-430m), can't go lower!"},
+  {"id":"istanbul","city":"Istanbul","country":"Turkey","flag":"🇹🇷","lat":"41.0082","lon":"28.9784","note":"A week that felt very different from home. I loved the scenery too."},
+  {"id":"jeddah","city":"Jeddah","country":"Saudi Arabia","flag":"🇸🇦","lat":"21.4858","lon":"39.1925","note":"Walking along the Red Sea felt like being in a movie."},
+  {"id":"medina","city":"Medina","country":"Saudi Arabia","flag":"🇸🇦","lat":"24.4672","lon":"39.6111","note":"Such a peaceful city"},
+  {"id":"sharm","city":"Sharm El Sheikh","country":"Egypt","flag":"🇪🇬","lat":"27.9158","lon":"34.3299","note":"Great hospitality, and conversations with people from all over the world. That was my favorite part."}
+]

@@ -725,25 +725,23 @@
 }
 
 .tech-card {
-    background: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 1.5rem;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    border-radius: 0;
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
     position: relative;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: none;
 }
 
 .tech-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-color);
-    box-shadow: var(--shadow-hover);
+    transform: none;
+    border-color: var(--border-color);
+    box-shadow: none;
 }
 
 .tech-card-top {
@@ -766,14 +764,13 @@
 }
 
 .tech-card-badge {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--accent-color);
-    background: rgba(var(--primary-color-rgb), 0.06);
-    border: 1px solid var(--border-color);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--border-radius-pill);
-    text-transform: uppercase;
+    font: .8125rem/1.5 var(--font-sans);
+    color: var(--muted-text);
+    background: none;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    text-transform: none;
 }
 
 .tech-card-title {
@@ -790,19 +787,6 @@
     margin: 0;
 }
 
-.tech-card-footer {
-    margin-top: 1.25rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--light-gray);
-}
-
-.tech-card-rec {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-text);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
 
 /* Fun Facts Section */
 .fun-facts-list {
@@ -812,36 +796,22 @@
 }
 
 .fact-card {
-    background: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    padding: 1.75rem 2rem;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    border-radius: 0;
+    padding: 24px 0;
     position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
+    overflow: visible;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: none;
 }
 
 .fact-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent-color);
-    box-shadow: var(--shadow-hover);
-}
-
-.fact-card-watermark {
-    position: absolute;
-    top: 0.75rem;
-    right: 1.5rem;
-    font-family: var(--font-mono);
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: var(--text-color);
-    opacity: 0.05;
-    pointer-events: none;
-    line-height: 1;
+    transform: none;
+    border-color: var(--border-color);
+    box-shadow: none;
 }
 
 .fact-card-header {
@@ -851,17 +821,6 @@
     margin-bottom: 0.85rem;
 }
 
-.fact-index {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent-color);
-    background: var(--hover-background);
-    border: 1px solid var(--border-color);
-    padding: 0.2rem 0.55rem;
-    border-radius: 6px;
-    text-transform: uppercase;
-}
 
 .fact-title {
     font-size: 1.2rem;
@@ -1028,9 +987,7 @@
         grid-template-columns: 1fr;
     }
 
-    .fact-card {
-        padding: 1.35rem 1.5rem;
-    }
+    .fact-card { padding: 24px 0; }
 
     .gaming-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1234,7 +1191,7 @@
 .globe-bucket-trigger { text-align:left; font:inherit; color:var(--text-color); }
 .bucket-card-reason { display:block; margin-bottom:1.25rem; }
 .bucket-card-reason,.tech-card-desc { color:var(--muted-text); }
-.fact-card-watermark { display:none; }
+
 .hud-pulse-dot { animation:none; }
 .game-card-life { min-height:190px; }
 /* The full collection has its own page; Life keeps compact, real links. */
@@ -1257,3 +1214,10 @@ html:not(.js) .globe-canvas-col, html:not(.js) .globe-chips-wrapper { display:no
  .globe-chip { font-size:.75rem; padding:8px; }
  .fun-facts-list,.tech-stack-grid,.gaming-grid,.bucket-list-grid { grid-template-columns:minmax(0,1fr); }
 }
+.travel-stories{margin-top:32px}
+.visited-stories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 32px;list-style:none;padding:0;margin:20px 0 0}
+.visited-stories>li{margin:0;padding-top:16px;border-top:1px solid var(--border-color);min-width:0}
+.visited-stories h4{font-size:1rem;line-height:1.4;letter-spacing:0;margin-bottom:6px}
+.visited-stories p{font-size:1rem;line-height:1.7;margin:0;max-width:60ch;color:var(--text-color)}
+.fact-body{max-width:68ch}
+@media(max-width:767px){.visited-stories{grid-template-columns:minmax(0,1fr)}}
