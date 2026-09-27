@@ -63,3 +63,11 @@ test('every experience stays visible on narrow and wide screens', async ({ page 
     await expect(page.locator('#experience [role="tablist"]')).toHaveCount(0);
   }
 });
+
+test('About print keeps the contact email and job narratives', async ({ page }) => {
+  await page.goto('/portfolio/');
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('#contact')).toBeVisible();
+  await expect(page.locator('#contact .button-row a[href^="mailto:"]')).toBeVisible();
+  for (const entry of await page.locator('#experience .experience-entry').all()) await expect(entry).toBeVisible();
+});

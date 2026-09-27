@@ -89,3 +89,14 @@ test('every job story is visible without tabs on About; Home links to the longer
   assert.ok(norm(home('#experience h2').text()).includes(`${jobs[0].role} at ${jobs[0].company}`));
   assert.ok(home('#experience a[href="/portfolio/#experience"]').length);
 });
+
+test('About keeps the personal story but drops generic throat-clearing', () => {
+  const $ = load('/portfolio/');
+  assert.equal($('.about-heading .eyebrow').length, 0);
+  assert.match(norm($('#about > p').first().text()), /privacy and GRC.*security tools.*AI models locally/);
+  assert.match(norm($('#about').text()), /My dad is a computer engineer/);
+  assert.match(norm($('#about').text()), /I'm based in Jordan/);
+  assert.equal($('#projects .section-heading-row p').length, 0);
+  assert.equal($('#references .eyebrow').length, 0);
+  assert.equal($('#references blockquote').length, 2);
+});
