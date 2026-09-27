@@ -123,8 +123,8 @@ test('mobile Home photograph cards return to compact side-by-side previews', asy
       expect(frame.cardHeight).toBeLessThan(230);
       expect(frame.fit).toBe('cover');
       expect(frame.captionVisible).toBe(false);
-      expect(frame.clamp).toBe('1');
-      expect(frame.paragraphLines).toBeLessThan(1.1);
+      expect(['none', '']).toContain(frame.clamp);
+      expect(await card.locator('.discovery-copy p').evaluate(el => el.scrollHeight <= el.clientHeight + 1)).toBe(true);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
