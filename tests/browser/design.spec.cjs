@@ -5,10 +5,10 @@ test('reading and metadata typography has explicit comfortable bounds', async ({
   await page.goto('/blog/');
   const sizes = await page.evaluate(() => ({
     body: parseFloat(getComputedStyle(document.body).fontSize),
-    eyebrow: parseFloat(getComputedStyle(document.querySelector('.eyebrow')).fontSize)
+    metadata: parseFloat(getComputedStyle(document.querySelector('.writing-entry time')).fontSize)
   }));
   expect(sizes.body).toBeGreaterThanOrEqual(16);
-  expect(sizes.eyebrow).toBeGreaterThanOrEqual(13);
+  expect(sizes.metadata).toBeGreaterThanOrEqual(13);
   await page.goto('/sites/');
   const cardMetaSize = await page.locator('.project-content .eyebrow').first().evaluate(el => parseFloat(getComputedStyle(el).fontSize));
   expect(cardMetaSize).toBeGreaterThanOrEqual(13);

@@ -107,7 +107,7 @@ test('About keeps the personal story but drops generic throat-clearing', () => {
 
 const interiorCopy = [
   ['/sites/', 'Security projects, local AI and small web tools.', "Things I've built."],
-  ['/blog/', "Notes on security, software and whatever I'm trying to understand.", 'Notes & rabbit holes.'],
+  ['/blog/', 'Security, software, and the occasional detour. Writing helps me figure out what I actually think.', 'Notes & rabbit holes.'],
   ['/life/', "Places I've been, games I love and the tools I use.", 'A little more life.'],
   ['/photos/', 'Trips and graduation photos from @qusai.pro.', 'The camera roll.'],
   ['/connect/', 'Email is the easiest way to reach me.', 'Say hi.']
