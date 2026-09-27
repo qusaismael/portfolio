@@ -22,20 +22,25 @@ test('home removes redundant preambles and keeps the useful invitations', () => 
   const $ = load('/');
   assert.equal($('#blog .eyebrow').length, 0);
   assert.equal($('#projects .section-heading-row p').length, 0);
-  assert.equal($('.contributions-personal-note').length, 1);
-  assert.equal(norm($('.contributions-intro > p:not(.contributions-personal-note)').text()), "Changes I've sent to open-source projects I use.");
+  assert.equal($('.contributions-personal-note').length, 0);
+  assert.equal(norm($('.contributions-intro > p').text()), "Changes I've sent to open-source projects I use.");
   assert.equal(norm($('#contact > p').text()), 'Email me about a project, a question, or a good Linux story.');
-  assert.equal(norm($('.personal-moment figcaption').text()), 'One room. A lot of freshmen. One piece of advice.');
   assert.equal($('.footer-top p').length, 0);
 });
 
 test('small personal details survive the editorial cut', () => {
   const $ = load('/');
   assert.equal(norm($('.personal-moment figcaption').text()), 'One room. A lot of freshmen. One piece of advice.');
-  assert.ok(norm($('.contributions-intro').text()).includes('A small fix still counts.'));
-  assert.equal(norm($('#discover-photos-note').text()), 'Trips and graduation, from my camera roll.');
-  assert.equal(norm($('#discover-travel-note').text()), 'Jordan, Istanbul and Egypt.');
-  assert.equal(norm($('#discover-travel-title').text()), "Places I've been.");
+});
+
+test('drafted Home teaser copy is frozen pending owner sign-off', () => {
+  const $ = load('/');
+  // Draft strings awaiting B1 approval. Originals stay in comments so provenance is auditable.
+  assert.equal(norm($('#discover-travel-title').text()), "Places I've been."); // was "A little further from home."
+  assert.equal(norm($('#discover-travel-note').text()), 'Jordan, Istanbul and Egypt.'); // was "From Amman's hills to a week in Istanbul. The places, and the bits I remember."
+  assert.equal(norm($('#discover-photos-note').text()), 'Trips and graduation, from my camera roll.'); // was "Graduation, trips, and whatever made it onto my Instagram."
+  assert.equal(norm($('#discover-travel-note').closest('a').find('.discovery-action').text()), 'Explore my map →'); // original kept
+  assert.equal(norm($('#discover-photos-note').closest('a').find('.discovery-action').text()), 'View photos →'); // was "Take a look around →"
 });
 
 test('project summaries match the reviewed copy without losing their caveats', () => {
