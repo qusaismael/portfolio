@@ -6,7 +6,7 @@ const fs = require('node:fs/promises');
 const os = require('node:os');
 const path = require('node:path');
 const { waitForReady, stopServer, verifyCaptureResponse } = require('../../scripts/capture-server.cjs');
-const { publishCapture } = require('../../scripts/capture-files.cjs');
+const { publishCapture, verifyCaptureMetrics } = require('../../scripts/capture-files.cjs');
 
 function child() {
   const server = new EventEmitter();
@@ -108,22 +108,39 @@ test('a failed publication restores the previous complete capture', async () => 
   }
 });
 
+function pngFixture(width, height) {
+  const header = Buffer.alloc(24);
+  for (const [index, byte] of [137, 80, 78, 71, 13, 10, 26, 10].entries()) header[index] = byte;
+  header.writeUInt32BE(13, 8);
+  header.write('IHDR', 12, 'ascii');
+  header.writeUInt32BE(width, 16);
+  header.writeUInt32BE(height, 20);
+  return header;
+}
+
 test('published capture metrics match the actual PNG dimensions', async () => {
-  for (const phase of ['before', 'after']) {
-    const metrics = JSON.parse(await fs.readFile(path.join('preview', phase, 'metrics.json'), 'utf8'));
-    for (const record of metrics) {
-      const handle = await fs.open(record.file, 'r');
-      try {
-        const header = Buffer.alloc(24);
-        const { bytesRead } = await handle.read(header, 0, header.length, 0);
-        assert.equal(bytesRead, 24, `truncated ${record.file}`);
-        assert.deepEqual([...header.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
-        assert.equal(header.readUInt32BE(16), record.viewport[0], `width drift: ${record.file}`);
-        assert.equal(header.readUInt32BE(20), record.height, `height drift: ${record.file}`);
-      } finally {
-        await handle.close();
-      }
-    }
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'portfolio-metrics-test-'));
+  try {
+    await fs.writeFile(path.join(root, 'home-390-dark.png'), pngFixture(390, 7598));
+    await fs.writeFile(path.join(root, 'metrics.json'), JSON.stringify([
+      { route: '/', theme: 'dark', file: 'preview/after/home-390-dark.png', viewport: [390, 844], height: 7598 }
+    ]));
+    assert.equal(await verifyCaptureMetrics(root), 1);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
+test('capture metrics reject any PNG dimension drift', async () => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'portfolio-metrics-test-'));
+  try {
+    await fs.writeFile(path.join(root, 'home-390-dark.png'), pngFixture(390, 9999));
+    await fs.writeFile(path.join(root, 'metrics.json'), JSON.stringify([
+      { route: '/', theme: 'dark', file: 'home-390-dark.png', viewport: [390, 844], height: 7598 }
+    ]));
+    await assert.rejects(verifyCaptureMetrics(root), /height drift/);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
   }
 });
 
