@@ -29,3 +29,40 @@ test('editorial work preserves facts quotations and existing destinations', () =
     for (const text of before.protectedText) assert.ok(body.includes(text), `${route}: changed quotation/story`);
   }
 });
+
+test('education and testimonial attribution remain intact', () => {
+  const $ = cheerio.load(fs.readFileSync(fileFor('/portfolio/'), 'utf8'));
+  assert.deepEqual($('#education .education-list article').toArray().map(el => norm($(el).text())), [
+    "The Hashemite UniversityBachelor's degree in Cyber Security · ExcellenceOct 2022 – Jun 2026",
+    'Nahda Private SchoolScientific stream · توجيهي علمي · 91.65%2021 – 2022'
+  ]);
+  assert.deepEqual($('#certifications .education-list article').toArray().map(el => norm($(el).text())), [
+    'Cybersecurity upskilling programCyber Shield Academy · 100 hours · Score: 92%Dec 2025'
+  ]);
+  assert.deepEqual($('#references .reference-card figcaption').toArray().map(el => norm($(el).text())), [
+    'Abdallah AlashqarPenetration Tester · Threat Management at Zain Jordan',
+    'Mahmoud SaeedCybersecurity Graduate · AI-Powered Security Automation'
+  ]);
+});
+
+test('navigation, footer, and project actions retain distinct links', () => {
+  const site = require('../../src/_data/site.json');
+  for (const route of routes) {
+    const $ = cheerio.load(fs.readFileSync(fileFor(route), 'utf8'));
+    assert.deepEqual($('#main-nav a').toArray().map(el => $(el).attr('href')),
+      ['/portfolio/', '/life/', '/photos/', '/blog/', '/sites/', '/connect/'], route);
+    assert.deepEqual($('.site-footer a').toArray().map(el => $(el).attr('href')),
+      ['/', `mailto:${site.email}`, '/photos/', site.github, '/connect/'], route);
+  }
+  const $ = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
+  for (const project of frozen.projects) {
+    const card = $('.project-card-enhanced').filter((_, el) => norm($(el).find('h3').text()) === `${project.name} ↗`);
+    assert.equal(card.length, 1, project.slug);
+    const url = project.featured ? `/projects/${project.slug}/` : project.live;
+    assert.equal(card.find(`h3 a[href="${url}"]`).length, 1, project.slug);
+    assert.equal(card.find(`.project-preview[href="${url}"]`).length, 1, project.slug);
+    if (project.featured) assert.equal(card.find(`.project-actions a[href="${url}"]`).length, 1, project.slug);
+    if (project.live && project.featured) assert.equal(card.find(`.project-actions a[href="${project.live}"]`).length, 1, project.slug);
+    if (project.source) assert.equal(card.find(`.project-actions a[href="${project.source}"]`).length, 1, project.slug);
+  }
+});
