@@ -14,8 +14,8 @@ test('compact photo rows expose their complete short descriptions', async ({ pag
     await page.goto('/');
     const cards = page.locator('.life-discovery:has(.discovery-photo)');
     await expect(cards).toHaveCount(2);
-    await expect(page.locator('#discover-travel-note')).toHaveText('Jordan, Istanbul and the Red Sea.');
-    await expect(page.locator('#discover-photos-note')).toHaveText('Trips, graduation and everyday photos.');
+    await expect(page.locator('#discover-travel-note')).toHaveText('Jordan, Istanbul and Egypt.');
+    await expect(page.locator('#discover-photos-note')).toHaveText('Trips and graduation, from my camera roll.');
     for (const card of await cards.all()) {
       const value = await card.evaluate(el => {
         const image = el.querySelector('.discovery-photo');

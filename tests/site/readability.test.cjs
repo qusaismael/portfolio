@@ -22,9 +22,18 @@ test('home removes redundant preambles and keeps the useful invitations', () => 
   const $ = load('/');
   assert.equal($('#blog .eyebrow').length, 0);
   assert.equal($('#projects .section-heading-row p').length, 0);
-  assert.equal($('.contributions-personal-note').length, 0);
-  assert.equal(norm($('.contributions-intro > p').text()), "Changes I've sent to open-source projects I use.");
+  assert.equal($('.contributions-personal-note').length, 1);
+  assert.equal(norm($('.contributions-intro > p:not(.contributions-personal-note)').text()), "Changes I've sent to open-source projects I use.");
   assert.equal(norm($('#contact > p').text()), 'Email me about a project, a question, or a good Linux story.');
-  assert.equal(norm($('.personal-moment figcaption').text()), 'Speaking to IT freshmen at university.');
+  assert.equal(norm($('.personal-moment figcaption').text()), 'One room. A lot of freshmen. One piece of advice.');
   assert.equal($('.footer-top p').length, 0);
+});
+
+test('small personal details survive the editorial cut', () => {
+  const $ = load('/');
+  assert.equal(norm($('.personal-moment figcaption').text()), 'One room. A lot of freshmen. One piece of advice.');
+  assert.ok(norm($('.contributions-intro').text()).includes('A small fix still counts.'));
+  assert.equal(norm($('#discover-photos-note').text()), 'Trips and graduation, from my camera roll.');
+  assert.equal(norm($('#discover-travel-note').text()), 'Jordan, Istanbul and Egypt.');
+  assert.equal(norm($('#discover-travel-title').text()), "Places I've been.");
 });
