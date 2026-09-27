@@ -71,3 +71,13 @@ test('About print keeps the contact email and job narratives', async ({ page }) 
   await expect(page.locator('#contact .button-row a[href^="mailto:"]')).toBeVisible();
   for (const entry of await page.locator('#experience .experience-entry').all()) await expect(entry).toBeVisible();
 });
+
+test('all experience remains visible with JavaScript disabled', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  try {
+    const page = await context.newPage();
+    await page.goto('http://127.0.0.1:4173/portfolio/');
+    for (const entry of await page.locator('#experience .experience-entry').all()) await expect(entry).toBeVisible();
+    await expect(page.locator('#experience .experience-entry')).toHaveCount(experience.length);
+  } finally { await context.close(); }
+});

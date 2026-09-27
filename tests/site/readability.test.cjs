@@ -83,6 +83,10 @@ test('every job story is visible without tabs on About; Home links to the longer
       assert.equal(norm(entry.find('h3').first().text()), job.role);
       for (const text of [job.company, job.dates, job.summary, ...job.bullets]) assert.ok(norm(entry.text()).includes(text));
       assert.equal(entry.attr('hidden'), undefined);
+      assert.equal(entry.attr('id'), `panel-${job.id}`);
+      assert.equal(entry.find('h3').attr('id'), `tab-${job.id}`);
+      if (job.id === 'zain') assert.deepEqual([entry.find('img').attr('width'), entry.find('img').attr('height')], ['655', '376']);
+      if (job.id === 'freelance-devops') assert.deepEqual([entry.find('img').attr('width'), entry.find('img').attr('height')], ['2584', '980']);
     });
   }
   const home = load('/');
