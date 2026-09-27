@@ -59,3 +59,14 @@ test('project caveats appear on Home and Work cards', () => {
     });
   }
 });
+
+test('case study status comes before the full project story', () => {
+  const projects = require('../../src/_data/projects.json').filter(p => p.featured);
+  for (const project of projects) {
+    const $ = load(`/projects/${project.slug}/`);
+    assert.equal($('.page-heading .project-status').length, 1);
+    assert.equal(norm($('.page-heading .project-status p').text()), project.status);
+    assert.equal($('.project-story .project-status').length, 0);
+    for (const field of ['problem', 'built', 'learned']) assert.ok(norm($('.project-story').text()).includes(project[field]));
+  }
+});
