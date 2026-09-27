@@ -36,3 +36,19 @@ test('compact photo rows expose their complete short descriptions', async ({ pag
     }
   }
 });
+
+test('metadata is readable without decorative badges', async ({ page }) => {
+  await page.goto('/sites/');
+  const values = await page.locator('.project-content').first().evaluate(el => {
+    const meta = el.querySelector('.eyebrow');
+    const tag = el.querySelector('.tags span');
+    return {
+      casing: getComputedStyle(meta).textTransform,
+      tagBorder: getComputedStyle(tag).borderTopWidth,
+      tagSize: parseFloat(getComputedStyle(tag).fontSize)
+    };
+  });
+  expect(values.casing).toBe('none');
+  expect(values.tagBorder).toBe('0px');
+  expect(values.tagSize).toBeGreaterThanOrEqual(13);
+});
