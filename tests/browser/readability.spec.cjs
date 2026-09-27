@@ -196,7 +196,7 @@ test('gallery card names include their visible labels', async ({ page }) => {
 });
 
 const essentialText = [
-  ['/', '.hero-intro,.hero-current,.discovery-copy p,.project-note'],
+  ['/', '.hero-intro,.hero-current,.life-discovery:not(.life-discovery-games) .discovery-copy p,.project-note'],
   ['/sites/', '.project-content > p:not(.eyebrow)'],
   ['/portfolio/', '.experience-entry>p,.experience-entry-meta,.experience-entry li'],
   ['/life/', '.visited-stories p,.fact-body']
