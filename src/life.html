@@ -12,7 +12,7 @@ customScripts: "/js/globe.js"
       <section id="travel" class="travel-section">
         <div class="section-header">
           <h2>Travel &amp; Places<span class="accent-dot">.</span></h2>
-          <p class="section-intro">A few places I have been, and a few I keep thinking about. Pick a place to see the story.</p>
+          <p class="section-intro">A few places I've been, and a few I'd like to visit.</p>
         </div>
 
         <!-- 3D Interactive Globe Showcase Hub -->
@@ -77,61 +77,28 @@ customScripts: "/js/globe.js"
                 <span class="chips-count">10 Visited Places</span>
               </div>
               <div class="visited-quick-chips globe-chips-grid" id="globe-visited-chips">
-                <button class="globe-chip visited-chip place-tag active" data-id="amman" data-lat="31.9566"
-                  data-lon="35.9457" data-city="Amman" data-country="Jordan (Spawn Point)" data-flag="🇯🇴"
-                  data-desc="My spawn point! The hills, the Roman Theater, the energy. Amman is home."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Amman</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="zarqa" data-lat="32.0500" data-lon="36.1000"
-                  data-city="Zarqa" data-country="Jordan" data-flag="🇯🇴"
-                  data-desc="A lot of my childhood was here, with family and friends. My roots, basically."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Zarqa</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="aqaba" data-lat="29.5267" data-lon="35.0078"
-                  data-city="Aqaba" data-country="Jordan" data-flag="🇯🇴"
-                  data-desc="Red Sea, beach, no rush. A very good combination."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Aqaba</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="jarash" data-lat="32.2723" data-lon="35.8914"
-                  data-city="Jarash" data-country="Jordan" data-flag="🇯🇴"
-                  data-desc="Walking between those ancient columns really does feel like going back in time."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Jarash</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="ajloun" data-lat="32.3333" data-lon="35.7500"
-                  data-city="Ajloun" data-country="Jordan" data-flag="🇯🇴"
-                  data-desc="Pine forests and an old castle. I loved how green it was."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Ajloun</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="deadsea" data-lat="31.5000"
-                  data-lon="35.5000" data-city="Dead Sea" data-country="Jordan" data-flag="🇯🇴"
-                  data-desc="Lowest elevation on Earth (-430m), can't go lower!"><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Dead Sea</span>
-                  <span class="visited-chip-flag">🇯🇴</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="istanbul" data-lat="41.0082"
-                  data-lon="28.9784" data-city="Istanbul" data-country="Turkey" data-flag="🇹🇷"
-                  data-desc="A week that felt very different from home. I loved the scenery too."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Istanbul</span>
-                  <span class="visited-chip-flag">🇹🇷</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="jeddah" data-lat="21.4858" data-lon="39.1925"
-                  data-city="Jeddah" data-country="Saudi Arabia" data-flag="🇸🇦"
-                  data-desc="Walking along the Red Sea felt like being in a movie."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Jeddah</span>
-                  <span class="visited-chip-flag">🇸🇦</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="medina" data-lat="24.4672" data-lon="39.6111"
-                  data-city="Medina" data-country="Saudi Arabia" data-flag="🇸🇦" data-desc="Such a peaceful city"><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Medina</span>
-                  <span class="visited-chip-flag">🇸🇦</span></button>
-                <button class="globe-chip visited-chip place-tag" data-id="sharm" data-lat="27.9158" data-lon="34.3299"
-                  data-city="Sharm El Sheikh" data-country="Egypt" data-flag="🇪🇬"
-                  data-desc="Great hospitality, and conversations with people from all over the world. That was my favorite part."><span
-                    class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">Sharm
-                    Elshikh</span> <span class="visited-chip-flag">🇪🇬</span></button>
+                {% for place in visitedPlaces %}
+                <button type="button" class="globe-chip visited-chip place-tag{% if loop.first %} active{% endif %}"
+                  data-id="{{ place.id }}" data-lat="{{ place.lat }}" data-lon="{{ place.lon }}"
+                  data-city="{{ place.city }}" data-country="{{ place.country }}" data-flag="{{ place.flag }}"
+                  data-desc="{{ place.note }}">
+                  <span class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">{{ place.city }}</span>
+                  <span class="visited-chip-flag">{{ place.flag }}</span>
+                </button>
+                {% endfor %}
               </div>
             </div>
           </div>
         </div>
 
-        <noscript><h3>Places I have visited</h3><ul><li><strong>Amman</strong> — My spawn point! The hills, the Roman Theater, the energy. Amman is home.</li><li><strong>Zarqa</strong> — A lot of my childhood was here, with family and friends. My roots, basically.</li><li><strong>Aqaba</strong> — Red Sea, beach, no rush. A very good combination.</li><li><strong>Jarash</strong> — Walking between those ancient columns really does feel like going back in time.</li><li><strong>Ajloun</strong> — Pine forests and an old castle. I loved how green it was.</li><li><strong>Dead Sea</strong> — Lowest elevation on Earth (-430m), can't go lower!</li><li><strong>Istanbul</strong> — A week that felt very different from home. I loved the scenery too.</li><li><strong>Jeddah</strong> — Walking along the Red Sea felt like being in a movie.</li><li><strong>Medina</strong> — Such a peaceful city</li><li><strong>Sharm El Sheikh</strong> — Great hospitality, and conversations with people from all over the world. That was my favorite part.</li></ul></noscript>
+        <div class="travel-stories" aria-labelledby="visited-stories-title">
+          <h3 id="visited-stories-title">Places I've been</h3>
+          <ul class="visited-stories">
+            {% for place in visitedPlaces %}
+            <li id="place-story-{{ place.id }}"><h4>{{ place.city }}</h4><p>{{ place.note }}</p></li>
+            {% endfor %}
+          </ul>
+        </div>
         <!-- Planning to Explore Subsection -->
         <div class="travel-subsection" style="margin-top: 3rem;">
           <div class="subsection-header">

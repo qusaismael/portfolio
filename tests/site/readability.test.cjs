@@ -144,3 +144,17 @@ test('articles have visible standfirsts and outlines only where useful', () => {
     assert.equal(norm($('.article-body').text()), norm(original.root().text()));
   }
 });
+
+test('place notes are in ordinary HTML and agree with the map controls', () => {
+  const places = require('../../src/_data/visitedPlaces.json');
+  const $ = load('/life/');
+  assert.equal($('.visited-stories > li').length, places.length);
+  for (const place of places) {
+    const chip = $(`.globe-chip[data-id="${place.id}"]`);
+    assert.equal(chip.attr('data-lat'), place.lat);
+    assert.equal(chip.attr('data-lon'), place.lon);
+    assert.equal(chip.attr('data-desc'), place.note);
+    assert.equal(norm($(`#place-story-${place.id} p`).text()), place.note);
+    assert.equal($(`#place-story-${place.id}`).parents('noscript,details,[hidden]').length, 0);
+  }
+});
