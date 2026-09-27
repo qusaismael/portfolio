@@ -6,3 +6,5 @@
 /_site/
 /test-results/
 /playwright-report/
+/preview/readability-before/
+/preview/readability-after/
