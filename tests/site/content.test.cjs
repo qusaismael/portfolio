@@ -36,6 +36,48 @@ test('changed stylesheets use fresh cache keys without loading Home-only CSS els
   assert.equal(work('link[href*="life-preview.css"]').length, 0);
 });
 
+test('Work page gives all ten named sites a compact directory without linking broken HTTPS', () => {
+  const $ = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
+  const expected = [
+    ['Portfolio', 'www.qusai.pro'],
+    ['Textify', 'textify.qusai.pro'],
+    ['GRC Check', 'grc.qusai.pro'],
+    ['30 Days From Today', '30daysfromtoday.qusai.pro'],
+    ['Local LLM', 'localllm.qusai.pro'],
+    ['ClipGuard', 'clipguard.qusai.pro'],
+    ['RSS + AI', 'rss.qusai.pro'],
+    ['Privacy Check', 'privacy.qusai.pro'],
+    ['SecureChat', 'securebot.qusai.pro'],
+    ['Token Speed', 'token.qusai.pro']
+  ];
+  const entries = $('#live-sites .site-directory-list > li');
+  assert.equal(entries.length, expected.length);
+  entries.each((index, entry) => {
+    const [name, host] = expected[index];
+    const item = $(entry);
+    assert.equal(normalize(item.find('.site-name').text()), name);
+    assert.equal(normalize(item.find('.site-domain').text()), host);
+    const link = item.find('a');
+    if (name === 'Textify') {
+      assert.equal(link.length, 0, 'do not send visitors to an invalid TLS certificate');
+      assert.match(item.text(), /HTTPS pending/);
+    } else {
+      assert.equal(link.length, 1);
+      assert.equal(link.attr('href'), `https://${host}/`);
+      if (name !== 'Portfolio') {
+        assert.equal(link.attr('target'), '_blank');
+        assert.match(link.attr('rel') || '', /noopener/);
+        assert.match(normalize(link.find('.sr-only').text()), /opens in a new tab/i);
+      } else {
+        assert.equal(link.find('.sr-only').length, 0);
+      }
+    }
+  });
+  assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
+    ['selected-work', 'sites', 'live-sites', 'contact']);
+  assert.equal($('link[href="/css/site-directory.css?v=20260911"]').length, 1);
+});
+
 test('homepage retains its human-first section order', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
   assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
