@@ -162,6 +162,34 @@ test('mobile Games card matches the compact format of the photo cards', async ({
   }
 });
 
+test('live-site directory rows align and links stay touch-sized across widths', async ({ page }) => {
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/sites/');
+    const rows = await page.locator('#live-sites .site-directory-list > li').evaluateAll(nodes => nodes.map(el => {
+      const box = el.getBoundingClientRect();
+      return { top: box.top, bottom: box.bottom };
+    }));
+    expect(rows).toHaveLength(10);
+    if (width === 1440) {
+      for (let index = 0; index < rows.length; index += 2) {
+        expect(Math.abs(rows[index].top - rows[index + 1].top)).toBeLessThan(1);
+      }
+    } else {
+      for (let index = 1; index < rows.length; index++) {
+        expect(Math.abs(rows[index].top - rows[index - 1].bottom)).toBeLessThan(1);
+      }
+    }
+    const links = await page.locator('#live-sites a.site-directory-entry').evaluateAll(nodes => nodes.map(el => {
+      const box = el.getBoundingClientRect();
+      return { height: box.height, left: box.left, right: box.right };
+    }));
+    expect(links).toHaveLength(9);
+    expect(links.every(link => link.height >= 44 && link.left >= 0 && link.right <= width)).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  }
+});
+
 test('all work previews are open entries with complete, loaded evidence', async ({ page }) => {
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 900 });

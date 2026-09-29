@@ -1,0 +1,12 @@
+[
+  {"name":"Portfolio","host":"www.qusai.pro","href":"https://www.qusai.pro/"},
+  {"name":"Textify","host":"textify.qusai.pro","status":"HTTPS pending"},
+  {"name":"GRC Check","host":"grc.qusai.pro","href":"https://grc.qusai.pro/","newTab":true},
+  {"name":"30 Days From Today","host":"30daysfromtoday.qusai.pro","href":"https://30daysfromtoday.qusai.pro/","newTab":true},
+  {"name":"Local LLM","host":"localllm.qusai.pro","href":"https://localllm.qusai.pro/","newTab":true},
+  {"name":"ClipGuard","host":"clipguard.qusai.pro","href":"https://clipguard.qusai.pro/","newTab":true},
+  {"name":"RSS + AI","host":"rss.qusai.pro","href":"https://rss.qusai.pro/","newTab":true},
+  {"name":"Privacy Check","host":"privacy.qusai.pro","href":"https://privacy.qusai.pro/","newTab":true},
+  {"name":"SecureChat","host":"securebot.qusai.pro","href":"https://securebot.qusai.pro/","newTab":true},
+  {"name":"Token Speed","host":"token.qusai.pro","href":"https://token.qusai.pro/","newTab":true}
+]

@@ -1,0 +1,12 @@
+/* A scannable directory of live destinations, separate from project stories. */
+.site-directory-list{list-style:none;padding:0;margin:24px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+.site-directory-list>li{min-width:0;margin-top:0;border-top:1px solid var(--border-color)}
+.site-directory-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;gap:2px 16px;align-items:center;min-height:72px;padding:12px 8px;color:var(--text-color);text-decoration:none}
+a.site-directory-entry:hover{color:var(--accent-color);background:rgba(var(--accent-color-rgb),.06)}
+a.site-directory-entry:focus-visible{outline:2px solid var(--accent-color);outline-offset:-2px}
+.site-name{font-size:1rem;line-height:1.4;font-weight:600;min-width:0}
+.site-domain{grid-column:1;color:var(--muted-text);font:.75rem/1.5 var(--font-mono);overflow-wrap:anywhere}
+.site-arrow,.site-state{grid-column:2;grid-row:1 / span 2;align-self:center;color:var(--accent-color)}
+.site-state{max-width:10ch;color:var(--muted-text);text-align:right;font:.75rem/1.4 var(--font-mono)}
+.site-directory-pending .site-name{color:var(--muted-text)}
+@media(max-width:700px){.site-directory-list{grid-template-columns:minmax(0,1fr)}.site-directory-entry{min-height:64px}}

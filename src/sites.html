@@ -3,10 +3,26 @@ layout: base
 title: "Things I've built — Qusai Ismael"
 description: "Security research, local AI, and small tools for problems I wanted to solve."
 permalink: "/sites/"
+customStyles: "/css/site-directory.css"
 ---
 <main class="container" id="main-content">
     <header class="page-heading"><p class="eyebrow">A few ideas that became code</p><h1>Things I've built<span class="accent-dot">.</span></h1><p class="page-lede">Some started with a security question.<br>Others started with “surely I can make a tool for that.”</p></header>
     <section id="selected-work"><h2>Selected projects<span class="accent-dot">.</span></h2><div class="project-grid-enhanced">{% for project in projects %}{% if project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
     <section id="sites"><h2>Small tools, real uses<span class="accent-dot">.</span></h2><p>A collection of little web apps. Open one and have a look around.</p><div class="project-grid-enhanced">{% for project in projects %}{% if not project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
+    <section id="live-sites" aria-labelledby="live-sites-heading">
+        <h2 id="live-sites-heading">Live sites<span class="accent-dot">.</span></h2>
+        <ul class="site-directory-list">
+            {% for siteLink in siteLinks %}
+            <li{% if not siteLink.href %} class="site-directory-pending"{% endif %}>
+                {% if siteLink.href %}<a class="site-directory-entry" href="{{ siteLink.href }}"{% if siteLink.newTab %} target="_blank" rel="noopener noreferrer"{% endif %}>{% else %}<span class="site-directory-entry">{% endif %}
+                    <span class="site-name">{{ siteLink.name }}</span>
+                    <span class="site-domain">{{ siteLink.host }}</span>
+                    {% if siteLink.status %}<span class="site-state">{{ siteLink.status }}</span>{% else %}<span class="site-arrow" aria-hidden="true">↗</span>{% endif %}
+                    {% if siteLink.newTab %}<span class="sr-only"> (opens in a new tab)</span>{% endif %}
+                {% if siteLink.href %}</a>{% else %}</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
     {% include "contact-section.njk" %}
 </main>
