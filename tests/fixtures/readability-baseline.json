@@ -1,0 +1,547 @@
+{
+  "commit": "0c1591ec3418f67ac6acf409ec33dc811c8ec954",
+  "hashes": {
+    "src/_data/site.json": "205047a1742a8189c0a7706ac257157c6dcfa0f54c0ed65d833c8dca717c8a8e",
+    "src/_data/experience.json": "dd89685ec9364d3109d4bcc8bc4d676395aa4fb17098e3eb896ae6b812385a0e",
+    "src/_data/games.json": "bcac923b8defadd3e0dfa1b763c370a300fc1549eef226657a9ecce85fda6ed1",
+    "src/_data/writing.json": "2e7c3a0dff341f7b2d62d9cbc52ab8bceae44d1e2e79bde415e91c200b126068",
+    "src/_includes/cat.njk": "abf18bce21217335eee251784a816586ee81d1b9ae5969b5e7dffa5dfeb3d9c5",
+    "src/_includes/terminal.njk": "268594da3ef92849b4b829b80279a84b7fda53e557fda3f966cae1086c9431a8",
+    "src/js/terminal.js": "a71b63176f1137965d0b8d58d4b665ab56f8d022e10e64748bcc3481159df32d",
+    "src/js/personality.js": "eb81f0f8ab8bcdbe2c96304a1f04a1616a07af7c63da59183679f37a25ce241e",
+    "src/css/terminal.css": "59ba8f734da17d1e3c52e9a03e16b0bcccfcd416b091d9a4290c46e60e517689"
+  },
+  "projects": [
+    {
+      "slug": "tamperlog",
+      "name": "TamperLog",
+      "type": "Graduation research",
+      "featured": true,
+      "description": "If someone edits the audit trail, the audit trail should tell you. That was the idea behind my graduation project.",
+      "tags": [
+        "Cryptography",
+        "Python",
+        "Flask"
+      ],
+      "visual": "chain",
+      "problem": "An audit log is only useful if you can trust it. I wanted to explore how to detect changes to earlier records instead of relying on the log server alone.",
+      "built": "I built a prototype that links log entries with SHA-256 hashes and checks them against distributed checkpoints. It combines a Flask backend with a JavaScript interface and explores threshold signatures for checkpoint verification.",
+      "learned": "The interesting part was the trust model: what gets detected, who can verify a checkpoint, and what happens when one component is no longer trustworthy.",
+      "status": "Graduation project prototype. The implementation and trust model are research work, not a production security guarantee.",
+      "evidenceImage": "/pics/tamperlog.webp",
+      "evidenceAlt": "Presenting the TamperLog graduation project",
+      "previewPhoto": "/pics/tamperlog.webp",
+      "previewCaption": "Me, explaining why a log should be able to tell on itself.",
+      "photoPosition": "25% 45%",
+      "image": "/pics/tamperlog.webp"
+    },
+    {
+      "slug": "grc-ai",
+      "name": "GRC AI",
+      "type": "Hackathon prototype",
+      "featured": true,
+      "description": "A team project exploring whether local AI can make policy reviews less painful.",
+      "tags": [
+        "Local AI",
+        "GRC",
+        "Team lead"
+      ],
+      "visual": "policy",
+      "problem": "Reviewing policies against several compliance frameworks involves a lot of reading, cross-referencing, and handling documents that may be sensitive.",
+      "built": "I led a team building a prototype that uses local AI to analyze policy documents against multiple compliance frameworks. We used Ollama and Gemma 2 2B to explore the workflow without relying on a hosted model.",
+      "learned": "The useful question was where AI could support a review and where a person still needed to make the decision. A model's answer is a starting point, not proof of compliance.",
+      "status": "Hackathon prototype; the team placed in the national top five.",
+      "evidenceImage": "/pics/grc-ai.webp",
+      "evidenceAlt": "Presenting the GRC AI team project",
+      "previewPhoto": "/pics/grc-ai.webp",
+      "previewCaption": "GRC AI · the hackathon presentation",
+      "photoPosition": "50% 28%",
+      "image": "/pics/grc-ai.webp"
+    },
+    {
+      "slug": "localllm",
+      "name": "LocalLLM",
+      "type": "Open source",
+      "featured": true,
+      "description": "A small Flask interface for Ollama. Run a model on your own machine, open your browser, and start talking.",
+      "tags": [
+        "Local AI",
+        "Flask",
+        "Ollama"
+      ],
+      "visual": "local",
+      "source": "https://github.com/qusaismael/localllm",
+      "problem": "I wanted a straightforward way to use local language models without making every conversation someone else's data.",
+      "built": "I made a Flask web interface for running Ollama models locally. Once a model is downloaded, the application can run offline.",
+      "learned": "Making local AI approachable means paying attention to the setup and the interface, as well as the model. Open source also gives other people a way to inspect and improve that work.",
+      "status": "Open-source project. Hardware requirements and behavior depend on the model you choose.",
+      "evidenceImage": "/pics/locallm.webp",
+      "evidenceAlt": "The merged pull request adding LocalLLM to Ollama's community integrations",
+      "image": "/pics/locallm.webp",
+      "imageAlt": "The LocalLLM community integration pull request on Ollama"
+    },
+    {
+      "slug": "grc-check",
+      "name": "GRC Check",
+      "type": "Web tool",
+      "featured": true,
+      "description": "Work through a privacy and security self-assessment without sending your answers to a server.",
+      "tags": [
+        "Compliance",
+        "Privacy"
+      ],
+      "image": "/pics/grc-check.webp",
+      "imageAlt": "GRC Check self-assessment interface",
+      "live": "https://grc.qusai.pro/",
+      "problem": "Compliance frameworks can be difficult to work through, especially when the answers describe how an organization handles sensitive data.",
+      "built": "I built a local-first self-assessment around Jordan's data protection law and ISO 27001. The tool keeps the answers on the device.",
+      "learned": "The challenge was turning long requirements into questions someone could actually work through, while keeping their answers private.",
+      "status": "A self-assessment tool to help organize your thinking. It does not certify compliance or replace a professional assessment."
+    },
+    {
+      "slug": "privacy-check",
+      "name": "Privacy Check",
+      "type": "Web tool",
+      "visual": "privacy",
+      "description": "A look at what your browser can reveal about you, and what you can do about it.",
+      "tags": [
+        "Privacy",
+        "Browser security"
+      ],
+      "live": "https://privacy.qusai.pro/",
+      "image": "/pics/privacy-check.webp"
+    },
+    {
+      "slug": "30-days",
+      "name": "30 Days From Today",
+      "type": "Web tool",
+      "image": "/pics/30daysfromtoday.webp",
+      "imageAlt": "The recurring-payment tracker interface",
+      "description": "A little tracker for recurring payments. Because remembering every renewal date is not a skill I want to develop.",
+      "tags": [
+        "Productivity"
+      ],
+      "live": "https://30daysfromtoday.qusai.pro/"
+    },
+    {
+      "slug": "rss-ai",
+      "name": "RSS AI",
+      "type": "Web tool",
+      "image": "/pics/rss-ai.webp",
+      "imageAlt": "RSS AI feed reader interface",
+      "description": "RSS feeds, summarized with local AI. A way to catch up without opening every tab.",
+      "tags": [
+        "RSS",
+        "Local AI"
+      ],
+      "live": "https://rss.qusai.pro/"
+    },
+    {
+      "slug": "token-speed",
+      "name": "Token Speed",
+      "type": "Web tool",
+      "image": "/pics/token-speed.webp",
+      "imageAlt": "Token generation speed comparison",
+      "description": "What does a token-per-second number actually feel like? This makes the difference visible.",
+      "tags": [
+        "AI",
+        "Benchmarking"
+      ],
+      "live": "https://token.qusai.pro/"
+    },
+    {
+      "slug": "clipguard",
+      "name": "ClipGuard",
+      "type": "Web tool",
+      "image": "/pics/clipguard.webp",
+      "imageAlt": "ClipGuard clipboard interface",
+      "description": "A clipboard utility built around a simple rule: what you copy should stay on your device.",
+      "tags": [
+        "Privacy",
+        "Clipboard"
+      ],
+      "live": "https://clipguard.qusai.pro/"
+    }
+  ],
+  "pages": {
+    "/": {
+      "hrefs": [
+        "/blog/",
+        "/connect/",
+        "/games/",
+        "/life/",
+        "/life/#travel",
+        "/photos/",
+        "/pics/freshmen-speech.webp",
+        "/portfolio/",
+        "/portfolio/#experience",
+        "/projects/grc-ai/",
+        "/projects/grc-check/",
+        "/projects/localllm/",
+        "/projects/tamperlog/",
+        "/sites/",
+        "/writing/attackers-are-evolving-so-should-we-c67ab9bb5a0b/",
+        "/writing/stop-letting-your-college-major-define-you-61db61c6e640/",
+        "/writing/the-math-of-success-if-you-are-smart-hardworking-why-aren-t-you-rich-3bdc28d16cd7/",
+        "/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/",
+        "https://github.com/qusaismael/localllm",
+        "https://github.com/search?q=is%3Apr+is%3Amerged+author%3Aqusaismael+-user%3Aqusaismael&type=pullrequests",
+        "https://grc.qusai.pro/",
+        "https://keys.openpgp.org/search?q=hi%40qusai.pro",
+        "https://www.linkedin.com/in/qusaismaeel/",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": [
+        "“You can't protect what you don't understand.”"
+      ]
+    },
+    "/sites/": {
+      "hrefs": [
+        "/connect/",
+        "/projects/grc-ai/",
+        "/projects/grc-check/",
+        "/projects/localllm/",
+        "/projects/tamperlog/",
+        "https://30daysfromtoday.qusai.pro/",
+        "https://clipguard.qusai.pro/",
+        "https://github.com/qusaismael/localllm",
+        "https://grc.qusai.pro/",
+        "https://keys.openpgp.org/search?q=hi%40qusai.pro",
+        "https://privacy.qusai.pro/",
+        "https://rss.qusai.pro/",
+        "https://token.qusai.pro/",
+        "https://www.linkedin.com/in/qusaismaeel/",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/portfolio/": {
+      "hrefs": [
+        "/connect/",
+        "/life/",
+        "/pics/devops.webp",
+        "/pics/freshmen-speech.webp",
+        "/pics/qusaiatzain.webp",
+        "/projects/grc-ai/",
+        "/projects/grc-check/",
+        "/projects/localllm/",
+        "/projects/tamperlog/",
+        "/resume/",
+        "/sites/",
+        "https://keys.openpgp.org/search?q=hi%40qusai.pro",
+        "https://www.linkedin.com/in/qusaismaeel/",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": [
+        "“I've been consistently impressed by his deep passion for data privacy. I'm confident that his drive and commitment will lead him to great success.”",
+        "“I've always been impressed by Qusai's mindset. He's a true builder who understands that execution is everything, and his open-source projects are clear proof of that.”"
+      ]
+    },
+    "/blog/": {
+      "hrefs": [
+        "/writing/ai-bubble-4b16d482a2d8/",
+        "/writing/attackers-are-evolving-so-should-we-c67ab9bb5a0b/",
+        "/writing/don-t-be-a-fan-use-the-tools-not-vice-versa-cea616577eb2/",
+        "/writing/reject-arm-embrace-x86-79a57093db0f/",
+        "/writing/static-weights-in-a-dynamic-world-the-case-for-artificial-information-596787d69547/",
+        "/writing/stop-letting-your-college-major-define-you-61db61c6e640/",
+        "/writing/the-math-of-success-if-you-are-smart-hardworking-why-aren-t-you-rich-3bdc28d16cd7/",
+        "/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/",
+        "/writing/writing-it-self-is-a-form-of-art-d0ef5f6563f7/",
+        "/writing/you-should-quit-coffee-but-not-caffeine-8cc7e862bb72/",
+        "https://medium.com/@qusaismael"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/life/": {
+      "hrefs": [
+        "#fun-facts",
+        "#gaming",
+        "#tech-stack",
+        "#travel",
+        "/games/",
+        "/games/#as-dusk-falls",
+        "/games/#cuphead",
+        "/games/#expedition-33",
+        "/games/#fortnite",
+        "/games/#hollow-knight",
+        "/games/#resident-evil",
+        "/games/#spider-man",
+        "/photos/"
+      ],
+      "placeFacts": [
+        {
+          "id": "amman",
+          "city": "Amman",
+          "country": "Jordan (Spawn Point)",
+          "flag": "🇯🇴",
+          "lat": "31.9566",
+          "lon": "35.9457",
+          "desc": "My spawn point! The hills, the Roman Theater, the energy. Amman is home."
+        },
+        {
+          "id": "zarqa",
+          "city": "Zarqa",
+          "country": "Jordan",
+          "flag": "🇯🇴",
+          "lat": "32.0500",
+          "lon": "36.1000",
+          "desc": "A lot of my childhood was here, with family and friends. My roots, basically."
+        },
+        {
+          "id": "aqaba",
+          "city": "Aqaba",
+          "country": "Jordan",
+          "flag": "🇯🇴",
+          "lat": "29.5267",
+          "lon": "35.0078",
+          "desc": "Red Sea, beach, no rush. A very good combination."
+        },
+        {
+          "id": "jarash",
+          "city": "Jarash",
+          "country": "Jordan",
+          "flag": "🇯🇴",
+          "lat": "32.2723",
+          "lon": "35.8914",
+          "desc": "Walking between those ancient columns really does feel like going back in time."
+        },
+        {
+          "id": "ajloun",
+          "city": "Ajloun",
+          "country": "Jordan",
+          "flag": "🇯🇴",
+          "lat": "32.3333",
+          "lon": "35.7500",
+          "desc": "Pine forests and an old castle. I loved how green it was."
+        },
+        {
+          "id": "deadsea",
+          "city": "Dead Sea",
+          "country": "Jordan",
+          "flag": "🇯🇴",
+          "lat": "31.5000",
+          "lon": "35.5000",
+          "desc": "Lowest elevation on Earth (-430m), can't go lower!"
+        },
+        {
+          "id": "istanbul",
+          "city": "Istanbul",
+          "country": "Turkey",
+          "flag": "🇹🇷",
+          "lat": "41.0082",
+          "lon": "28.9784",
+          "desc": "A week that felt very different from home. I loved the scenery too."
+        },
+        {
+          "id": "jeddah",
+          "city": "Jeddah",
+          "country": "Saudi Arabia",
+          "flag": "🇸🇦",
+          "lat": "21.4858",
+          "lon": "39.1925",
+          "desc": "Walking along the Red Sea felt like being in a movie."
+        },
+        {
+          "id": "medina",
+          "city": "Medina",
+          "country": "Saudi Arabia",
+          "flag": "🇸🇦",
+          "lat": "24.4672",
+          "lon": "39.6111",
+          "desc": "Such a peaceful city"
+        },
+        {
+          "id": "sharm",
+          "city": "Sharm El Sheikh",
+          "country": "Egypt",
+          "flag": "🇪🇬",
+          "lat": "27.9158",
+          "lon": "34.3299",
+          "desc": "Great hospitality, and conversations with people from all over the world. That was my favorite part."
+        }
+      ],
+      "protectedText": [
+        "I have been the curious tech kid for as long as I can remember. My dad is a computer engineer, so he got ALL the questions. If I asked what a driver was, the answer usually involved reinstalling a computer and finding out for myself. I loved learning that way.",
+        "I got bullied at school for some strange things. Being clean, even my skin color. Racism is bad for everyone. Those experiences were not easy, but they are part of what shaped me.",
+        "People sometimes call me a robot, or say I am like ChatGPT. They insist it is a compliment. I am still deciding, lol."
+      ]
+    },
+    "/games/": {
+      "hrefs": [
+        "/life/#gaming",
+        "/life/#travel",
+        "mailto:hi@qusai.pro?subject=A%20game%20for%20your%20list"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/photos/": {
+      "hrefs": [
+        "/life/",
+        "https://instagram.com/qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/connect/": {
+      "hrefs": [
+        "/life/",
+        "https://github.com/qusaismael",
+        "https://instagram.com/qusai.pro",
+        "https://keys.openpgp.org/search?q=hi%40qusai.pro",
+        "https://medium.com/@qusaismael",
+        "https://www.linkedin.com/in/qusaismaeel/",
+        "https://x.com/qusaismael",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/resume/": {
+      "hrefs": [
+        "/portfolio/",
+        "https://github.com/qusaismael",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/projects/tamperlog/": {
+      "hrefs": [
+        "/pics/tamperlog.webp",
+        "/sites/",
+        "mailto:hi@qusai.pro?subject=TamperLog"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/projects/grc-ai/": {
+      "hrefs": [
+        "/pics/grc-ai.webp",
+        "/sites/",
+        "mailto:hi@qusai.pro?subject=GRC%20AI"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/projects/localllm/": {
+      "hrefs": [
+        "/pics/locallm.webp",
+        "/sites/",
+        "https://github.com/qusaismael/localllm",
+        "mailto:hi@qusai.pro?subject=LocalLLM"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/projects/grc-check/": {
+      "hrefs": [
+        "/pics/grc-check.webp",
+        "/sites/",
+        "https://grc.qusai.pro/",
+        "mailto:hi@qusai.pro?subject=GRC%20Check"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/attackers-are-evolving-so-should-we-c67ab9bb5a0b/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/attackers-are-evolving-so-should-we-c67ab9bb5a0b",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/": {
+      "hrefs": [
+        "/blog/",
+        "https://kernel.googlesource.com/pub/scm/linux/kernel/git/nico/archive/+/v0.97/include/linux/errno.h#:~:text=%23define%20ENOMEM%2012%20%2F%2A%20Out%20of%20memory%20%2A%2F",
+        "https://qusaismael.medium.com/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd",
+        "https://www.kernel.org/doc/html/v4.9/media/uapi/gen-errors.html#:~:text=ENOMEM,operation",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/the-math-of-success-if-you-are-smart-hardworking-why-aren-t-you-rich-3bdc28d16cd7/": {
+      "hrefs": [
+        "/blog/",
+        "https://arxiv.org/abs/1802.07068",
+        "https://en.wikipedia.org/wiki/Minimax",
+        "https://qusaismael.medium.com/the-math-of-success-if-you-are-smart-hardworking-why-arent-you-rich-3bdc28d16cd7",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/static-weights-in-a-dynamic-world-the-case-for-artificial-information-596787d69547/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/static-weights-in-a-dynamic-world-the-case-for-artificial-information-596787d69547",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/don-t-be-a-fan-use-the-tools-not-vice-versa-cea616577eb2/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/dont-be-a-fan-use-the-tools-not-vice-versa-cea616577eb2",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/stop-letting-your-college-major-define-you-61db61c6e640/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/stop-letting-your-college-major-define-you-61db61c6e640",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/writing-it-self-is-a-form-of-art-d0ef5f6563f7/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/writing-it-self-is-a-form-of-art-d0ef5f6563f7",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/reject-arm-embrace-x86-79a57093db0f/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/reject-arm-embrace-x86-79a57093db0f",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/ai-bubble-4b16d482a2d8/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/ai-bubble-4b16d482a2d8",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/writing/you-should-quit-coffee-but-not-caffeine-8cc7e862bb72/": {
+      "hrefs": [
+        "/blog/",
+        "https://qusaismael.medium.com/you-should-quit-coffee-but-not-caffeine-8cc7e862bb72",
+        "mailto:hi@qusai.pro"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    }
+  }
+}

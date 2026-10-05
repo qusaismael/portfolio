@@ -20,6 +20,7 @@
         <span class="eyebrow">{{ project.type }}</span>
         <h3><a href="{{ projectUrl }}" {% if not project.featured %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ project.name }} <span class="project-title-arrow" aria-hidden="true">↗</span></a></h3>
         <p>{{ project.description }}</p>
+        {% if project.cardNote %}<p class="project-note">{{ project.cardNote }}</p>{% endif %}
         <div class="tags">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div>
         <div class="project-actions">
             {% if project.featured %}<a href="{{ projectUrl }}">About the project <span aria-hidden="true">→</span></a>{% endif %}
