@@ -68,9 +68,10 @@ test('Work page gives all ten named sites a compact directory without linking br
       assert.equal(link.attr('href'), `https://${host}/`);
       if (name !== 'Portfolio') {
         assert.equal(link.attr('target'), '_blank');
-        assert.match(link.attr('rel') || '', /noopener/);
+        assert.deepEqual((link.attr('rel') || '').split(/\s+/).filter(Boolean).sort(), ['noopener', 'noreferrer']);
         assert.match(normalize(link.find('.sr-only').text()), /opens in a new tab/i);
       } else {
+        assert.equal(link.attr('target'), undefined, 'Portfolio stays in the current tab');
         assert.equal(link.find('.sr-only').length, 0);
       }
     }
