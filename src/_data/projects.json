@@ -4,7 +4,8 @@
     "name": "TamperLog",
     "type": "Graduation research",
     "featured": true,
-    "description": "If someone edits the audit trail, the audit trail should tell you. That was the idea behind my graduation project.",
+    "description": "My graduation project: a prototype for detecting changes to audit logs.",
+    "cardNote": "Research prototype; not a production security guarantee.",
     "tags": [
       "Cryptography",
       "Python",
@@ -27,7 +28,8 @@
     "name": "GRC AI",
     "type": "Hackathon prototype",
     "featured": true,
-    "description": "A team project exploring whether local AI can make policy reviews less painful.",
+    "description": "I led a team building a local-AI prototype for reviewing policies against compliance frameworks.",
+    "cardNote": "Hackathon prototype; national top five. AI output still needs human review.",
     "tags": [
       "Local AI",
       "GRC",
@@ -50,7 +52,8 @@
     "name": "LocalLLM",
     "type": "Open source",
     "featured": true,
-    "description": "A small Flask interface for Ollama. Run a model on your own machine, open your browser, and start talking.",
+    "description": "A Flask interface for running Ollama models on your own machine.",
+    "cardNote": "Runs offline after model download. Hardware needs depend on the model.",
     "tags": [
       "Local AI",
       "Flask",
@@ -72,7 +75,8 @@
     "name": "GRC Check",
     "type": "Web tool",
     "featured": true,
-    "description": "Work through a privacy and security self-assessment without sending your answers to a server.",
+    "description": "A privacy and security self-assessment that keeps your answers on your device.",
+    "cardNote": "Self-assessment only; not a compliance certification or professional assessment.",
     "tags": [
       "Compliance",
       "Privacy"
@@ -90,7 +94,7 @@
     "name": "Privacy Check",
     "type": "Web tool",
     "visual": "privacy",
-    "description": "A look at what your browser can reveal about you, and what you can do about it.",
+    "description": "See what your browser reveals about you and what you can change.",
     "tags": [
       "Privacy",
       "Browser security"

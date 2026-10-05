@@ -12,6 +12,7 @@ module.exports = function(eleventyConfig) {
   // Optional: you can add an alias for layouts
   eleventyConfig.addLayoutAlias('base', 'base.njk');
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true });
+  eleventyConfig.addFilter('articleOutline', require('./scripts/article-outline.cjs'));
 
   return {
     dir: {

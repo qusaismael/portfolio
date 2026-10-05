@@ -181,7 +181,7 @@
                     <span>INSTAGRAM ARCHIVE</span>
                 </div>
                 <h2>The gallery couldn't load this time<span class="accent-dot">.</span></h2>
-                <p>The photos are still there. Instagram is just taking the scenic route. You can see them directly on my profile.</p>
+                <p>The gallery could not load. You can still view the photos on Instagram.</p>
                 <div class="construction-actions">
                     <a href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer" class="see-more instagram-btn">Visit @qusai.pro on Instagram ↗</a>
                     <a href="/life/" class="see-more">Explore Life &amp; Interests →</a>
@@ -211,7 +211,11 @@
             card.className = 'gallery-card';
             card.setAttribute('data-index', String(index));
             card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('aria-label', (photo.isVideo ? 'Video preview · ' : '') + (photo.alt || ('View photo ' + (index + 1))));
+            var visibleLabel = photo.caption || photo.quote || 'Open photo';
+            var cardLabel = visibleLabel;
+            if (photo.alt && photo.alt.indexOf(visibleLabel) === -1) cardLabel += ' — ' + photo.alt;
+            if (photo.isVideo) cardLabel = 'Video preview · ' + cardLabel;
+            card.setAttribute('aria-label', cardLabel);
             card.addEventListener('click', function () {
                 openPhotoModal(index);
             });
@@ -230,16 +234,14 @@
                     '</svg></div>';
             }
 
-            card.innerHTML = 
-                '<div class="gallery-card-media">' +
+            card.innerHTML =
+                '<span class="gallery-card-media">' +
                     '<img src="' + escapeHTML(photo.src) + '" alt="' + escapeHTML(photo.alt) + '" loading="lazy" decoding="async">' +
                     mediaIndicator +
-                    '<div class="card-overlay">' +
-                        '<div class="card-caption">' +
-                            '<span class="card-title">' + escapeHTML(photo.caption || photo.quote) + '</span>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
+                '</span>' +
+                '<span class="card-caption"><span class="card-title">' +
+                    escapeHTML(photo.caption || photo.quote || 'Open photo') +
+                '</span></span>';
 
             gallery.appendChild(card);
         });
@@ -278,6 +280,7 @@
             renderFallback(gallery);
         } finally {
             if (timeout) clearTimeout(timeout);
+            gallery.dataset.feedReady = 'true';
         }
     }
 
