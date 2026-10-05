@@ -18,7 +18,7 @@ Branch: `ux/human-readable` (worktree `/opt/data/repos/portfolio-readable`).
 | `flock … test:browser -- tests/browser/design.spec.cjs tests/browser/smoke.spec.cjs --workers=1` | 12/12 pass |
 | `npm run build` | clean |
 
-Total after integration: 70 tests, 0 failures (4 unit, 39 site, 27 browser). Browser runs serialized behind `/opt/data/repos/.site-browser.lock`, one worker.
+The earlier narrative reported 70 tests (4 unit, 39 site, 27 browser), but the historical table above recorded only 38 site tests. That one-test discrepancy is not used as release evidence. The fresh execution below establishes the verified counts. Browser runs are serialized behind `/opt/data/repos/.site-browser.lock`, one worker.
 
 ## Capture evidence
 
@@ -90,6 +90,24 @@ Second batch (deleg_889401b0 code + visual audit):
 - **B1 (Home/Work/one project)** — pending owner: does the shorter copy still sound like Qusai? More modern without losing the warm theme? Compact side-by-side mobile photo cards unchanged? Prototype caveats visible in a short scan?
 - **B2 (About/reading/Life/Photos)** — pending owner. Automated/manual checks green: ten-second scan, five-second scan, article measure + outlines, JS-off readability, failure fallbacks, print (About + Resume), no new animations. **Not verifiable here:** real phone, actual 200% browser zoom, on-device keyboard walkthrough.
 
-## Release state
+## Historical release state (2026-09-27)
 
-PR #2 (https://github.com/qusaismael/portfolio/pull/2) was merged at `2026-09-27T07:22:57Z`; it contains Gate A, not this readability branch. This branch is published as **draft PR #3** (https://github.com/qusaismael/portfolio/pull/3) at head `57b6db0`; CI run [36322754699](https://github.com/qusaismael/portfolio/actions/runs/36322754699) passed (build, site, unit, browser). Open as a draft for owner review — **not merged, nothing live changed**. Deployment happens only on merge to `main`.
+PR #2 (https://github.com/qusaismael/portfolio/pull/2) was merged at `2026-09-27T07:22:57Z`; it contains Gate A, not this readability branch. This branch was published as **draft PR #3** (https://github.com/qusaismael/portfolio/pull/3). CI run [36322754699](https://github.com/qusaismael/portfolio/actions/runs/36322754699) passed. At that time the branch was unmerged and deployment awaited owner approval.
+
+## Release authorization and fresh verification (2026-10-05)
+
+After being told that PRs #3 and #4 were the remaining unpublished-to-production work, the owner instructed: **“continue on doing it all in the best way”**. This authorizes completing review, integration, merge, and deployment of the existing proposals; it supersedes the pending release/copy gates above. The implemented teaser drafts and single-column phone Photos layout are retained. Published article bodies, facts, quotations, and destinations remain frozen; the two article typos are not silently rewritten.
+
+Fresh verification at application head `20212dc7f5e79e672b983bbfe9b127e21b18d322`, against current-main baseline `7121ef4341c7bde7ed6e6be65d23f9f62a6954e2`:
+
+- `npm run build`: passed.
+- `npm test`: **4/4** unit tests passed.
+- `npm run test:site`: **39/39** site tests passed.
+- Browser readability suite: **15/15** passed; design + smoke: **12/12** passed. Total: **70 tests, 0 failures**.
+- **88 baseline + 88 proposed** screenshots regenerated across 11 routes, 320/390/1024/1440px, and both themes. Exact key/count and PNG geometry checks passed, with no recorded overflow, broken loaded images, or page errors. Proposed Photos captures waited for feed readiness; baseline has the older capture harness. Live external content is not claimed to be pixel-identical.
+- Representative matched Home/Work/article screenshots and About/Life/Photos theme captures visually inspected, with no confirmed visual breakage.
+- **24 axe WCAG A/AA scans** across six changed routes, 390/1440px, and both themes: no detected violations. Keyboard mobile-menu Enter/Escape and theme-toggle checks passed.
+- Independent read-only review of all 42 changed files: no confirmed security/logic blocker; protected data/facts/quotes/destinations preserved. Historical test-count inconsistency clarified above. A broader rendered-article DOM guard remains a nonblocking test-hardening suggestion, not evidence of lost content.
+- Real physical-phone use, assistive-technology evaluation, and actual 200% browser chrome zoom are **not claimed**. Responsive browser automation is not a substitute for those checks.
+
+Local comparison/audit artifacts: `/opt/data/personal/portfolio-release-20261005/`. GitHub PR state and deployment are verified separately after publication; this preparation record does not itself claim a merge or live release.
