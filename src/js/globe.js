@@ -604,6 +604,14 @@
         });
       });
 
+      // Country wall names: focus the country's first visited pin (someday names are their own trigger).
+      document.querySelectorAll('.country-name').forEach(name => {
+        name.addEventListener('click', () => {
+          const first = name.closest('.country-block').querySelector('.globe-chip, .globe-bucket-trigger');
+          if (first && first !== name) first.click();
+        });
+      });
+
       document.querySelectorAll('.globe-bucket-trigger').forEach(card => {
         card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); } });
         card.addEventListener('click', () => {

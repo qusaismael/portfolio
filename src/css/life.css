@@ -1221,3 +1221,208 @@ html:not(.js) .globe-canvas-col, html:not(.js) .globe-chips-wrapper { display:no
 .visited-stories p{font-size:1rem;line-height:1.7;margin:0;max-width:60ch;color:var(--text-color)}
 .fact-body{max-width:68ch}
 @media(max-width:767px){.visited-stories{grid-template-columns:minmax(0,1fr)}}
+
+/* ==========================================================================
+   COUNTRY WALL — one typeface per country, just the names.
+   Visited: solid ink. Someday: outlined, waiting to be filled in.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Reem Kufi';
+  src: url('/fonts/reem-kufi-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Duru Sans';
+  src: url('/fonts/duru-sans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('/fonts/almarai-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/fonts/cinzel-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Big Shoulders Display';
+  src: url('/fonts/big-shoulders-display-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/fonts/jost-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/playfair-display-500i.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Zen Old Mincho';
+  src: url('/fonts/zen-old-mincho-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+.country-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  column-gap: 32px;
+  row-gap: 8px;
+  align-items: end;
+  margin-top: 40px;
+}
+
+/* — Visited: solid, present tense — */
+.country-block {
+  position: relative;
+}
+
+.country-name {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  margin: 0;
+  color: var(--heading-color);
+  line-height: 1.15;
+  letter-spacing: 0;
+  cursor: pointer;
+  transform: translateZ(0); /* Chrome text-stroke AA fix */
+  transition: color .18s ease, opacity .18s ease;
+}
+
+.country-name:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+}
+
+.country-name:hover { color: var(--accent-color); }
+
+.country-reem-kufi   .country-name { font: 500 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Reem Kufi', var(--font-sans); }
+.country-duru-sans   .country-name { font: 400 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Duru Sans', var(--font-sans); }
+.country-almarai     .country-name { font: 800 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Almarai', var(--font-sans); }
+.country-cinzel      .country-name { font: 600 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Cinzel', var(--font-sans); }
+.country-big-shoulders .country-name { font: 700 clamp(2.2rem, 5.5vw, 3.4rem)/1.05 'Big Shoulders Display', var(--font-sans); }
+.country-jost        .country-name { font: 500 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Jost', var(--font-sans); }
+.country-playfair    .country-name { font: italic 500 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Playfair Display', var(--font-sans); }
+.country-zen-mincho  .country-name { font: 500 clamp(2.2rem, 5.5vw, 3.4rem)/1.15 'Zen Old Mincho', var(--font-sans); }
+
+/* — Someday: outlined names, waiting to be inked in — */
+.someday-wall .country-name {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--muted-text);
+}
+
+.someday-wall .country-name:hover,
+.someday-wall .country-name:focus-visible {
+  color: var(--accent-color);
+  -webkit-text-stroke: 1px var(--accent-color);
+}
+
+.someday-wall .country-name:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Firefox: no text-stroke support for this use, fall back to muted ink */
+@supports not (-webkit-text-stroke: 1px black) {
+  .someday-wall .country-name { color: var(--muted-text); opacity: .75; }
+}
+
+/* — Cities: quiet mono caps, revealed on hover/focus of the block — */
+.country-cities {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0 0 0 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .35s ease, opacity .25s ease;
+}
+
+.country-block:hover .country-cities,
+.country-block:focus-within .country-cities {
+  max-height: 120px;
+  opacity: 1;
+}
+
+.country-cities .globe-chip,
+.country-cities .globe-bucket-trigger {
+  font: .75rem var(--font-mono);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted-text);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  min-height: 28px;
+  cursor: pointer;
+  opacity: .8;
+  transition: color .18s ease, opacity .18s ease;
+}
+
+.country-cities .globe-chip:hover,
+.country-cities .globe-bucket-trigger:hover,
+.country-cities .globe-chip:focus-visible,
+.country-cities .globe-bucket-trigger:focus-visible {
+  color: var(--accent-color);
+  opacity: 1;
+}
+
+.country-cities .globe-chip:focus-visible,
+.country-cities .globe-bucket-trigger:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Riyadh sits in the visited column with an asterisk: on the someday plan — */
+
+/* Small screens: keep the wall readable but compact */
+@media (max-width: 767px) {
+  .country-wall { grid-template-columns: 1fr; row-gap: 4px; margin-top: 28px; }
+  .country-name { padding: 4px 0; }
+  .someday-wall .country-name { -webkit-text-stroke-width: 0.75px; }
+}
+
+/* Reduced motion: no reveal animation */
+@media (prefers-reduced-motion: reduce) {
+  .country-cities { transition: none; }
+}
+
+/* Print: everything solid and visible */
+@media print {
+  .someday-wall .country-name { color: var(--text-color); -webkit-text-stroke: 0; }
+  .country-cities { max-height: none; opacity: 1; overflow: visible; }
+}
