@@ -26,7 +26,7 @@ customScripts: "/js/globe.js"
                 <span class="globe-legend-item legend-visited"><span class="legend-dot visited-dot">●</span> Visited
                   (10)</span>
                 <span class="globe-legend-item legend-bucket"><span class="legend-dot bucket-dot">◆</span> Planning to
-                  Explore (8)</span>
+                  Explore (5)</span>
               </div>
               <div class="globe-drag-hint">
                 <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -70,25 +70,28 @@ customScripts: "/js/globe.js"
               </div>
             </div>
 
-            <!-- Visited City Quick-Select Chips -->
-            <div class="globe-chips-wrapper">
-              <div class="globe-chips-title">
-                <h4>Select a destination to focus globe:</h4>
-                <span class="chips-count">10 Visited Places</span>
-              </div>
-              <div class="visited-quick-chips globe-chips-grid" id="globe-visited-chips">
-                {% for place in visitedPlaces %}
-                <button type="button" class="globe-chip visited-chip place-tag{% if loop.first %} active{% endif %}"
-                  data-id="{{ place.id }}" data-lat="{{ place.lat }}" data-lon="{{ place.lon }}"
-                  data-city="{{ place.city }}" data-country="{{ place.country }}" data-flag="{{ place.flag }}"
-                  data-desc="{{ place.note }}">
-                  <span class="chip-dot visited-chip-dot"></span><span class="chip-name visited-chip-city">{{ place.city }}</span>
-                  <span class="visited-chip-flag">{{ place.flag }}</span>
-                </button>
-                {% endfor %}
-              </div>
-            </div>
           </div>
+        </div>
+
+        <!-- Country wall: one typeface per country, just the names. -->
+        <div class="country-wall" id="globe-visited-chips" aria-label="Countries I have visited">
+          {% for c in wallCountries %}
+          <div class="country-block country-{{ c.font }}">
+            <button type="button" class="country-name" data-country-id="{{ c.id }}">{{ c.name }}</button>
+            <ul class="country-cities">
+              {% for place in c.cities %}
+              <li><button type="button" class="globe-chip" data-id="{{ place.id }}" data-lat="{{ place.lat }}" data-lon="{{ place.lon }}"
+                data-city="{{ place.city }}" data-country="{{ place.country }}" data-flag="{{ place.flag }}"
+                data-desc="{{ place.note }}">{{ place.city }}</button></li>
+              {% endfor %}
+              {% if c.id == 'saudi' %}
+              <li class="someday-note"><button type="button" class="globe-bucket-trigger" data-id="riyadh" data-lat="24.7136" data-lon="46.6753"
+                data-city="Riyadh" data-country="Saudi Arabia 🇸🇦"
+                data-desc="Black Hat and a chance to meet more people working in security.">Riyadh*</button></li>
+              {% endif %}
+            </ul>
+          </div>
+          {% endfor %}
         </div>
 
         <div class="travel-stories" aria-labelledby="visited-stories-title">
@@ -103,176 +106,34 @@ customScripts: "/js/globe.js"
         <div class="travel-subsection" style="margin-top: 3rem;">
           <div class="subsection-header">
             <h3>The someday list</h3>
-            <span class="subsection-count">8 Destinations</span>
+            <span class="subsection-count">5 Destinations</span>
           </div>
           <p class="subsection-desc">Not booked. Just a list that keeps getting longer.
           </p>
 
-          <div class="bucket-list-grid">
-            <!-- 1. SF -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
-              data-city="SF" data-country="USA 🇺🇸"
-              data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">SF</span>
-                <span class="bucket-card-badge">USA 🇺🇸</span>
-              </span>
-              <span class="bucket-card-reason">I spend enough time reading about Silicon Valley. I want to see it in person.
-              </span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>San Francisco, California</span>
-              </span>
-            </button>
-
-            <!-- 2. Germany -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="germany" data-lat="52.5200" data-lon="13.4050"
-              data-city="Germany" data-country="EU 🇩🇪"
-              data-desc="I want to see the engineering scene, and a bit of the country around it."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">Germany</span>
-                <span class="bucket-card-badge">EU 🇩🇪</span>
-              </span>
-              <span class="bucket-card-reason">The tech hub of the EU—really want to explore the engineering scene and
-                culture.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>European Engineering Center</span>
-              </span>
-            </button>
-
-            <!-- 3. UK -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="uk" data-lat="51.5074" data-lon="-0.1278"
-              data-city="UK" data-country="Europe 🇬🇧"
-              data-desc="London in winter. Rain included."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">UK</span>
-                <span class="bucket-card-badge">Europe 🇬🇧</span>
-              </span>
-              <span class="bucket-card-reason">London in winter. Rain included.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>London Winter Cityscapes</span>
-              </span>
-            </button>
-
-            <!-- 4. Texas -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="texas" data-lat="30.2672" data-lon="-97.7431"
-              data-city="Texas" data-country="USA 🇺🇸"
-              data-desc="There is a friend I really want to visit here."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">Texas</span>
-                <span class="bucket-card-badge">USA 🇺🇸</span>
-              </span>
-              <span class="bucket-card-reason">There is a friend I really want to visit here.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>Personal Reunion &amp; Travel</span>
-              </span>
-            </button>
-
-            <!-- 5. New York -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="newyork" data-lat="40.7128" data-lon="-74.0060"
-              data-city="New York" data-country="USA 🇺🇸"
-              data-desc="The Spider-Man city. Obviously I have to go."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">New York</span>
-                <span class="bucket-card-badge">USA 🇺🇸</span>
-              </span>
-              <span class="bucket-card-reason">The Spider-Man city. Obviously I have to go.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>NYC Skyline &amp; Culture</span>
-              </span>
-            </button>
-
-            <!-- 6. Detroit -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="detroit" data-lat="42.3314" data-lon="-83.0458"
-              data-city="Detroit" data-country="USA 🇺🇸"
-              data-desc="Mostly because of Detroit: Become Human. Yes, a game made the travel list."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">Detroit</span>
-                <span class="bucket-card-badge">USA 🇺🇸</span>
-              </span>
-              <span class="bucket-card-reason">Mostly because of Detroit: Become Human. Yes, a game made the travel list.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>Cyberpunk &amp; Sci-Fi Lore</span>
-              </span>
-            </button>
-
-            <!-- 7. Japan -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="japan" data-lat="35.6762" data-lon="139.6503"
-              data-city="Japan" data-country="Asia 🇯🇵"
-              data-desc="I want to see the sakura in person, then get lost in the tech and culture."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">Japan</span>
-                <span class="bucket-card-badge">Asia 🇯🇵</span>
-              </span>
-              <span class="bucket-card-reason">I want to see the sakura in person, then get lost in the tech and culture.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>Cherry Blossoms &amp; Architecture</span>
-              </span>
-            </button>
-
-            <!-- 8. Riyadh -->
-            <button type="button" class="bucket-card globe-bucket-trigger" data-id="riyadh" data-lat="24.7136" data-lon="46.6753"
-              data-city="Riyadh" data-country="Saudi Arabia 🇸🇦"
-              data-desc="Black Hat and a chance to meet more people working in security."
-             >
-              <span class="bucket-card-header">
-                <span class="bucket-card-destination">Riyadh</span>
-                <span class="bucket-card-badge">Saudi Arabia 🇸🇦</span>
-              </span>
-              <span class="bucket-card-reason">Want to attend BlackHat MENA and tech events to connect with security
-                researchers.</span>
-              <span class="bucket-card-icon-pill">
-                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                    stroke="currentColor" stroke-width="1.5" />
-                  <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span>Cybersecurity &amp; Tech Conferences</span>
-              </span>
-            </button>
+          <div class="country-wall someday-wall" aria-label="Countries I want to visit">
+            <div class="country-block country-big-shoulders">
+              <button type="button" class="country-name globe-bucket-trigger" data-country-id="usa" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
+                data-city="SF" data-country="USA 🇺🇸"
+                data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">USA</button>
+            </div>
+            <div class="country-block country-jost">
+              <button type="button" class="country-name globe-bucket-trigger" data-country-id="germany" data-id="germany" data-lat="52.5200" data-lon="13.4050"
+                data-city="Germany" data-country="EU 🇩🇪"
+                data-desc="I want to see the engineering scene, and a bit of the country around it.">Germany</button>
+            </div>
+            <div class="country-block country-playfair">
+              <button type="button" class="country-name globe-bucket-trigger" data-country-id="uk" data-id="uk" data-lat="51.5074" data-lon="-0.1278"
+                data-city="UK" data-country="Europe 🇬🇧"
+                data-desc="London in winter. Rain included.">UK</button>
+            </div>
+            <div class="country-block country-zen-mincho">
+              <button type="button" class="country-name globe-bucket-trigger" data-country-id="japan" data-id="japan" data-lat="35.6762" data-lon="139.6503"
+                data-city="Japan" data-country="Asia 🇯🇵"
+                data-desc="I want to see the sakura in person, then get lost in the tech and culture.">Japan</button>
+            </div>
           </div>
         </div>
-      </section>
 
       <!-- SECTION 2: FUN FACTS -->
       <section id="fun-facts" class="fun-facts-section">
