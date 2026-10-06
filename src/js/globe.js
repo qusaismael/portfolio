@@ -581,10 +581,9 @@
       function focusLocation(lat, lon, city, country, flag, desc, isBucket = false) {
         const angles = coordsToAngles(lat, lon);
         targetPhi = angles.phi; targetTheta = angles.theta; isFocusing = true;
-        const hc = document.getElementById('hud-city'), hf = document.getElementById('hud-flag');
+        const hc = document.getElementById('hud-city');
         const hco = document.getElementById('hud-country'), hcr = document.getElementById('hud-coords');
         const hd = document.getElementById('hud-description'), hb = document.getElementById('hud-category-label');
-        if (hf) hf.textContent = flag;
         if (hc && hc.firstChild) hc.firstChild.nodeValue = `${city} `;
         if (hco) hco.textContent = country;
         if (hcr) hcr.textContent = `${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(4)}° ${lon >= 0 ? 'E' : 'W'}`;

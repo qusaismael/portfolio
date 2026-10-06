@@ -26,7 +26,7 @@ customScripts: "/js/globe.js"
                 <span class="globe-legend-item legend-visited"><span class="legend-dot visited-dot">●</span> Visited
                   (10)</span>
                 <span class="globe-legend-item legend-bucket"><span class="legend-dot bucket-dot">◆</span> Planning to
-                  Explore (5)</span>
+                  Explore (8)</span>
               </div>
               <div class="globe-drag-hint">
                 <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -64,7 +64,7 @@ customScripts: "/js/globe.js"
                 <span class="hud-coords" id="hud-coords">31.9566° N, 35.9457° E</span>
               </div>
               <div class="hud-body">
-                <h3 class="hud-city" id="hud-city">Amman <span class="hud-flag" id="hud-flag">🇯🇴</span></h3>
+                <h3 class="hud-city" id="hud-city">Amman</h3>
                 <p class="hud-country" id="hud-country">Jordan (Spawn Point)</p>
                 <p class="hud-description" id="hud-description">My spawn point! The hills, the Roman Theater, the energy. Amman is home.</p>
               </div>
@@ -86,7 +86,7 @@ customScripts: "/js/globe.js"
               {% endfor %}
               {% if c.id == 'saudi' %}
               <li class="someday-note"><button type="button" class="globe-bucket-trigger" data-id="riyadh" data-lat="24.7136" data-lon="46.6753"
-                data-city="Riyadh" data-country="Saudi Arabia 🇸🇦"
+                data-city="Riyadh" data-country="Saudi Arabia"
                 data-desc="Black Hat and a chance to meet more people working in security.">Riyadh*</button></li>
               {% endif %}
             </ul>
@@ -106,7 +106,7 @@ customScripts: "/js/globe.js"
         <div class="travel-subsection" style="margin-top: 3rem;">
           <div class="subsection-header">
             <h3>The someday list</h3>
-            <span class="subsection-count">5 Destinations</span>
+            <span class="subsection-count">8 Destinations</span>
           </div>
           <p class="subsection-desc">Not booked. Just a list that keeps getting longer.
           </p>
@@ -114,22 +114,33 @@ customScripts: "/js/globe.js"
           <div class="country-wall someday-wall" aria-label="Countries I want to visit">
             <div class="country-block country-big-shoulders">
               <button type="button" class="country-name globe-bucket-trigger" data-country-id="usa" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
-                data-city="SF" data-country="USA 🇺🇸"
+                data-city="SF" data-country="USA"
                 data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">USA</button>
+              <ul class="country-cities">
+                <li><button type="button" class="globe-bucket-trigger" data-id="texas" data-lat="30.2672" data-lon="-97.7431"
+                  data-city="Texas" data-country="USA"
+                  data-desc="There is a friend I really want to visit here.">Texas</button></li>
+                <li><button type="button" class="globe-bucket-trigger" data-id="newyork" data-lat="40.7128" data-lon="-74.0060"
+                  data-city="New York" data-country="USA"
+                  data-desc="The Spider-Man city. Obviously I have to go.">New York</button></li>
+                <li><button type="button" class="globe-bucket-trigger" data-id="detroit" data-lat="42.3314" data-lon="-83.0458"
+                  data-city="Detroit" data-country="USA"
+                  data-desc="Mostly because of Detroit: Become Human. Yes, a game made the travel list.">Detroit</button></li>
+              </ul>
             </div>
             <div class="country-block country-jost">
               <button type="button" class="country-name globe-bucket-trigger" data-country-id="germany" data-id="germany" data-lat="52.5200" data-lon="13.4050"
-                data-city="Germany" data-country="EU 🇩🇪"
+                data-city="Germany" data-country="Germany"
                 data-desc="I want to see the engineering scene, and a bit of the country around it.">Germany</button>
             </div>
             <div class="country-block country-playfair">
               <button type="button" class="country-name globe-bucket-trigger" data-country-id="uk" data-id="uk" data-lat="51.5074" data-lon="-0.1278"
-                data-city="UK" data-country="Europe 🇬🇧"
+                data-city="UK" data-country="United Kingdom"
                 data-desc="London in winter. Rain included.">UK</button>
             </div>
             <div class="country-block country-zen-mincho">
               <button type="button" class="country-name globe-bucket-trigger" data-country-id="japan" data-id="japan" data-lat="35.6762" data-lon="139.6503"
-                data-city="Japan" data-country="Asia 🇯🇵"
+                data-city="Japan" data-country="Japan"
                 data-desc="I want to see the sakura in person, then get lost in the tech and culture.">Japan</button>
             </div>
           </div>
