@@ -46,13 +46,9 @@ html:not(.js) .wandering-cat{pointer-events:none}
 .personal-moment blockquote{font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.4;letter-spacing:-.025em;color:var(--heading-color);margin:0 0 20px}
 .personal-moment>div>p{color:var(--muted-text)}
 .memory-strip{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:32px 0 20px;padding:8px 4px}
-.memory-strip figure{margin:0;min-width:0}
-.memory-strip figure>a{display:block;background:var(--card-background);padding:8px;border:1px solid var(--border-color);border-radius:4px}
-.memory-strip img{width:100%;height:auto;border-radius:2px;aspect-ratio:1.85;object-fit:cover}
-.memory-strip figcaption{font:.75rem/1.7 var(--font-mono);padding:12px 4px 0}
+.memory-strip img{aspect-ratio:1.85;object-fit:cover}
 .memory-strip figure:nth-child(1){transform:rotate(-1deg)}
 .memory-strip figure:nth-child(2){transform:rotate(1deg)}
-.memory-strip img{aspect-ratio:1.85;object-fit:cover}
 .memory-strip figure:nth-child(2) img{object-position:50% 32%}
 .memory-strip figure>a:hover{border-color:var(--accent-color)}
 .exp-photo{margin:24px 0 0;max-width:540px}.exp-photo a{display:block}.exp-photo img{width:100%;height:auto;border-radius:6px}
@@ -87,6 +83,8 @@ html:not(.js) .wandering-cat{pointer-events:none}
 }
 @media(max-width:374px){
  .home-hero h1{font-size:2.1rem}.home-hero .hero-role{font-size:1.5rem}
+ .hero-copy>.button-row{display:grid;grid-template-columns:minmax(0,1fr)}
+ .hero-copy>.button-row>.button{width:100%;justify-content:space-between}
  .hero-aside .portrait-button{width:108px;height:108px}
  .about-heading{flex-wrap:wrap}
 }

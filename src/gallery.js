@@ -18,6 +18,8 @@
     var nextButton = null;
     var opener = null;
     var originalLink = null;
+    var retryButton = null;
+    var modalImageStatus = null;
 
     function originalUrl(post) {
         var link = post.permalink || post.postUrl || '';
@@ -237,12 +239,25 @@
             card.innerHTML =
                 '<span class="gallery-card-media">' +
                     '<img src="' + escapeHTML(photo.src) + '" alt="' + escapeHTML(photo.alt) + '" loading="lazy" decoding="async">' +
+                    '<span class="gallery-image-fallback" hidden>Photo unavailable<span>Open to try again</span></span>' +
                     mediaIndicator +
                 '</span>' +
                 '<span class="card-caption"><span class="card-title">' +
                     escapeHTML(photo.caption || photo.quote || 'Open photo') +
                 '</span></span>';
 
+            var image = card.querySelector('img');
+            var fallback = card.querySelector('.gallery-image-fallback');
+            image.addEventListener('error', function () {
+                image.hidden = true;
+                fallback.hidden = false;
+                card.setAttribute('aria-label', cardLabel + ' — Photo unavailable. Open to try again.');
+            });
+            image.addEventListener('load', function () {
+                image.hidden = false;
+                fallback.hidden = true;
+                card.setAttribute('aria-label', cardLabel);
+            });
             gallery.appendChild(card);
         });
     }
@@ -287,10 +302,22 @@
     /**
      * Updates modal image, quote, and caption based on currentIndex.
      */
+    function setModalImageState(state) {
+        modal.dataset.imageState = state;
+        modalImage.hidden = state !== 'ready';
+        modalImageStatus.hidden = state === 'ready';
+        modalImageStatus.textContent = state === 'error'
+            ? 'This photo could not load. Try again or view it on Instagram.'
+            : state === 'loading' ? 'Loading photo…' : '';
+        retryButton.hidden = state !== 'error';
+    }
+
     function updateModalContent() {
         var photo = PHOTOS[currentIndex];
         if (!photo || !modalImage) return;
 
+        setModalImageState('loading');
+        modalImage.removeAttribute('src');
         modalImage.src = photo.fullSrc || photo.src;
         modalImage.alt = photo.alt;
         modalQuote.textContent = photo.quote ? '“' + photo.quote + '”' : '';
@@ -332,6 +359,10 @@
 
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
+        modal.removeAttribute('data-image-state');
+        modalImageStatus.hidden = true;
+        modalImageStatus.textContent = '';
+        retryButton.hidden = true;
         modalImage.removeAttribute('src');
         modalImage.alt = '';
         document.body.style.overflow = '';
@@ -376,10 +407,22 @@
         prevButton = document.getElementById('photo-modal-prev');
         nextButton = document.getElementById('photo-modal-next');
         originalLink = document.getElementById('modal-original');
+        retryButton = document.getElementById('photo-modal-retry');
+        modalImageStatus = document.getElementById('modal-image-status');
 
-        if (!modal || !modalImage || !modalQuote || !modalCaption || !closeButton) return;
+        if (!modal || !modalImage || !modalQuote || !modalCaption || !closeButton || !retryButton || !modalImageStatus) return;
 
         closeButton.addEventListener('click', closePhotoModal);
+        retryButton.addEventListener('click', function () {
+            closeButton.focus();
+            updateModalContent();
+        });
+        modalImage.addEventListener('load', function () {
+            if (modal.classList.contains('active')) setModalImageState('ready');
+        });
+        modalImage.addEventListener('error', function () {
+            if (modal.classList.contains('active')) setModalImageState('error');
+        });
 
         if (prevButton) prevButton.addEventListener('click', function (e) { e.stopPropagation(); prevPhoto(); });
         if (nextButton) nextButton.addEventListener('click', function (e) { e.stopPropagation(); nextPhoto(); });
@@ -409,7 +452,7 @@
                 return;
             }
             if (event.key === 'Tab') {
-                var focusable = [closeButton, prevButton, nextButton, originalLink].filter(function (btn) {
+                var focusable = [closeButton, prevButton, nextButton, retryButton, originalLink].filter(function (btn) {
                     return btn && !btn.hidden && typeof btn.focus === 'function';
                 });
                 if (focusable.length === 0) {

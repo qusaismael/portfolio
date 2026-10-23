@@ -28,12 +28,12 @@ test('authored data and existing prose remain intact and in order', () => {
 test('changed stylesheets use fresh cache keys without loading Home-only CSS elsewhere', () => {
   const home = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
   const work = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
-  for (const asset of ['personality.css', 'terminal.css']) {
-    assert.equal(home(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
-    assert.equal(work(`link[rel="stylesheet"][href="/css/${asset}?v=soul-gate-a"]`).length, 1, asset);
+  for (const [asset, version] of [['personality.css', '20261023-polish'], ['terminal.css', 'soul-gate-a']]) {
+    assert.equal(home(`link[rel="stylesheet"][href="/css/${asset}?v=${version}"]`).length, 1, asset);
+    assert.equal(work(`link[rel="stylesheet"][href="/css/${asset}?v=${version}"]`).length, 1, asset);
   }
-  assert.equal(home('link[href="/css/style.css?v=20260926-readability"]').length, 1);
-  assert.equal(work('link[href="/css/style.css?v=20260926-readability"]').length, 1);
+  assert.equal(home('link[href="/css/style.css?v=20261023-polish"]').length, 1);
+  assert.equal(work('link[href="/css/style.css?v=20261023-polish"]').length, 1);
   assert.equal(home('link[href="/css/life-preview.css?v=20260926-readability"]').length, 1);
   assert.equal(work('link[href*="life-preview.css"]').length, 0);
 });

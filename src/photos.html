@@ -33,10 +33,12 @@ customScripts: "/gallery.js"
             <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
         <div class="photo-modal-content">
-            <img id="modal-image" alt="">
+            <img id="modal-image" alt="" hidden>
+            <p id="modal-image-status" class="photo-modal-status" role="status" hidden></p>
             <div id="modal-meta" class="photo-modal-meta">
                 <div id="modal-quote" class="photo-modal-quote"></div>
                 <div id="modal-caption" class="photo-modal-caption"></div>
+                <button id="photo-modal-retry" class="button button-small" type="button" hidden>Try again</button>
                 <a id="modal-original" class="text-link" target="_blank" rel="noopener noreferrer" hidden>View original on Instagram ↗</a>
             </div>
         </div>
