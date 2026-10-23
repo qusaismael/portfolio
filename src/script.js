@@ -16,6 +16,7 @@
     menu.setAttribute('aria-expanded', String(open));
     nav?.classList.toggle('active', open);
     menu.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
+    if (open) nav?.querySelector('a')?.focus();
   });
   nav?.addEventListener('click', e => { if (e.target.closest('a')) closeMenu(); });
   document.addEventListener('click', e => {
@@ -105,8 +106,5 @@
     $('.brand')?.focus({ preventScroll: true });
   });
   updateTop();
-  let catIndex = 0;
-  const catLines = ['meow.', 'Yes, the cat is part of the team.', 'Currently reviewing your code. Silently.', 'One more click. For science.'];
-  $('#cat-button')?.addEventListener('click', () => { $('#cat-message').textContent = catLines[catIndex++ % catLines.length]; });
 
 })();

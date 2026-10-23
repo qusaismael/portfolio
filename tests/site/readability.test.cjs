@@ -173,14 +173,17 @@ test('Life stories and setup notes keep their substance without numbered decorat
   ]);
 });
 
-test('changed readability assets have a distinct cache version', () => {
+test('changed assets keep distinct cache versions through the polish pass', () => {
   const home = load('/');
-  for (const asset of ['/css/style.css', '/css/life-preview.css', '/css/print.css']) {
-    assert.equal(home(`link[href="${asset}?v=20260926-readability"]`).length, 1, asset);
+  for (const [asset, version] of [
+    ['/css/style.css', '20261023-polish'], ['/css/life-preview.css', '20260926-readability'],
+    ['/css/print.css', '20261023-polish']
+  ]) {
+    assert.equal(home(`link[href="${asset}?v=${version}"]`).length, 1, asset);
   }
-  assert.equal(home('script[src="/script.js?v=20260926-readability"]').length, 1);
+  assert.equal(home('script[src="/script.js?v=20261023-polish"]').length, 1);
   assert.equal(load('/life/')('link[href="/css/life.css?v=20260926-readability"]').length, 1);
   const photos = load('/photos/');
-  assert.equal(photos('link[href="/css/gallery.css?v=20260926-readability"]').length, 1);
-  assert.equal(photos('script[src="/gallery.js?v=20260926-readability"]').length, 1);
+  assert.equal(photos('link[href="/css/gallery.css?v=20261023-polish"]').length, 1);
+  assert.equal(photos('script[src="/gallery.js?v=20261023-polish"]').length, 1);
 });
