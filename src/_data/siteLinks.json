@@ -1,6 +1,6 @@
 [
   {"name":"Portfolio","host":"www.qusai.pro","href":"https://www.qusai.pro/"},
-  {"name":"Textify","host":"textify.qusai.pro","status":"HTTPS pending"},
+  {"name":"Textify","host":"textify.qusai.pro","href":"https://textify.qusai.pro/","newTab":true},
   {"name":"GRC Check","host":"grc.qusai.pro","href":"https://grc.qusai.pro/","newTab":true},
   {"name":"30 Days From Today","host":"30daysfromtoday.qusai.pro","href":"https://30daysfromtoday.qusai.pro/","newTab":true},
   {"name":"Local LLM","host":"localllm.qusai.pro","href":"https://localllm.qusai.pro/","newTab":true},

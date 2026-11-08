@@ -38,7 +38,7 @@ test('changed stylesheets use fresh cache keys without loading Home-only CSS els
   assert.equal(work('link[href*="life-preview.css"]').length, 0);
 });
 
-test('Work page gives all ten named sites a compact directory without linking broken HTTPS', () => {
+test('Work page gives all ten named sites active HTTPS links with safe external targets', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
   const expected = [
     ['Portfolio', 'www.qusai.pro'],
@@ -60,20 +60,18 @@ test('Work page gives all ten named sites a compact directory without linking br
     assert.equal(normalize(item.find('.site-name').text()), name);
     assert.equal(normalize(item.find('.site-domain').text()), host);
     const link = item.find('a');
-    if (name === 'Textify') {
-      assert.equal(link.length, 0, 'do not send visitors to an invalid TLS certificate');
-      assert.match(item.text(), /HTTPS pending/);
+    assert.equal(link.length, 1, `${name} has an active link`);
+    assert.equal(link.attr('href'), `https://${host}/`);
+    assert.equal(item.hasClass('site-directory-pending'), false, name);
+    assert.equal(item.find('.site-state').length, 0, name);
+    assert.doesNotMatch(item.text(), /HTTPS pending/i);
+    if (name !== 'Portfolio') {
+      assert.equal(link.attr('target'), '_blank');
+      assert.deepEqual((link.attr('rel') || '').split(/\s+/).filter(Boolean).sort(), ['noopener', 'noreferrer']);
+      assert.match(normalize(link.find('.sr-only').text()), /opens in a new tab/i);
     } else {
-      assert.equal(link.length, 1);
-      assert.equal(link.attr('href'), `https://${host}/`);
-      if (name !== 'Portfolio') {
-        assert.equal(link.attr('target'), '_blank');
-        assert.deepEqual((link.attr('rel') || '').split(/\s+/).filter(Boolean).sort(), ['noopener', 'noreferrer']);
-        assert.match(normalize(link.find('.sr-only').text()), /opens in a new tab/i);
-      } else {
-        assert.equal(link.attr('target'), undefined, 'Portfolio stays in the current tab');
-        assert.equal(link.find('.sr-only').length, 0);
-      }
+      assert.equal(link.attr('target'), undefined, 'Portfolio stays in the current tab');
+      assert.equal(link.find('.sr-only').length, 0);
     }
   });
   assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
