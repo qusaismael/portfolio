@@ -1,5 +1,26 @@
 const { test, expect } = require('@playwright/test');
 
+// Replace the server-rendered cards before gallery.js initializes. Fixture images
+// deliberately omit srcset so an aborted URL cannot fall back to another source.
+async function fixtureGallery(page, photos) {
+  await page.route('**/photos/', async route => {
+    const response = await route.fetch();
+    const $ = require('cheerio').load(await response.text());
+    const gallery = $('#photo-gallery').empty().addClass('photo-gallery');
+    for (const photo of photos) {
+      const caption = photo.caption || photo.quote || 'Open photo';
+      const card = $('<a class="gallery-card"><span class="gallery-card-media"><img><span class="gallery-image-fallback" hidden>Photo unavailable<span>Open to try again</span></span></span><span class="card-caption"><span class="card-title"></span></span></a>');
+      card.attr({ href: photo.src, 'data-full-src': photo.src,
+        'data-original-url': photo.originalUrl || 'https://instagram.com/qusai.pro',
+        'data-quote': photo.quote || '', 'data-video': 'false', 'aria-label': caption });
+      card.find('img').attr({ src: photo.src, alt: caption });
+      card.find('.card-title').text(caption);
+      gallery.append(card);
+    }
+    await route.fulfill({ response, body: $.html() });
+  });
+}
+
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('https://api.github.com/**', route => route.abort());
@@ -25,13 +46,10 @@ test('opening the mobile menu focuses its links and Escape restores the toggle',
 });
 
 test('one failed gallery image has a useful fallback without hiding healthy photos', async ({ page }) => {
-  await page.route('https://feeds.behold.so/**', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify([
-      { id: 'synthetic-broken', mediaType: 'IMAGE', caption: 'Synthetic unavailable photo.', mediaUrl: '/pics/test-unavailable.webp' },
-      { id: 'synthetic-healthy', mediaType: 'IMAGE', caption: 'Synthetic healthy photo.', mediaUrl: '/pics/instagram-egypt.jpg' }
-    ])
-  }));
+  await fixtureGallery(page, [
+    { caption: 'Synthetic unavailable photo.', src: '/pics/test-unavailable.webp' },
+    { caption: 'Synthetic healthy photo.', src: '/pics/instagram-egypt.jpg' }
+  ]);
   await page.route('**/pics/test-unavailable.webp', route => route.abort());
   await page.goto('/photos/');
   const cards = page.locator('.gallery-card');
@@ -47,13 +65,8 @@ test('one failed gallery image has a useful fallback without hiding healthy phot
 
 test('photo viewer retries a failed image and restores keyboard focus after recovery', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
-  await page.route('https://feeds.behold.so/**', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify([
-      { id: 'synthetic-retry', mediaType: 'IMAGE', caption: 'Synthetic recovery photo.',
-        mediaUrl: '/pics/test-recover.jpg', permalink: 'https://www.instagram.com/p/SYNTHETIC/' }
-    ])
-  }));
+  await fixtureGallery(page, [{ caption: 'Synthetic recovery photo.', src: '/pics/test-recover.jpg',
+    originalUrl: 'https://www.instagram.com/p/SYNTHETIC/' }]);
   let requests = 0;
   await page.route('**/pics/test-recover.jpg', route => {
     requests++;
@@ -120,13 +133,10 @@ test('the deferred full-size portrait still opens and closes on every portrait p
 });
 
 test('photo navigation clears the previous error before showing a healthy image', async ({ page }) => {
-  await page.route('https://feeds.behold.so/**', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify([
-      { id: 'synthetic-error-navigation', mediaType: 'IMAGE', caption: 'Synthetic unavailable photo.', mediaUrl: '/pics/test-unavailable.webp' },
-      { id: 'synthetic-good-navigation', mediaType: 'IMAGE', caption: 'Synthetic healthy photo.', mediaUrl: '/pics/instagram-egypt.jpg' }
-    ])
-  }));
+  await fixtureGallery(page, [
+    { caption: 'Synthetic unavailable photo.', src: '/pics/test-unavailable.webp' },
+    { caption: 'Synthetic healthy photo.', src: '/pics/instagram-egypt.jpg' }
+  ]);
   await page.route('**/pics/test-unavailable.webp', route => route.abort());
   await page.goto('/photos/');
   await page.locator('.gallery-card').first().click();

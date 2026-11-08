@@ -61,6 +61,8 @@ section,[id]{scroll-margin-top:calc(var(--header-offset,var(--header-height)) + 
 .site-header .brand,.site-footer .brand,.footer-links>a{position:relative}
 .site-header .brand::after,.site-footer .brand::after,.footer-links>a::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
 .progress-wrap{position:fixed;bottom:22px;right:22px;z-index:80;width:44px;height:44px;border-radius:50%;border:1px solid var(--border-color);background:var(--card-background);color:var(--text-color);font-size:1.2rem;box-shadow:var(--shadow)}
+/* Keep row actions clear on small screens; the control remains at the page end. */
+@media(max-width:767px){.progress-wrap{position:static;display:block;margin:0 22px max(22px,env(safe-area-inset-bottom)) auto}}
 /* Page rhythm */
 .home-hero{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:60px;align-items:center;padding:76px 0 68px;border:0}
 .home-hero h1{font-size:clamp(2.5rem,4.6vw,4rem);margin-bottom:.65rem}

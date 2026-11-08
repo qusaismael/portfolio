@@ -90,7 +90,12 @@ test('every job story is visible without tabs on About; Home links to the longer
       assert.equal(entry.attr('hidden'), undefined);
       assert.equal(entry.attr('id'), `panel-${job.id}`);
       assert.equal(entry.find('h3').attr('id'), `tab-${job.id}`);
-      if (job.id === 'zain') assert.deepEqual([entry.find('img').attr('width'), entry.find('img').attr('height')], ['655', '376']);
+      if (job.id === 'zain') {
+        const photo = $('.memory-strip img[src="/pics/qusaiatzain.webp"]');
+        assert.deepEqual([photo.attr('width'), photo.attr('height')], ['655', '376']);
+        assert.equal(entry.find('img').length, 0, 'do not repeat the memory-strip photo');
+        assert.equal(entry.find('a[data-view-photo]').attr('href'), job.photo.src);
+      }
       if (job.id === 'freelance-devops') assert.deepEqual([entry.find('img').attr('width'), entry.find('img').attr('height')], ['2584', '980']);
     });
   }
@@ -176,7 +181,7 @@ test('Life stories and setup notes keep their substance without numbered decorat
 test('changed assets keep distinct cache versions through the polish pass', () => {
   const home = load('/');
   for (const [asset, version] of [
-    ['/css/style.css', '20261023-polish'], ['/css/life-preview.css', '20260926-readability'],
+    ['/css/style.css', '20261108-photos'], ['/css/life-preview.css', '20260926-readability'],
     ['/css/print.css', '20261023-polish']
   ]) {
     assert.equal(home(`link[href="${asset}?v=${version}"]`).length, 1, asset);
@@ -184,6 +189,6 @@ test('changed assets keep distinct cache versions through the polish pass', () =
   assert.equal(home('script[src="/script.js?v=20261023-polish"]').length, 1);
   assert.equal(load('/life/')('link[href="/css/life.css?v=20260926-readability"]').length, 1);
   const photos = load('/photos/');
-  assert.equal(photos('link[href="/css/gallery.css?v=20261023-polish"]').length, 1);
-  assert.equal(photos('script[src="/gallery.js?v=20261023-polish"]').length, 1);
+  assert.equal(photos('link[href="/css/gallery.css?v=20261108-photos"]').length, 1);
+  assert.equal(photos('script[src="/gallery.js?v=20261108-photos"]').length, 1);
 });

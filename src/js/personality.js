@@ -34,7 +34,7 @@
    event.preventDefault();
    const image=memory.querySelector('img');
    image.src=link.href;
-   image.alt=link.querySelector('img')?.alt || '';
+   image.alt=link.querySelector('img')?.alt || link.dataset.photoAlt || '';
    document.getElementById('memory-caption').textContent=link.dataset.photoCaption || image.alt;
    memory.showModal();
   });

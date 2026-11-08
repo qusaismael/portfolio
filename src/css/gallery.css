@@ -27,12 +27,14 @@
     color: inherit;
     font: inherit;
     text-align: left;
+    text-decoration: none;
     cursor: pointer;
     transition: none;
 }
 
 .gallery-card:hover {
     transform: none;
+    color: inherit;
 }
 
 .gallery-card:focus-visible {
