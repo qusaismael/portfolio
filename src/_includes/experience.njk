@@ -7,7 +7,10 @@
     <p>{{ job.summary }}</p>
     {% if job.bullets.length %}<ul>{% for bullet in job.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
     <div class="tags">{% for tag in job.tags %}<span>{{ tag }}</span>{% endfor %}</div>
-    {% if job.photo %}<figure class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-caption="{{ job.photo.caption }}" aria-label="Enlarge photo from {{ job.company }}"><img src="{{ job.photo.src }}" alt="{{ job.photo.alt }}" {% if job.id == 'zain' %}width="655" height="376"{% elif job.id == 'freelance-devops' %}width="2584" height="980"{% endif %} loading="lazy"></a><figcaption>{{ job.photo.caption }}</figcaption></figure>{% endif %}
+    {% if job.photo and job.id == 'zain' %}
+    {# The Zain photo already appears in the balanced memory strip above. #}
+    <p class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-alt="{{ job.photo.alt }}" data-photo-caption="{{ job.photo.caption }}">{{ job.photo.caption }}</a></p>
+    {% elif job.photo %}<figure class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-caption="{{ job.photo.caption }}" aria-label="Enlarge photo from {{ job.company }}"><img src="{{ job.photo.src }}" alt="{{ job.photo.alt }}" {% if job.id == 'freelance-devops' %}width="2584" height="980"{% endif %} loading="lazy"></a><figcaption>{{ job.photo.caption }}</figcaption></figure>{% endif %}
   </article>
   {% endfor %}
 </div>

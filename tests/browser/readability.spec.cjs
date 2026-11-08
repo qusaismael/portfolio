@@ -1,4 +1,25 @@
 const { test, expect } = require('@playwright/test');
+
+// Replace the server-rendered cards before gallery.js initializes. Fixture images
+// deliberately omit srcset so an aborted URL cannot fall back to another source.
+async function fixtureGallery(page, photos) {
+  await page.route('**/photos/', async route => {
+    const response = await route.fetch();
+    const $ = require('cheerio').load(await response.text());
+    const gallery = $('#photo-gallery').empty().addClass('photo-gallery');
+    for (const photo of photos) {
+      const caption = photo.caption || photo.quote || 'Open photo';
+      const card = $('<a class="gallery-card"><span class="gallery-card-media"><img><span class="gallery-image-fallback" hidden>Photo unavailable<span>Open to try again</span></span></span><span class="card-caption"><span class="card-title"></span></span></a>');
+      card.attr({ href: photo.src, 'data-full-src': photo.src,
+        'data-original-url': photo.originalUrl || 'https://instagram.com/qusai.pro',
+        'data-quote': photo.quote || '', 'data-video': 'false', 'aria-label': caption });
+      card.find('img').attr({ src: photo.src, alt: caption });
+      card.find('.card-title').text(caption);
+      gallery.append(card);
+    }
+    await route.fulfill({ response, body: $.html() });
+  });
+}
 const projects = require('../../src/_data/projects.json');
 const experience = require('../../src/_data/experience.json');
 const writing = require('../../src/_data/writing.json');
@@ -118,11 +139,8 @@ test('Life stories stay visible when the map script fails', async ({ page }) => 
 
 test('photo captions are visible without hover in both themes', async ({ page }) => {
   const caption = 'A test caption with enough words to occupy several lines at phone width. The full sentence stays readable without hovering over a photo or opening a separate control.';
-  await page.route('https://feeds.behold.so/**', route => route.fulfill({
-    contentType: 'application/json',
-    body: JSON.stringify([{ id: 'readability-fixture', mediaType: 'IMAGE', caption,
-      mediaUrl: '/pics/instagram-egypt.jpg', permalink: 'https://www.instagram.com/p/TEST/' }])
-  }));
+  await fixtureGallery(page, [{ caption, src: '/pics/instagram-egypt.jpg',
+    originalUrl: 'https://www.instagram.com/p/TEST/' }]);
   await page.setViewportSize({ width: 390, height: 844 });
   for (const theme of ['dark', 'light']) {
     await page.goto('/photos/');
@@ -152,40 +170,63 @@ test('photo captions are visible without hover in both themes', async ({ page })
   }
 });
 
-test('gallery failure explains the next action without a made-up cause', async ({ page }) => {
-  await page.route('https://feeds.behold.so/**', route => route.abort());
-  await page.goto('/photos/');
-  await expect(page.locator('.under-construction-card p')).toHaveText('The gallery could not load. You can still view the photos on Instagram.');
-  await expect(page.locator('.construction-actions a[href="https://instagram.com/qusai.pro"]')).toBeVisible();
-});
-
-test('photo feed marks readiness only after a result or fallback', async ({ page }) => {
-  let release;
-  const feedGate = new Promise(resolve => { release = resolve; });
-  await page.route('https://feeds.behold.so/**', async route => {
-    await feedGate;
-    await route.fulfill({ contentType: 'application/json', body: JSON.stringify([
-      { id: 'ready-fixture', mediaType: 'IMAGE', caption: 'Ready after fetch.', mediaUrl: '/pics/instagram-egypt.jpg' }
-    ]) });
+test('static photos remain usable when external network is unavailable', async ({ page }) => {
+  await page.route('**/*', route => {
+    const url = new URL(route.request().url());
+    return url.origin === 'http://127.0.0.1:4173' ? route.continue() : route.abort();
   });
   await page.goto('/photos/');
-  const gallery = page.locator('#photo-gallery');
-  await expect(gallery).not.toHaveAttribute('data-feed-ready', 'true');
-  release();
-  await expect(gallery).toHaveAttribute('data-feed-ready', 'true');
-  await expect(gallery.locator('.gallery-card')).toHaveCount(1);
-  await page.unrouteAll();
-  await page.route('https://feeds.behold.so/**', route => route.abort());
-  await page.reload();
-  await expect(gallery).toHaveAttribute('data-feed-ready', 'true');
-  await expect(gallery.locator('.under-construction-card')).toBeVisible();
+  const cards = page.locator('#photo-gallery .gallery-card');
+  expect(await cards.count()).toBeGreaterThan(0);
+  const card = cards.first();
+  await expect(card).toBeVisible();
+  await expect.poll(() => card.locator('img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  await card.click();
+  await expect(page.locator('#photo-modal')).toBeVisible();
+  await expect.poll(() => page.locator('#modal-image').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+});
+
+test('static gallery works without JavaScript and makes no runtime feed requests', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  try {
+    const page = await context.newPage();
+    const runtimeRequests = [];
+    page.on('request', request => {
+      if (['fetch', 'xhr'].includes(request.resourceType()) || new URL(request.url()).origin !== 'http://127.0.0.1:4173') runtimeRequests.push(request.url());
+    });
+    await page.goto('http://127.0.0.1:4173/photos/');
+    const cards = page.locator('#photo-gallery .gallery-card');
+    expect(await cards.count()).toBeGreaterThan(0);
+    const card = cards.first();
+    await expect(card).toBeVisible();
+    const href = await card.getAttribute('href');
+    expect(href).toMatch(/^\/pics\//);
+    await expect.poll(() => card.locator('img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+    await card.click();
+    await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
+    expect(runtimeRequests).toEqual([]);
+  } finally { await context.close(); }
+});
+
+test('gallery makes no runtime feed or API requests with JavaScript enabled', async ({ page }) => {
+  const runtimeRequests = [];
+  page.on('request', request => {
+    if (['fetch', 'xhr'].includes(request.resourceType()) || new URL(request.url()).origin !== 'http://127.0.0.1:4173') runtimeRequests.push(request.url());
+  });
+  await page.goto('/photos/');
+  const card = page.locator('#photo-gallery .gallery-card').first();
+  await expect(card).toBeVisible();
+  await card.click();
+  await expect(page.locator('#photo-modal')).toBeVisible();
+  await expect.poll(() => page.locator('#modal-image').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+  expect(runtimeRequests).toEqual([]);
 });
 
 test('gallery card names include their visible labels', async ({ page }) => {
-  await page.route('https://feeds.behold.so/**', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify([
-    { id: 'label-fixture', mediaType: 'IMAGE', caption: 'A visible caption line.', mediaUrl: '/pics/instagram-egypt.jpg' },
-    { id: 'label-fixture-2', mediaType: 'IMAGE', mediaUrl: '/pics/instagram-graduation.jpg' }
-  ]) }));
+  await fixtureGallery(page, [
+    { caption: 'A visible caption line.', src: '/pics/instagram-egypt.jpg' },
+    { src: '/pics/instagram-graduation.jpg' }
+  ]);
   await page.goto('/photos/');
   const cards = page.locator('.gallery-card');
   await expect(cards).toHaveCount(2);

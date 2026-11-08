@@ -1,302 +1,47 @@
-/* ============================================
-   Accessible Photo Gallery (Dynamic JSON Loader)
-   ============================================ */
-
+/* Accessible, progressively enhanced local photo gallery. */
 (function () {
     'use strict';
-
-    var BEHOLD_FEED_URL = 'https://feeds.behold.so/ejGxzOQacoDxD3xiP62S';
     var PHOTOS = [];
     var currentIndex = 0;
-
-    var modal = null;
-    var modalImage = null;
-    var modalQuote = null;
-    var modalCaption = null;
-    var closeButton = null;
-    var prevButton = null;
-    var nextButton = null;
-    var opener = null;
-    var originalLink = null;
-    var retryButton = null;
-    var modalImageStatus = null;
+    var modal, modalImage, modalQuote, modalCaption, closeButton, prevButton, nextButton;
+    var opener, originalLink, retryButton, modalImageStatus;
 
     function originalUrl(post) {
-        var link = post.permalink || post.postUrl || '';
+        var link = post.permalink || '';
         return /^https:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?[^\s]*)?$/.test(link) ? link : 'https://instagram.com/qusai.pro';
     }
 
-    /**
-     * Escapes unsafe HTML characters to prevent XSS and malformed attributes.
-     *
-     * @param {string} str Input string
-     * @returns {string} Escaped string
-     */
-    function escapeHTML(str) {
-        if (!str) return '';
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
-    }
-
-    /**
-     * Resolves media URL using multi-tier size cascade.
-     * For 'card': large -> medium -> small -> mediaUrl -> thumbnailUrl
-     * For 'modal': full -> large -> medium -> small -> mediaUrl -> thumbnailUrl
-     *
-     * @param {Object} item Raw post or child object
-     * @param {'card'|'modal'} tier Target display tier
-     * @returns {string} Resolved image/media URL
-     */
-    function resolveMediaUrl(item, tier) {
-        if (!item) return '';
-
-        if (item.sizes) {
-            if (tier === 'modal' && item.sizes.full && item.sizes.full.mediaUrl) {
-                return item.sizes.full.mediaUrl;
-            }
-            if (item.sizes.large && item.sizes.large.mediaUrl) {
-                return item.sizes.large.mediaUrl;
-            }
-            if (item.sizes.medium && item.sizes.medium.mediaUrl) {
-                return item.sizes.medium.mediaUrl;
-            }
-            if (item.sizes.small && item.sizes.small.mediaUrl) {
-                return item.sizes.small.mediaUrl;
-            }
-        }
-
-        if (item.mediaUrl) return item.mediaUrl;
-        if (item.thumbnailUrl) return item.thumbnailUrl;
-        return '';
-    }
-
-    /**
-     * Formats ISO 8601 timestamp to "MMM D, YYYY" (e.g. "May 31, 2026").
-     *
-     * @param {string} timestamp ISO 8601 date string
-     * @returns {string} Formatted date string or empty string
-     */
-    function formatPostDate(timestamp) {
-        if (!timestamp) return '';
-        var d = new Date(timestamp);
-        if (isNaN(d.getTime())) return '';
-        return d.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-            timeZone: 'UTC'
-        });
-    }
-
-    /**
-     * Normalizes Behold feed payload into an array of raw post objects.
-     * Supports:
-     * - Post[] (standard Behold array endpoint response)
-     * - { posts: Post[] } (wrapper object)
-     * - { data: Post[] } (Graph API / alternate wrapper)
-     *
-     * @param {any} data Raw JSON response
-     * @returns {Array<Object>} Array of raw post objects
-     */
-    function normalizeFeedPayload(data) {
-        if (!data) return [];
-        if (Array.isArray(data)) return data;
-        if (typeof data === 'object') {
-            if (Array.isArray(data.posts)) return data.posts;
-            if (Array.isArray(data.data)) return data.data;
-        }
-        return [];
-    }
-
-    /**
-     * Transforms raw Behold posts into flat GalleryItem array, unpacking carousels.
-     *
-     * @param {Array<Object>} rawPosts
-     * @returns {Array<Object>} Flat array of GalleryItem objects
-     */
-    function processPosts(rawPosts) {
-        var items = [];
-
-        rawPosts.forEach(function (post, postIdx) {
-            if (!post || typeof post !== 'object') return;
-
-            var captionText = post.prunedCaption || post.caption || '';
-            var dateStr = formatPostDate(post.timestamp);
-            var isAlbum = (post.mediaType === 'CAROUSEL_ALBUM' || (post.children && post.children.length > 0));
-
-            if (isAlbum && post.children && post.children.length > 0) {
-                var total = post.children.length;
-                post.children.forEach(function (child, idx) {
-                    if (!child) return;
-                    var seqStr = (idx + 1) + '/' + total;
-                    var quoteStr = dateStr ? (dateStr + ' · ' + seqStr) : seqStr;
-                    var altStr = captionText ? (captionText + (total > 1 ? ' (' + seqStr + ')' : '')) : ('Instagram photo ' + seqStr);
-                    var childIsVideo = child.mediaType === 'VIDEO';
-
-                    items.push({
-                        id: String(post.id || ('photo_' + postIdx)) + '_' + String(child.id || idx),
-                        src: resolveMediaUrl(child, 'card'),
-                        fullSrc: resolveMediaUrl(child, 'modal'),
-                        alt: altStr,
-                        caption: captionText,
-                        quote: quoteStr,
-                        isVideo: childIsVideo,
-                        originalUrl: originalUrl(post),
-                        isCarousel: idx === 0 && total > 1
-                    });
-                });
-            } else {
-                var isVideo = post.mediaType === 'VIDEO';
-                items.push({
-                    id: String(post.id || ('photo_' + postIdx)),
-                    src: resolveMediaUrl(post, 'card'),
-                    fullSrc: resolveMediaUrl(post, 'modal'),
-                    alt: captionText || 'Instagram photo',
-                    caption: captionText,
-                    quote: dateStr,
-                    isVideo: isVideo,
-                    originalUrl: originalUrl(post),
-                    isCarousel: false
-                });
-            }
-        });
-
-        return items;
-    }
-
-    /**
-     * Renders fallback Instagram Archive card when feed is unavailable or fails.
-     *
-     * @param {HTMLElement} gallery
-     */
-    function renderFallback(gallery) {
-        if (!gallery) return;
-        gallery.classList.remove('photo-gallery');
-        gallery.innerHTML = `
-            <div class="under-construction-card" data-aos="fade-up">
-                <div class="under-construction-badge">
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    <span>INSTAGRAM ARCHIVE</span>
-                </div>
-                <h2>The gallery couldn't load this time<span class="accent-dot">.</span></h2>
-                <p>The gallery could not load. You can still view the photos on Instagram.</p>
-                <div class="construction-actions">
-                    <a href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer" class="see-more instagram-btn">Visit @qusai.pro on Instagram ↗</a>
-                    <a href="/life/" class="see-more">Explore Life &amp; Interests →</a>
-                </div>
-            </div>
-        `;
-    }
-
-    /**
-     * Renders photo cards in responsive grid layout with data-index and indicator badges.
-     *
-     * @param {HTMLElement} gallery
-     */
-    function renderGalleryGrid(gallery) {
-        if (!gallery) return;
-        if (!PHOTOS || PHOTOS.length === 0) {
-            renderFallback(gallery);
-            return;
-        }
-
-        gallery.innerHTML = '';
-        gallery.classList.add('photo-gallery');
-
-        PHOTOS.forEach(function (photo, index) {
-            var card = document.createElement('button');
-            card.type = 'button';
-            card.className = 'gallery-card';
-            card.setAttribute('data-index', String(index));
-            card.setAttribute('data-aos', 'fade-up');
-            var visibleLabel = photo.caption || photo.quote || 'Open photo';
-            var cardLabel = visibleLabel;
-            if (photo.alt && photo.alt.indexOf(visibleLabel) === -1) cardLabel += ' — ' + photo.alt;
-            if (photo.isVideo) cardLabel = 'Video preview · ' + cardLabel;
-            card.setAttribute('aria-label', cardLabel);
-            card.addEventListener('click', function () {
-                openPhotoModal(index);
-            });
-
-            var mediaIndicator = '';
-            if (photo.isVideo) {
-                mediaIndicator = '<div class="media-indicator" aria-label="Video">' +
-                    '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">' +
-                    '<polygon points="6 4 20 12 6 20 6 4"></polygon>' +
-                    '</svg></div>';
-            } else if (photo.isCarousel) {
-                mediaIndicator = '<div class="media-indicator" aria-label="Carousel">' +
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true">' +
-                    '<rect x="7" y="3" width="14" height="14" rx="2" ry="2"></rect>' +
-                    '<path d="M3 7v12a2 2 0 0 0 2 2h12"></path>' +
-                    '</svg></div>';
-            }
-
-            card.innerHTML =
-                '<span class="gallery-card-media">' +
-                    '<img src="' + escapeHTML(photo.src) + '" alt="' + escapeHTML(photo.alt) + '" loading="lazy" decoding="async">' +
-                    '<span class="gallery-image-fallback" hidden>Photo unavailable<span>Open to try again</span></span>' +
-                    mediaIndicator +
-                '</span>' +
-                '<span class="card-caption"><span class="card-title">' +
-                    escapeHTML(photo.caption || photo.quote || 'Open photo') +
-                '</span></span>';
-
-            var image = card.querySelector('img');
-            var fallback = card.querySelector('.gallery-image-fallback');
-            image.addEventListener('error', function () {
-                image.hidden = true;
-                fallback.hidden = false;
-                card.setAttribute('aria-label', cardLabel + ' — Photo unavailable. Open to try again.');
-            });
-            image.addEventListener('load', function () {
-                image.hidden = false;
-                fallback.hidden = true;
-                card.setAttribute('aria-label', cardLabel);
-            });
-            gallery.appendChild(card);
-        });
-    }
-
-    /**
-     * Fetches photos from Behold JSON feed, normalizes payload, processes items, and renders grid.
-     */
-    async function fetchPhotos() {
+    function initGallery() {
         var gallery = document.getElementById('photo-gallery');
         if (!gallery) return;
-
-        var controller = typeof AbortController === 'function' ? new AbortController() : null;
-        var timeout = controller ? setTimeout(function () { controller.abort(); }, 8000) : null;
-        try {
-            var res = await fetch(BEHOLD_FEED_URL, controller ? { signal: controller.signal } : undefined);
-            if (!res.ok) {
-                throw new Error('HTTP ' + res.status + ' (' + res.statusText + ')');
+        var cards = gallery.querySelectorAll('.gallery-card');
+        cards.forEach(function (card, index) {
+            var image = card.querySelector('img');
+            var fallback = card.querySelector('.gallery-image-fallback');
+            var label = card.getAttribute('aria-label');
+            PHOTOS.push({
+                src: image.getAttribute('src'), fullSrc: card.dataset.fullSrc || card.getAttribute('href'),
+                alt: image.alt, caption: card.querySelector('.card-title').textContent.trim(),
+                quote: card.dataset.quote || '', originalUrl: originalUrl({ permalink: card.dataset.originalUrl }),
+                isVideo: card.dataset.video === 'true'
+            });
+            card.addEventListener('click', function (event) {
+                // Keep normal open-in-new-tab gestures and no-script navigation intact.
+                if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                openPhotoModal(index);
+            });
+            function showImageState() {
+                var failed = image.complete && image.naturalWidth === 0;
+                image.hidden = failed;
+                if (fallback) fallback.hidden = !failed;
+                card.setAttribute('aria-label', label + (failed ? ' — Photo unavailable. Open to try again.' : ''));
             }
-            var data = await res.json();
-            var rawPosts = normalizeFeedPayload(data);
-
-            if (!rawPosts || rawPosts.length === 0) {
-                renderFallback(gallery);
-                return;
-            }
-
-            PHOTOS = processPosts(rawPosts);
-            if (PHOTOS.length === 0) {
-                renderFallback(gallery);
-                return;
-            }
-
-            renderGalleryGrid(gallery);
-        } catch (err) {
-            renderFallback(gallery);
-        } finally {
-            if (timeout) clearTimeout(timeout);
-            gallery.dataset.feedReady = 'true';
-        }
+            image.addEventListener('error', showImageState);
+            image.addEventListener('load', showImageState);
+            if (image.complete) showImageState();
+        });
+        gallery.dataset.galleryReady = 'true';
     }
 
     /**
@@ -479,7 +224,7 @@
 
     function init() {
         initModal();
-        fetchPhotos();
+        initGallery();
     }
 
     if (document.readyState === 'loading') {

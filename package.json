@@ -5,6 +5,7 @@
   "scripts": {
     "build": "eleventy",
     "dev": "eleventy --serve",
+    "photos:sync": "node scripts/sync-photos.cjs",
     "test": "node --test tests/unit/*.test.cjs",
     "test:site": "node --test tests/site/*.test.cjs",
     "test:browser": "node scripts/install-playwright-if-ci.cjs && playwright test"
