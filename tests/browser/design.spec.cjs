@@ -185,7 +185,7 @@ test('live-site directory stays aligned and readable across breakpoints and them
       const box = el.getBoundingClientRect();
       return { height: box.height, left: box.left, right: box.right };
     }));
-    expect(links).toHaveLength(9);
+    expect(links).toHaveLength(10);
     expect(links.every(link => link.height >= 44 && link.left >= 0 && link.right <= width)).toBe(true);
     const labels = await page.locator('#live-sites .site-name, #live-sites .site-domain, #live-sites .site-state').evaluateAll(nodes => nodes.map(el => {
       const box = el.getBoundingClientRect();
@@ -198,12 +198,19 @@ test('live-site directory stays aligned and readable across breakpoints and them
   }
 });
 
-test('live-site links keep visible keyboard focus and skip the pending entry', async ({ page }) => {
+test('all live-site links including Textify keep visible keyboard focus', async ({ page }) => {
   for (const theme of ['dark', 'light']) {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/sites/');
     await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
     const links = page.locator('#live-sites a.site-directory-entry');
+    await expect(links).toHaveCount(10);
+    const textify = links.filter({ has: page.locator('.site-name', { hasText: /^Textify$/ }) });
+    await expect(textify).toHaveAttribute('href', 'https://textify.qusai.pro/');
+    await expect(textify).toHaveAttribute('target', '_blank');
+    await expect(textify).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(page.locator('#live-sites .site-directory-pending, #live-sites .site-state')).toHaveCount(0);
+    await expect(page.locator('#live-sites')).not.toContainText('HTTPS pending');
     await links.first().focus();
     for (let index = 0; index < await links.count(); index++) {
       await expect(links.nth(index)).toBeFocused();
