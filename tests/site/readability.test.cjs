@@ -100,8 +100,9 @@ test('every job story is visible without tabs on About; Home links to the longer
     });
   }
   const home = load('/');
-  assert.ok(norm(home('#experience h2').text()).includes(`${jobs[0].role} at ${jobs[0].company}`));
-  assert.ok(home('#experience a[href="/portfolio/#experience"]').length);
+  assert.equal(home('#experience').length, 0);
+  assert.ok(norm(home('.hero-current').text()).includes(`${jobs[0].role} at ${jobs[0].company}`));
+  assert.ok(home('.hero-current a[href="/portfolio/#experience"]').length);
 });
 
 test('About keeps the personal story but drops generic throat-clearing', () => {

@@ -1,0 +1,33 @@
+---
+layout: base
+title: "Explore — Qusai Ismael"
+description: "Find writing and project stories on qusai.pro."
+permalink: "/explore/"
+customStyles: "/css/explore.css"
+customScripts: "/js/explore.js"
+---
+<main class="container reading-width" id="main-content" data-explorer>
+    <header class="page-heading">
+        <h1>Explore<span class="accent-dot">.</span></h1>
+        <p class="page-lede">Search what I've written and built, or let the site pick something for you.</p>
+    </header>
+    <form id="explore-form" role="search" aria-label="Writing and project stories" hidden>
+        <label>Search writing and project stories<input name="q" type="search" maxlength="100" autocomplete="off" spellcheck="false"></label>
+        <label>Content type<select name="type"><option value="all">All content</option><option value="writing">Writing</option><option value="projects">Projects</option></select></label>
+        <button class="button button-primary" type="submit">Find</button>
+        <button class="button button-secondary" id="explore-random" type="button">Surprise me</button>
+        <a class="text-link" href="/explore/">Clear</a>
+    </form>
+    <noscript><p>Search needs JavaScript; the complete list is below.</p></noscript>
+    <p id="explore-status" role="status"></p>
+    <ul class="explore-list">
+        {% for entry in explore %}
+        <li data-entry data-kind="{{ entry.kind }}" data-search="{{ entry.search }}">
+            <p class="eyebrow">{{ "Writing" if entry.kind == "writing" else "Project" }}</p>
+            <h2><a href="{{ entry.href }}">{{ entry.title }}</a></h2>
+            <p>{{ entry.summary }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <p class="explore-more">Not everything is searchable here. There's also <a href="/life/">Life</a>, <a href="/photos/">Photos</a> and <a href="/games/">Games</a>.</p>
+</main>
