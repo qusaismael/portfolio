@@ -1,0 +1,121 @@
+{
+ "/blog/": [
+  {
+   "kicker": "Work",
+   "title": "Things I've built",
+   "href": "/sites/"
+  },
+  {
+   "kicker": "About",
+   "title": "How I got here",
+   "href": "/portfolio/"
+  },
+  {
+   "kicker": "Search",
+   "title": "Find something specific",
+   "href": "/explore/"
+  }
+ ],
+ "/life/": [
+  {
+   "kicker": "Photos",
+   "title": "The camera roll",
+   "href": "/photos/"
+  },
+  {
+   "kicker": "Games",
+   "title": "My games shelf",
+   "href": "/games/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  }
+ ],
+ "/photos/": [
+  {
+   "kicker": "Life",
+   "title": "Places, stories and my setup",
+   "href": "/life/"
+  },
+  {
+   "kicker": "Work",
+   "title": "Things I've built",
+   "href": "/sites/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  }
+ ],
+ "/games/": [
+  {
+   "kicker": "Life",
+   "title": "Places, stories and my setup",
+   "href": "/life/"
+  },
+  {
+   "kicker": "Photos",
+   "title": "The camera roll",
+   "href": "/photos/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  }
+ ],
+ "/connect/": [
+  {
+   "kicker": "Work",
+   "title": "Things I've built",
+   "href": "/sites/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  },
+  {
+   "kicker": "About",
+   "title": "How I got here",
+   "href": "/portfolio/"
+  }
+ ],
+ "/explore/": [
+  {
+   "kicker": "Work",
+   "title": "Things I've built",
+   "href": "/sites/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  },
+  {
+   "kicker": "Life",
+   "title": "Off the keyboard",
+   "href": "/life/"
+  }
+ ],
+ "/colophon/": [
+  {
+   "kicker": "Work",
+   "title": "Things I've built",
+   "href": "/sites/"
+  },
+  {
+   "kicker": "Writing",
+   "title": "Notes & rabbit holes",
+   "href": "/blog/"
+  },
+  {
+   "kicker": "About",
+   "title": "How I got here",
+   "href": "/portfolio/"
+  }
+ ]
+}

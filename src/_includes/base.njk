@@ -38,7 +38,7 @@
     <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-latin-wght-normal.woff2" crossorigin>
     <link rel="stylesheet" href="/css/print.css?v=20261023-polish" media="print">
     {% if customStyles %}<link rel="stylesheet" href="{{ customStyles }}?v={% if customStyles == '/css/gallery.css' %}20261108-photos{% elif customStyles == '/css/life-preview.css' or customStyles == '/css/life.css' %}20260926-readability{% else %}20260911{% endif %}">{% endif %}
-    <link rel="stylesheet" href="/css/edition.css?v=20261114">
+    <link rel="stylesheet" href="/css/edition.css?v=20261114-journey">
     {% if page.url == '/' or page.url == '/portfolio/' or page.url == '/connect/' %}
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"Person","name":"Qusai Ismael","url":"https://www.qusai.pro","image":"https://www.qusai.pro/pfp.webp","jobTitle":"Privacy & GRC Engineer","sameAs":["https://github.com/qusaismael","https://www.linkedin.com/in/qusaismaeel/","https://medium.com/@qusaismael"]}
@@ -62,6 +62,9 @@
         </div>
     </header>
     {{ content | safe }}
+    {% set steps = onward[page.url] %}{% if steps %}
+    <nav class="onward" aria-label="Keep going"><p class="onward-label">Keep going</p><div class="onward-links">{% for step in steps %}<a href="{{ step.href }}"><span>{{ step.kicker }}</span><strong>{{ step.title }} <i aria-hidden="true">→</i></strong></a>{% endfor %}</div></nav>
+    {% endif %}
     <footer class="site-footer">
         <div class="footer-top"><a class="brand" href="/" aria-label="Qusai Ismael — home">QI<span class="accent-dot">.</span></a><a href="mailto:{{ site.email }}">{{ site.email }} ↗</a></div>
         <div class="footer-bottom"><span>© 2026 Qusai Ismael</span><div class="footer-links"><a href="/explore/">Explore</a><a href="/photos/">Photos</a><a href="{{ site.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="/connect/">Say hi</a><a href="/colophon/">Behind the site</a><button class="terminal-opener" type="button" data-terminal-open aria-controls="command-dialog" aria-haspopup="dialog" title="Open terminal (backtick)" hidden><span aria-hidden="true">&gt;_</span> Terminal</button></div></div>

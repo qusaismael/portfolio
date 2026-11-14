@@ -13,6 +13,14 @@ module.exports = function(eleventyConfig) {
   // Optional: you can add an alias for layouts
   eleventyConfig.addLayoutAlias('base', 'base.njk');
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true });
+  eleventyConfig.addFilter('relatedWriting', (posts, slug, topics) => {
+    const at = posts.findIndex(post => post.slug === slug);
+    const rest = [...posts.slice(at + 1), ...posts.slice(0, at)];
+    const same = rest.filter(post => topics[post.slug] === topics[slug]);
+    const other = rest.filter(post => topics[post.slug] !== topics[slug]);
+    return [...same.slice(0, 1), ...other.slice(0, 1)];
+  });
+  eleventyConfig.addFilter('readingTime', html => Math.max(1, Math.round(String(html || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length / 220)));
   eleventyConfig.addFilter('articleOutline', require('./scripts/article-outline.cjs'));
 
   // Country wall: visited places grouped by country, one typeface each.

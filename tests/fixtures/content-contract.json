@@ -14,24 +14,6 @@
       "I'm a privacy and GRC engineer from Jordan. I build security tools, work with local AI, and usually have a Linux terminal open.",
       "GRC Engineer at NourNet",
       "Qusai IsmaelJordan, Earth.",
-      "Off the keyboard.",
-      "The games I come back to.",
-      "Strange worlds, good stories, and a few very stubborn boss fights.",
-      "Places I've been.",
-      "Jordan, Istanbul and Egypt.",
-      "The camera roll.",
-      "Trips and graduation, from my camera roll.",
-      "One room. A lot of freshmen. One piece of advice.",
-      "“You can't protect what you don't understand.”",
-      "I got asked to give the IT freshmen one piece of advice. Picking just one was the hard part.",
-      "From my notes.",
-      "attackers are evolving. so should WE!!!",
-      "Tracing a Kernel Panic: What Actually Happens When You Hit “Sleep”?",
-      "The Math of Success: If you are smart/hardworking, why aren’t you rich?",
-      "Beyond my own repos.",
-      "Changes I've sent to open-source projects I use.",
-      "The full history is on GitHub.",
-      "The full history is on GitHub.",
       "A few things I've built.",
       "TamperLog ↗",
       "My graduation project: a prototype for detecting changes to audit logs.",
@@ -45,6 +27,24 @@
       "GRC Check ↗",
       "A privacy and security self-assessment that keeps your answers on your device.",
       "Self-assessment only; not a compliance certification or professional assessment.",
+      "From my notes.",
+      "attackers are evolving. so should WE!!!",
+      "Tracing a Kernel Panic: What Actually Happens When You Hit “Sleep”?",
+      "The Math of Success: If you are smart/hardworking, why aren’t you rich?",
+      "Beyond my own repos.",
+      "Changes I've sent to open-source projects I use.",
+      "The full history is on GitHub.",
+      "The full history is on GitHub.",
+      "Off the keyboard.",
+      "The games I come back to.",
+      "Strange worlds, good stories, and a few very stubborn boss fights.",
+      "Places I've been.",
+      "Jordan, Istanbul and Egypt.",
+      "The camera roll.",
+      "Trips and graduation, from my camera roll.",
+      "One room. A lot of freshmen. One piece of advice.",
+      "“You can't protect what you don't understand.”",
+      "I got asked to give the IT freshmen one piece of advice. Picking just one was the hard part.",
       "Say hi.",
       "Email me about a project, a question, or a good Linux story.",
       "My GPG fingerprint:"
@@ -76,14 +76,14 @@
       "What does a token-per-second number actually feel like? This makes the difference visible.",
       "ClipGuard ↗",
       "A clipboard utility built around a simple rule: what you copy should stay on your device.",
-      "Live sites.",
+      "Every address.",
       "Portfolio www.qusai.pro ↗",
       "Textify textify.qusai.pro ↗ (opens in a new tab)",
       "GRC Check grc.qusai.pro ↗ (opens in a new tab)",
       "30 Days From Today 30daysfromtoday.qusai.pro ↗ (opens in a new tab)",
-      "Local LLM localllm.qusai.pro ↗ (opens in a new tab)",
+      "LocalLLM localllm.qusai.pro ↗ (opens in a new tab)",
       "ClipGuard clipguard.qusai.pro ↗ (opens in a new tab)",
-      "RSS + AI rss.qusai.pro ↗ (opens in a new tab)",
+      "RSS AI rss.qusai.pro ↗ (opens in a new tab)",
       "Privacy Check privacy.qusai.pro ↗ (opens in a new tab)",
       "SecureChat securebot.qusai.pro ↗ (opens in a new tab)",
       "Token Speed token.qusai.pro ↗ (opens in a new tab)",
@@ -477,7 +477,7 @@
       "Questions about GRC Check?"
     ],
     "/writing/attackers-are-evolving-so-should-we-c67ab9bb5a0b/": [
-      "May 12, 2026 · Qusai Ismael",
+      "May 12, 2026 · AI · 1 min read",
       "attackers are evolving. so should WE!!!",
       "Attackers are using AI. That is not a good reason to replace the humans defending the network.",
       "Originally published on Medium ↗.",
@@ -494,7 +494,7 @@
       "Questions or corrections?"
     ],
     "/writing/tracing-a-kernel-panic-what-actually-happens-when-you-hit-sleep-6e1e2bffa4bd/": [
-      "Mar 22, 2026 · Qusai Ismael",
+      "Mar 22, 2026 · Linux & hardware · 2 min read",
       "Tracing a Kernel Panic: What Actually Happens When You Hit “Sleep”?",
       "What actually happens when you put a Linux machine to sleep? I followed a kernel panic to find out.",
       "Originally published on Medium ↗.",
@@ -532,7 +532,7 @@
       "Questions or corrections?"
     ],
     "/writing/the-math-of-success-if-you-are-smart-hardworking-why-aren-t-you-rich-3bdc28d16cd7/": [
-      "Feb 27, 2026 · Qusai Ismael",
+      "Feb 27, 2026 · Life · 5 min read",
       "The Math of Success: If you are smart/hardworking, why aren’t you rich?",
       "Being smart and working hard matter. They just are not the entire equation.",
       "Originally published on Medium ↗.",
@@ -596,7 +596,7 @@
       "Questions or corrections?"
     ],
     "/writing/static-weights-in-a-dynamic-world-the-case-for-artificial-information-596787d69547/": [
-      "Jan 11, 2026 · Qusai Ismael",
+      "Jan 11, 2026 · AI · 1 min read",
       "Static Weights in a Dynamic World: The Case for “Artificial Information”",
       "A model can know a lot and still be working with yesterday's world. A few thoughts on that gap.",
       "Originally published on Medium ↗.",
@@ -630,7 +630,7 @@
       "Questions or corrections?"
     ],
     "/writing/don-t-be-a-fan-use-the-tools-not-vice-versa-cea616577eb2/": [
-      "Nov 25, 2025 · Qusai Ismael",
+      "Nov 25, 2025 · Life · 1 min read",
       "Don’t be a fan, Use the tools, not vice versa",
       "Tools are here to serve you. You do not owe a brand your loyalty.",
       "Originally published on Medium ↗.",
@@ -644,7 +644,7 @@
       "Questions or corrections?"
     ],
     "/writing/stop-letting-your-college-major-define-you-61db61c6e640/": [
-      "Nov 11, 2025 · Qusai Ismael",
+      "Nov 11, 2025 · Life · 1 min read",
       "Stop Letting Your College Major Define You",
       "The major you chose at 18 is a starting point, not a life sentence.",
       "Originally published on Medium ↗.",
@@ -666,7 +666,7 @@
       "Questions or corrections?"
     ],
     "/writing/writing-it-self-is-a-form-of-art-d0ef5f6563f7/": [
-      "Nov 3, 2025 · Qusai Ismael",
+      "Nov 3, 2025 · Life · 1 min read",
       "Writing it self, is a form of art.",
       "Putting something into words is more than reporting what you think. Sometimes it is how you find out.",
       "Originally published on Medium ↗.",
@@ -678,7 +678,7 @@
       "Questions or corrections?"
     ],
     "/writing/reject-arm-embrace-x86-79a57093db0f/": [
-      "Oct 29, 2025 · Qusai Ismael",
+      "Oct 29, 2025 · Linux & hardware · 1 min read",
       "Reject ARM, Embrace x86.",
       "A slightly opinionated look at ARM, x86, and choosing hardware for what you actually need.",
       "Originally published on Medium ↗.",
@@ -699,7 +699,7 @@
       "Questions or corrections?"
     ],
     "/writing/ai-bubble-4b16d482a2d8/": [
-      "Oct 26, 2025 · Qusai Ismael",
+      "Oct 26, 2025 · AI · 1 min read",
       "AI Bubble.",
       "Some thoughts on the AI hype, the money behind it, and what might actually last.",
       "Originally published on Medium ↗.",
@@ -716,7 +716,7 @@
       "Questions or corrections?"
     ],
     "/writing/you-should-quit-coffee-but-not-caffeine-8cc7e862bb72/": [
-      "Oct 24, 2025 · Qusai Ismael",
+      "Oct 24, 2025 · Life · 1 min read",
       "You Should Quit Coffee,,, But Not Caffeine",
       "Coffee and caffeine are not the same conversation. Here is why I separate them.",
       "Originally published on Medium ↗.",
