@@ -231,7 +231,8 @@ test('all work previews are open entries with complete, loaded evidence', async 
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/sites/');
     const images = page.locator('.project-preview > img');
-    await expect(images).toHaveCount(9);
+    await expect(images).toHaveCount(4);
+    await expect(page.locator('.tool-row > img')).toHaveCount(5);
     for (const image of await images.all()) {
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate(el => el.complete && el.naturalWidth > 0)).toBe(true);
@@ -269,7 +270,9 @@ test('work links retain their distinct story, tool and source destinations', asy
     title: card.querySelector('h3 a').getAttribute('href'),
     actions: [...card.querySelectorAll('.project-actions a')].map(a => a.getAttribute('href'))
   })));
-  expect(destinations).toEqual(projects.map(project => {
+  expect(await page.locator('.tool-row').evaluateAll(rows => rows.map(row => row.getAttribute('href'))))
+    .toEqual(projects.filter(project => !project.featured).map(project => project.live));
+  expect(destinations).toEqual(projects.filter(project => project.featured).map(project => {
     const story = project.featured ? `/projects/${project.slug}/` : project.live;
     return {
       preview: story, title: story,
