@@ -82,5 +82,5 @@ test('Work page gives all ten named sites active HTTPS links with safe external 
 test('homepage retains its human-first section order', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
   assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
-    ['about', 'life-teasers', 'blog', 'github-pulse', 'experience', 'projects', 'contact']);
+    ['about', 'life-teasers', 'blog', 'github-pulse', 'projects', 'contact']);
 });

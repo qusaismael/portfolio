@@ -52,7 +52,7 @@ test('navigation, footer, and project actions retain distinct links', () => {
     assert.deepEqual($('#main-nav a').toArray().map(el => $(el).attr('href')),
       ['/portfolio/', '/life/', '/photos/', '/blog/', '/sites/', '/connect/'], route);
     assert.deepEqual($('.site-footer a').toArray().map(el => $(el).attr('href')),
-      ['/', `mailto:${site.email}`, '/photos/', site.github, '/connect/'], route);
+      ['/', `mailto:${site.email}`, '/explore/', '/photos/', site.github, '/connect/', '/colophon/'], route);
   }
   const $ = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
   for (const project of frozen.projects) {

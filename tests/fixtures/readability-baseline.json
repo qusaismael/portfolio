@@ -542,6 +542,23 @@
       ],
       "placeFacts": [],
       "protectedText": []
+    },
+    "/explore/": {
+      "hrefs": [
+        "/life/",
+        "/photos/",
+        "/games/"
+      ],
+      "placeFacts": [],
+      "protectedText": []
+    },
+    "/colophon/": {
+      "hrefs": [
+        "/explore/",
+        "https://github.com/qusaismael/portfolio"
+      ],
+      "placeFacts": [],
+      "protectedText": []
     }
   }
 }
