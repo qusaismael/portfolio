@@ -62,7 +62,7 @@ test('navigation, footer, and project actions retain distinct links', () => {
       assert.equal(norm(row.find('h3').text()), `${project.name} ↗`, project.slug);
       continue;
     }
-    const card = $('.project-card-enhanced').filter((_, el) => norm($(el).find('h3').text()) === `${project.name} ↗`);
+    const card = $('.project-card-enhanced').filter((_, el) => norm($(el).find('h3').text()) === project.name);
     assert.equal(card.length, 1, project.slug);
     const url = project.featured ? `/projects/${project.slug}/` : project.live;
     assert.equal(card.find(`h3 a[href="${url}"]`).length, 1, project.slug);

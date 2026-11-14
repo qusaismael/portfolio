@@ -99,18 +99,17 @@ test('photo viewer retries a failed image and restores keyboard focus after reco
   await expect(card).toBeFocused();
 });
 
-test('narrow phone hero actions form a full-width stack in both themes', async ({ page }) => {
+test('narrow phone hero actions stack with one full-width primary in both themes', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto('/');
   for (const theme of ['dark', 'light']) {
     await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
     const row = page.locator('.hero-copy > .button-row');
     const bounds = await row.boundingBox();
-    const buttons = row.locator('.button');
+    const buttons = row.locator('a');
     const first = await buttons.first().boundingBox();
     const second = await buttons.nth(1).boundingBox();
     expect(first.width).toBeCloseTo(bounds.width, 0);
-    expect(second.width).toBeCloseTo(bounds.width, 0);
     expect(first.height).toBeGreaterThanOrEqual(44);
     expect(second.height).toBeGreaterThanOrEqual(44);
     expect(second.y - first.y - first.height).toBeGreaterThanOrEqual(12);

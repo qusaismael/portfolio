@@ -1,0 +1,155 @@
+/* Quiet edition — Life and its Games / Photos sub-pages. */
+
+:is(.life-page,.games-page,.photos-page) h2{font:500 clamp(1.75rem,3vw,2.5rem)/1.15 var(--font-display);letter-spacing:-.025em}
+:is(.life-page,.games-page,.photos-page) h3{font-family:var(--font-display);font-weight:500}
+:is(.life-page,.games-page,.photos-page) p{max-width:65ch}
+:is(.life-page,.games-page,.photos-page) main>section{border-top:1px solid var(--border-color);padding-block:80px;margin:0}
+.life-page main>section h2 .accent-dot{color:inherit}
+.life-page .section-header,.life-page .section-heading-row{margin-bottom:28px}
+.life-page .section-intro{margin:12px 0 0;color:var(--text-color)}
+.life-page .section-jumps{display:flex;flex-wrap:wrap;gap:4px 24px;margin-top:24px}
+.life-page .section-jumps a{display:inline-flex;align-items:center;min-height:44px;font-family:var(--font-sans);letter-spacing:0;text-transform:none}
+/* A map and its ordinary HTML notes, not an instrument panel. */
+.life-page .section-jumps a{border:0;border-radius:0;padding:0;background:none}
+.life-page .globe-canvas{filter:none}
+.life-page .hud-coords{color:var(--muted-text)}
+.life-page .globe-drag-hint{border:0;border-radius:0;background:none;box-shadow:none}
+.life-page .globe-legend-overlay .legend-dot{box-shadow:none}
+.life-page .globe-showcase-container{padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;overflow:visible;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin:24px 0 32px}
+.life-page .globe-showcase-container::before,.life-page .globe-hud-card::before{display:none}
+.life-page .globe-canvas-wrapper{max-width:340px;margin:0;gap:8px}
+.life-page .globe-canvas-col{display:flex;justify-content:flex-start}
+.life-page .globe-hud-card{padding:0;background:none;border:0;border-radius:0;box-shadow:none}
+.life-page .hud-header{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:20px}
+.life-page .hud-status-badge{background:none;border:0;padding:0;color:var(--muted-text);font: .875rem/1.6 var(--font-sans);text-transform:none;letter-spacing:0}
+.life-page .hud-pulse-dot{display:none}
+.life-page .hud-city{font:500 2.5rem/1.1 var(--font-display);margin:0 0 8px}
+.life-page .hud-country{font:1rem/1.6 var(--font-sans);color:var(--muted-text);text-transform:none;letter-spacing:0;margin-bottom:12px}
+.life-page .hud-description{font:1rem/1.7 var(--font-sans);color:var(--text-color);max-width:45ch}
+.life-page :is(.globe-legend-overlay,.globe-drag-hint,.globe-mini-btn){font-family:var(--font-sans);letter-spacing:0;text-transform:none}
+.life-page .globe-legend-overlay{font-size:.8125rem;color:var(--text-color)}
+.life-page .globe-mini-btn{border-radius:4px;min-width:44px;min-height:44px;color:var(--text-color)}
+.life-page .country-wall{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 28px;margin-top:24px;align-items:start}
+.life-page .country-wall .country-name{font:500 1.5rem/1.2 var(--font-display);min-height:44px;color:var(--heading-color);-webkit-text-stroke:0;transform:none}
+.life-page .country-name:hover{color:var(--signal)}
+.life-page .country-cities button,.life-page .section-jumps a{min-width:44px}
+.life-page .country-cities{max-height:none;overflow:visible;opacity:1;gap:0 16px;padding:0;margin:0;transition:none}
+.life-page .country-cities :is(.globe-chip,.globe-bucket-trigger){font:.875rem/1.5 var(--font-sans);text-transform:none;letter-spacing:0;min-height:44px;opacity:1;color:var(--text-color);padding:4px 0;white-space:normal}
+.life-page .travel-stories{margin-top:40px}
+.life-page .travel-stories>h3,.life-page .subsection-header h3{font-size:1.5rem;margin:0}
+.life-page .visited-stories{gap:16px 32px;margin-top:16px}
+.life-page .visited-stories>li{padding-top:16px}
+.life-page .visited-stories h4{font:500 1.15rem/1.4 var(--font-display);margin-bottom:8px}
+.life-page .visited-stories p{font-size:.9375rem;line-height:1.65}
+.life-page .travel-subsection{margin-bottom:0}
+.life-page .subsection-header{justify-content:flex-start;gap:20px}
+.life-page .subsection-count{font:.8125rem/1.6 var(--font-sans);letter-spacing:0;text-transform:none;background:none;border:0;padding:0;color:var(--muted-text)}
+.life-page .subsection-desc{font-size:1rem;color:var(--text-color);margin:12px 0 0}
+/* Stories and tools share the same unboxed editorial rhythm. */
+.life-page .fun-facts-list{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.life-page .fact-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;padding:24px 0;border:0;border-top:1px solid var(--border-color);border-radius:0;background:none;box-shadow:none;transform:none}
+.life-page .fact-card::before,.life-page .fact-card::after,.life-page .story-quote::before{display:none}
+.life-page .fact-card-header{margin:0}
+.life-page .fact-title{font:500 1.5rem/1.3 var(--font-display);margin:0}
+.life-page .story-quote{padding:0;margin:0;border:0;background:none}
+.life-page .fact-body{font:400 1rem/1.75 var(--font-sans);color:var(--text-color);margin:0;letter-spacing:0}
+.life-page .tech-stack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.life-page .tech-card{padding:24px 0;border:0;border-top:1px solid var(--border-color);border-radius:0;background:none;box-shadow:none;transform:none}
+.life-page .tech-card::before,.life-page .tech-card::after,.life-page .tech-card-icon-wrap{display:none}
+.life-page .tech-card-top{margin:0 0 8px}
+.life-page .tech-card-badge{font:.8125rem/1.5 var(--font-sans);text-transform:none;letter-spacing:0;color:var(--muted-text);background:none;border:0;padding:0}
+.life-page .tech-card-title{font-size:1.5rem;margin:0 0 10px}
+.life-page .tech-card-desc{font-size:1rem;line-height:1.7;color:var(--text-color);margin:0}
+.life-page .gaming-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px}
+.life-page .gaming-grid .game-life-link{padding:20px 0;border:0;border-top:1px solid var(--border-color);border-radius:0;background:none;box-shadow:none;transform:none}
+.life-page .game-life-link::before,.life-page .game-life-link::after{display:none}
+.life-page .game-life-link .game-card-title{font-size:1.35rem;justify-content:flex-start;gap:8px;margin:8px 0}
+.life-page .game-life-link .game-card-title>span{color:inherit}
+.life-page :is(.game-card-genre,.game-card-badge,.section-heading-row>a){font-family:var(--font-sans);text-transform:none;letter-spacing:0;color:var(--muted-text)}
+.life-page .game-life-link:hover .game-card-title{color:var(--signal)}
+/* Games: one shelf, no numbered or featured-card treatment. */
+.games-page .games-heading{padding:72px 0 56px}
+.games-page .games-heading-copy{display:block}
+.games-page .games-heading h1{font-size:clamp(2.8rem,6.4vw,5.25rem);font-weight:480;max-width:16ch}
+.games-page .games-heading .page-lede{font-size:clamp(1.2rem,1.9vw,1.5rem);max-width:46ch}
+:is(.games-page .games-heading>.text-link,.photos-page .life-back){display:inline-flex;align-items:center;min-height:44px;font:.875rem/1.6 var(--font-sans);color:var(--muted-text);margin-bottom:20px}
+.games-page .games-shelf-heading{margin-bottom:28px}
+.games-page :is(.games-shelf-heading p,.games-result-count,.shelf-game-top,.shelf-game-aside,.shelf-game-bottom,.games-rights-note){font-family:var(--font-sans);text-transform:none;letter-spacing:0}
+.games-page .games-filter-options span{background:none;border-color:var(--border-color);color:var(--text-color);border-radius:4px}
+.games-page .games-filter-options input:checked+span{color:var(--signal);border-color:var(--signal);background:none}
+.games-page .games-shelf{gap:0 40px;margin-top:28px}
+.games-page .shelf-game{padding:24px 0;border:0;border-top:1px solid var(--border-color);border-radius:0;background:none;box-shadow:none}
+.games-page .shelf-game-featured{grid-column:auto}
+.games-page .shelf-game-top{font-size:.8125rem}
+.games-page .shelf-game-genre{text-align:left;max-width:none}
+.games-page .shelf-game-body,.games-page .shelf-game-featured .shelf-game-body{display:block;padding:12px 0 16px}
+.games-page .shelf-game h3,.games-page .shelf-game-featured h3{font-size:1.75rem;line-height:1.2;max-width:none;margin-bottom:12px}
+.games-page .shelf-game-bottom{border:0;padding:0;font-size:.8125rem}
+.games-page .shelf-game-aside{font-size:.875rem}
+.games-page .games-shelf-footnote{padding:32px 0 0;border:0}
+.games-page .games-shelf-footnote .eyebrow{font:.875rem/1.6 var(--font-sans);letter-spacing:0;text-transform:none;color:var(--muted-text)}
+.games-page .games-signoff{padding:32px 0;border-top:1px solid var(--border-color)}
+.games-page .games-rights-note{font-size:.8125rem;line-height:1.7}
+/* Photos: images and their captions, with no frames or hovering surprises. */
+.photos-page .photo-gallery{border-top:1px solid var(--border-color);padding-block:80px;margin:0;gap:40px 28px}
+.photos-page .gallery-card-media,.photos-page .gallery-card:focus-visible{border-radius:4px;box-shadow:none}
+.photos-page .gallery-card:hover .gallery-card-media{box-shadow:none}
+.photos-page .card-caption{padding-top:8px}
+.photos-page .card-title{font:.9375rem/1.65 var(--font-sans);color:var(--text-color)}
+.photos-page .photo-modal-content>img{border-radius:4px}
+.photos-page .photo-modal-nav,.photos-page .photo-modal-close{min-width:44px;min-height:44px}
+.photos-page .photo-modal-quote{font-family:var(--font-display)}
+/* HOME TEASERS — scoped here; the Home page loads this stylesheet too. */
+.home-page .life-discoveries{gap:28px;margin:28px 0 0}
+.home-page .life-discovery,.home-page .life-discovery:hover,.home-page .life-discovery:focus-visible{border:0;border-radius:0;background:none;box-shadow:none;transform:none;color:var(--text-color)}
+.home-page .discovery-photo,.home-page .discovery-game-preview{height:250px;border:0;border-radius:4px}
+.home-page .discovery-photo>span{padding:48px 18px 16px;background:linear-gradient(transparent,rgba(0,0,0,.92));font:.875rem/1.6 var(--font-sans);color:#fff}
+.home-page .discovery-game-preview{background:var(--secondary-color);padding:24px;filter:none!important}
+.home-page .discovery-game-preview strong{font:500 3rem/1.05 var(--font-display);letter-spacing:-.035em}
+.home-page .discovery-game-preview strong em{color:inherit;font-style:italic}
+.home-page .discovery-game-kicker,.home-page .discovery-game-titles{font:.875rem/1.6 var(--font-sans);letter-spacing:0;text-transform:none;color:var(--text-color)}
+.home-page .discovery-game-kicker::before{display:none}
+.home-page .discovery-copy{padding:20px 0 0}
+.home-page .discovery-copy h3{font:500 1.5rem/1.25 var(--font-display);margin-bottom:12px}
+.home-page .discovery-copy p{font-size:1rem;color:var(--text-color)}
+.home-page .discovery-action{display:block;font:500 .875rem/1.6 var(--font-sans);min-height:44px;padding-top:12px;border:0;letter-spacing:0;text-transform:none}
+.home-page .discovery-action>span{font-size:inherit;color:inherit}
+@media(max-width:900px) and (min-width:581px){
+ .home-page .life-discoveries{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .home-page .life-discovery{display:flex}
+ .home-page .discovery-game-preview,.home-page .discovery-photo{height:220px;min-height:0}
+ .home-page .discovery-game-preview strong{font-size:2.2rem}
+}
+@media(max-width:767px){
+ :is(.life-page,.games-page,.photos-page) main>section{padding-block:56px}
+ .games-page .games-heading{padding:40px 0}
+ .photos-page .page-heading{padding-top:40px}
+ .life-page .globe-showcase-container{grid-template-columns:minmax(0,1fr);gap:28px}
+ .life-page .globe-canvas-wrapper{max-width:300px}
+ .life-page .country-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ .life-page .country-wall .country-name{font-size:1.35rem}
+ .life-page .visited-stories{grid-template-columns:minmax(0,1fr)}
+ .life-page .fact-card{grid-template-columns:minmax(0,1fr);gap:12px}
+ .life-page .tech-stack-grid{grid-template-columns:minmax(0,1fr)}
+ .life-page .gaming-grid{grid-template-columns:minmax(0,1fr)}
+ .life-page .section-heading-row{align-items:flex-start;gap:12px}
+ .games-page .games-shelf{grid-template-columns:minmax(0,1fr)}
+ .photos-page .photo-gallery{grid-template-columns:repeat(2,minmax(0,1fr));padding-block:56px;gap:28px 16px}
+}
+@media(max-width:580px){
+ .home-page .life-discoveries{gap:24px}
+ .home-page .life-discovery{display:grid;grid-template-columns:88px minmax(0,1fr);gap:16px;align-items:start}
+ .home-page .discovery-photo,.home-page .discovery-game-preview{height:100%;min-height:120px;border:0}
+ .home-page .discovery-game-preview{padding:12px;justify-content:center}
+ .home-page .discovery-game-preview strong{font-size:1.2rem;letter-spacing:-.025em}
+ .home-page .discovery-game-kicker{font-size:.6875rem}
+ .home-page .discovery-copy{padding:0}
+ .home-page .discovery-copy h3{font-size:1.25rem;margin-bottom:8px}
+ .home-page .discovery-copy p{font-size:.875rem;line-height:1.65;margin-bottom:8px}
+ .home-page .life-discovery-games .discovery-copy p{display:block;-webkit-line-clamp:unset;overflow:visible}
+ .home-page .discovery-action{font-size:.8125rem;padding-top:4px}
+}
+
+.life-page .country-cities{display:flex;flex-wrap:wrap;align-items:center}
+.life-page .country-cities li{margin:0;display:flex;align-items:center}
+.life-page .country-cities :is(.globe-chip,.globe-bucket-trigger){display:inline-flex;align-items:center;margin:0;transform:none;border:0;background:none}
