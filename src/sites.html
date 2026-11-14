@@ -8,7 +8,7 @@ customStyles: "/css/site-directory.css"
 <main class="container" id="main-content">
     <header class="page-heading"><h1>Things I've built<span class="accent-dot">.</span></h1><p class="page-lede">Security projects, local AI and small web tools.</p></header>
     <section id="selected-work"><h2>Selected projects<span class="accent-dot">.</span></h2><div class="project-grid-enhanced">{% for project in projects %}{% if project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
-    <section id="sites"><h2>Tools<span class="accent-dot">.</span></h2><div class="project-grid-enhanced">{% for project in projects %}{% if not project.featured %}{% include "project-card.njk" %}{% endif %}{% endfor %}</div></section>
+    <section id="sites"><h2>Tools<span class="accent-dot">.</span></h2><ul class="tool-index">{% for project in projects %}{% if not project.featured %}<li><a class="tool-row" href="{{ project.live }}" target="_blank" rel="noopener noreferrer"><img src="{{ project.image }}" alt="" width="264" height="165" loading="lazy" decoding="async"><span><h3>{{ project.name }} <span class="tool-arrow" aria-hidden="true">↗</span></h3><small>{{ project.tags | join(" · ") }}</small></span><p>{{ project.description }}</p><span class="sr-only"> (opens in a new tab)</span></a></li>{% endif %}{% endfor %}</ul></section>
     <section id="live-sites" aria-labelledby="live-sites-heading">
         <h2 id="live-sites-heading">Live sites<span class="accent-dot">.</span></h2>
         <ul class="site-directory-list">

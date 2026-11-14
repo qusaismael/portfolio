@@ -56,6 +56,12 @@ test('navigation, footer, and project actions retain distinct links', () => {
   }
   const $ = cheerio.load(fs.readFileSync(fileFor('/sites/'), 'utf8'));
   for (const project of frozen.projects) {
+    if (!project.featured) {
+      const row = $(`.tool-row[href="${project.live}"]`);
+      assert.equal(row.length, 1, project.slug);
+      assert.equal(norm(row.find('h3').text()), `${project.name} ↗`, project.slug);
+      continue;
+    }
     const card = $('.project-card-enhanced').filter((_, el) => norm($(el).find('h3').text()) === `${project.name} ↗`);
     assert.equal(card.length, 1, project.slug);
     const url = project.featured ? `/projects/${project.slug}/` : project.live;

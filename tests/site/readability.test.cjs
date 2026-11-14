@@ -57,7 +57,8 @@ test('project caveats appear on Home and Work cards', () => {
   for (const route of ['/', '/sites/']) {
     const $ = load(route);
     const cards = $('.project-card-enhanced').toArray();
-    const expected = route === '/' ? projects.filter(p => p.featured) : projects;
+    const expected = projects.filter(p => p.featured);
+    if (route === '/sites/') assert.equal($('.tool-row').length, projects.length - expected.length);
     assert.equal(cards.length, expected.length);
     expected.forEach((project, index) => {
       assert.equal(norm($(cards[index]).find('.project-note').text()), project.cardNote || '');
