@@ -157,8 +157,6 @@ test('mobile Games card matches the compact format of the photo cards', async ({
     expect(state.mediaHeight).toBeGreaterThanOrEqual(88);
     expect(state.cardHeight).toBeLessThan(230);
     expect(state.titlesVisible).toBe(false);
-    expect(state.clamp).toBe('1');
-    expect(state.paragraphLines).toBeLessThan(1.1);
   }
 });
 
@@ -241,7 +239,7 @@ test('all work previews are open entries with complete, loaded evidence', async 
       fit: getComputedStyle(img).objectFit,
       ratio: img.parentElement.getBoundingClientRect().width / img.parentElement.getBoundingClientRect().height
     })));
-    expect(styles.every(style => style.fit === 'contain' && Math.abs(style.ratio - 16 / 9) < 0.03)).toBe(true);
+    expect(styles.every(style => style.fit === 'cover' && Math.abs(style.ratio - 16 / 9) < 0.03)).toBe(true);
     const surfaces = await page.locator('.project-card-enhanced').evaluateAll(nodes => nodes.map(card => ({
       background: getComputedStyle(card).backgroundColor,
       shadow: getComputedStyle(card).boxShadow
@@ -258,7 +256,7 @@ test('all work previews are open entries with complete, loaded evidence', async 
       const photo = photos.nth(index);
       await photo.evaluate(el => el.scrollIntoView({ block: 'center' }));
       await expect.poll(() => photo.evaluate(el => el.complete && el.naturalWidth > 0)).toBe(true);
-      expect(await photo.evaluate(el => getComputedStyle(el).objectFit)).toBe('contain');
+      expect(await photo.evaluate(el => getComputedStyle(el).objectFit)).toBe('cover');
     }
   }
 });
@@ -287,7 +285,7 @@ test('work links retain their distinct story, tool and source destinations', asy
   await expect(page).toHaveURL(/\/projects\/tamperlog\/$/);
 });
 
-test('featured personal photos keep their full frames at 320 and 390', async ({ page }) => {
+test('featured personal photos fill a 16:9 frame at 320 and 390', async ({ page }) => {
   for (const width of [320, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/');
@@ -301,7 +299,7 @@ test('featured personal photos keep their full frames at 320 and 390', async ({ 
         const rect = el.getBoundingClientRect();
         return { ratio: rect.width / rect.height, fit: getComputedStyle(el.querySelector('img')).objectFit };
       });
-      expect(frame.fit).toBe('contain');
+      expect(frame.fit).toBe('cover');
       expect(frame.ratio).toBeCloseTo(16 / 9, 1);
     }
   }

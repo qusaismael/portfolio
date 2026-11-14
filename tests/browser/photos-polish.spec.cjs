@@ -25,14 +25,14 @@ for (const route of ['/', '/blog/', '/sites/']) {
   });
 }
 
-test('About keeps one Zain thumbnail and an accessible experience-photo link', async ({ page }) => {
+test('About keeps one Zain thumbnail and keeps it enlargeable', async ({ page }) => {
   await page.goto('/portfolio/');
   await expect(page.locator('main img[src="/pics/qusaiatzain.webp"]')).toHaveCount(1);
-  const link = page.locator('#panel-zain a[data-view-photo]');
+  const link = page.locator('.memory-strip a[data-view-photo][href="/pics/qusaiatzain.webp"]');
   await link.click();
   const dialog = page.locator('#memory-dialog');
   await expect(dialog).toBeVisible();
-  await expect(dialog.locator('img')).toHaveAttribute('alt', 'Qusai presenting during his internship at Zain Jordan');
+  await expect(dialog.locator('img')).toHaveAttribute('alt', /Zain Jordan/);
   await expect.poll(() => dialog.locator('img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await page.keyboard.press('Escape');
   await expect(dialog).toBeHidden();

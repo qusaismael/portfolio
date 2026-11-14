@@ -1,0 +1,38 @@
+{
+ "/sites/": {
+  "title": "Writing",
+  "href": "/blog/"
+ },
+ "/blog/": {
+  "title": "About me",
+  "href": "/portfolio/"
+ },
+ "/portfolio/": {
+  "title": "Life off the keyboard",
+  "href": "/life/"
+ },
+ "/resume/": {
+  "title": "Things I've built",
+  "href": "/sites/"
+ },
+ "/life/": {
+  "title": "Photos",
+  "href": "/photos/"
+ },
+ "/photos/": {
+  "title": "Games",
+  "href": "/games/"
+ },
+ "/games/": {
+  "title": "Say hi",
+  "href": "/connect/"
+ },
+ "/explore/": {
+  "title": "Things I've built",
+  "href": "/sites/"
+ },
+ "/colophon/": {
+  "title": "Things I've built",
+  "href": "/sites/"
+ }
+}

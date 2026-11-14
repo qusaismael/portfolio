@@ -3,10 +3,12 @@ layout: base
 title: "Photos – Qusai Ismael"
 description: "Trips and graduation photos from Qusai Ismael."
 permalink: "/photos/"
+bodyClass: "photos-page"
+editionStyles: "/css/quiet-life.css"
 customStyles: "/css/gallery.css"
 customScripts: "/gallery.js"
 ---
-<div class="container"><main class="main-content" id="main-content"><header class="page-heading"><h1>The camera roll<span class="accent-dot">.</span></h1><p class="page-lede">Trips and graduation photos from @qusai.pro.</p><div class="button-row"><a class="text-link" href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer">@qusai.pro on Instagram ↗</a><a class="text-link" href="/life/">← Back to Life</a></div></header><div id="photo-gallery" class="photo-gallery">
+<div class="container"><main class="main-content" id="main-content"><header class="page-heading"><a class="text-link life-back" href="/life/">← Life</a><h1>The camera roll<span class="accent-dot">.</span></h1><p class="page-lede">Trips and graduation photos from @qusai.pro.</p><div class="button-row"><a class="text-link" href="https://instagram.com/qusai.pro" target="_blank" rel="noopener noreferrer">@qusai.pro on Instagram ↗</a></div></header><div id="photo-gallery" class="photo-gallery">
 {% for post in photos %}
 {% for photo in post.children %}
 <a class="gallery-card" href="{{ photo.fullSrc }}" data-full-src="{{ photo.fullSrc }}" data-original-url="{{ post.permalink }}" data-quote="{{ post.date }}{% if post.children.length > 1 %} · {{ loop.index }}/{{ post.children.length }}{% endif %}" data-video="{{ photo.isVideo }}" aria-label="{{ post.caption }} — {{ photo.alt }}">

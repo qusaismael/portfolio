@@ -40,12 +40,12 @@ test('archive metadata preserves valid original links and every local asset', ()
     }
   }
 });
-test('About displays the Zain photo only once while retaining its experience link', () => {
+test('About displays the Zain photo only once while keeping it enlargeable', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/portfolio/'), 'utf8'));
   assert.equal($('main img[src="/pics/qusaiatzain.webp"]').length, 1);
   assert.equal($('.memory-strip figure').length, 2, 'keep the balanced pair of memories');
-  assert.equal($('#panel-zain a[data-view-photo][href="/pics/qusaiatzain.webp"]').length, 1);
-  assert.equal($('#panel-zain a[data-view-photo]').text(), 'A little of what the internship looked like.');
+  assert.equal($('.memory-strip a[data-view-photo][href="/pics/qusaiatzain.webp"]').length, 1);
+  assert.equal($('#panel-zain a[data-view-photo]').length, 0, 'one link to the photo is enough');
 });
 
 test('mobile back-to-top control leaves the row action lane unobstructed', () => {

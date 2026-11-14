@@ -28,6 +28,7 @@ ogType: article
     {% endif %}
     <article class="article-body" aria-label="Article">{{ article.body | safe }}</article>
   </div>
-  <nav class="onward onward-inline" aria-label="Keep reading"><p class="onward-label">Keep reading</p><div class="onward-links">{% for other in writing | relatedWriting(post.slug, writingTopics) %}<a href="/writing/{{ other.slug }}/"><span>{{ "More on " + writingTopics[other.slug] if writingTopics[other.slug] == writingTopics[post.slug] else "Something different · " + writingTopics[other.slug] }}</span><strong>{{ other.title }} <i aria-hidden="true">→</i></strong></a>{% endfor %}<a href="/blog/"><span>Writing</span><strong>All {{ writing.length }} notes <i aria-hidden="true">→</i></strong></a></div></nav>
-  <section class="article-end reading-width"><h2>Questions or corrections?</h2><a class="text-link" href="mailto:{{ site.email }}">Email me ↗</a></section>
+  {% set other = (writing | relatedWriting(post.slug, writingTopics))[0] %}
+  <nav class="next-step next-step-inline" aria-label="Next"><a href="/writing/{{ other.slug }}/"><span>Read next</span><strong>{{ other.title }} <i aria-hidden="true">→</i></strong></a></nav>
+  <section class="article-end reading-width"><h2>Questions or corrections?</h2><a class="text-link" href="mailto:{{ site.email }}">Email me</a></section>
 </main>

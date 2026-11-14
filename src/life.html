@@ -3,11 +3,13 @@ layout: base
 title: "Life & Interests – Qusai Ismael"
 description: "Personal interests, travel history, tech stack, fun facts, and gaming favorites of Qusai Ismael."
 permalink: "/life/"
+bodyClass: "life-page"
+editionStyles: "/css/quiet-life.css"
 customStyles: "/css/life.css"
 customScripts: "/js/globe.js"
 ---
 <div class="container">
-    <main class="main-content" id="main-content"><header class="page-heading"><h1>A little more life<span class="accent-dot">.</span></h1><p class="page-lede">Places I've been, games I love and the tools I use.</p><nav class="section-jumps" aria-label="On this page"><a href="#travel">Places</a><a href="#fun-facts">Stories</a><a href="#tech-stack">My setup</a><a href="#gaming">Games</a><a href="/photos/">Photos ↗</a></nav></header>
+    <main class="main-content" id="main-content"><header class="page-heading"><h1>A little more life<span class="accent-dot">.</span></h1><p class="page-lede">Places I've been, games I love and the tools I use.</p><nav class="section-jumps" aria-label="On this page"><a href="#travel">Places</a><a href="#fun-facts">Stories</a><a href="#tech-stack">My setup</a><a href="#gaming">Games</a><a href="/photos/">Photos →</a></nav></header>
       <!-- SECTION 1: TRAVEL & PLACES -->
       <section id="travel" class="travel-section">
         <div class="section-header">
@@ -146,6 +148,8 @@ customScripts: "/js/globe.js"
           </div>
         </div>
 
+      </section>
+
       <!-- SECTION 2: FUN FACTS -->
       <section id="fun-facts" class="fun-facts-section">
         <div class="section-header">
@@ -159,9 +163,9 @@ customScripts: "/js/globe.js"
             <div class="fact-card-header">
               <h3 class="fact-title">So, how does that work?</h3>
             </div>
-            <blockquote class="story-quote">
+            <div class="story-quote">
               <p class="fact-body quote-text">I have been the curious tech kid for as long as I can remember. My dad is a computer engineer, so he got ALL the questions. If I asked what a driver was, the answer usually involved reinstalling a computer and finding out for myself. I loved learning that way.</p>
-            </blockquote>
+            </div>
           </article>
 
           <!-- Story 2: Growing Up -->
@@ -169,10 +173,10 @@ customScripts: "/js/globe.js"
             <div class="fact-card-header">
               <h3 class="fact-title">The less fun part of growing up</h3>
             </div>
-            <blockquote class="story-quote">
+            <div class="story-quote">
               <p class="fact-body quote-text">I got bullied at school for some strange things. Being clean, even my skin color. Racism is bad for everyone. Those experiences were not easy, but they are part of what shaped me.
               </p>
-            </blockquote>
+            </div>
           </article>
 
           <!-- Story 3: The Robot Compliment -->
@@ -180,10 +184,10 @@ customScripts: "/js/globe.js"
             <div class="fact-card-header">
               <h3 class="fact-title">Apparently, I am a robot</h3>
             </div>
-            <blockquote class="story-quote">
+            <div class="story-quote">
               <p class="fact-body quote-text">People sometimes call me a robot, or say I am like ChatGPT. They insist it is a compliment. I am still deciding, lol.
               </p>
-            </blockquote>
+            </div>
           </article>
         </div>
       </section>
@@ -340,7 +344,7 @@ customScripts: "/js/globe.js"
           {% for game in games %}
           <a class="game-card-life game-card game-life-link" href="/games/#{{ game.id }}">
             <span class="game-card-genre">{{ game.genre }}</span>
-            <h3 class="game-card-title">{{ game.shortTitle }} <span aria-hidden="true">↗</span></h3>
+            <h3 class="game-card-title">{{ game.shortTitle }} <span aria-hidden="true">→</span></h3>
             <span class="game-card-badge">{{ game.studio }}</span>
           </a>
           {% endfor %}

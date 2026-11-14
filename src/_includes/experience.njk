@@ -1,16 +1,17 @@
 <div class="experience-list">
   {% for job in experience %}
   <article class="experience-entry" id="panel-{{ job.id }}">
-    <header class="experience-entry-heading">
-      <div><p class="experience-entry-meta">{{ job.company }} · {{ job.dates }}</p><h3 id="tab-{{ job.id }}">{{ job.role }}</h3><p class="muted">{{ job.location }}</p></div>
-    </header>
-    <p>{{ job.summary }}</p>
-    {% if job.bullets.length %}<ul>{% for bullet in job.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
-    <div class="tags">{% for tag in job.tags %}<span>{{ tag }}</span>{% endfor %}</div>
-    {% if job.photo and job.id == 'zain' %}
-    {# The Zain photo already appears in the balanced memory strip above. #}
-    <p class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-alt="{{ job.photo.alt }}" data-photo-caption="{{ job.photo.caption }}">{{ job.photo.caption }}</a></p>
-    {% elif job.photo %}<figure class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-caption="{{ job.photo.caption }}" aria-label="Enlarge photo from {{ job.company }}"><img src="{{ job.photo.src }}" alt="{{ job.photo.alt }}" {% if job.id == 'freelance-devops' %}width="2584" height="980"{% endif %} loading="lazy"></a><figcaption>{{ job.photo.caption }}</figcaption></figure>{% endif %}
+    <p class="entry-date">{{ job.dates }}</p>
+    <div class="experience-content">
+      <header class="experience-entry-heading">
+        <h3 id="tab-{{ job.id }}">{{ job.role }}</h3>
+        <p class="entry-company">{{ job.company }}</p>
+        <p class="muted">{{ job.location }}</p>
+      </header>
+      <p>{{ job.summary }}</p>
+      {% if job.bullets.length %}<ul>{% for bullet in job.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
+      {% if job.photo and job.id != 'zain' %}<figure class="exp-photo"><a href="{{ job.photo.src }}" data-view-photo data-photo-caption="{{ job.photo.caption }}" aria-label="Enlarge photo from {{ job.company }}"><img src="{{ job.photo.src }}" alt="{{ job.photo.alt }}" {% if job.id == 'freelance-devops' %}width="2584" height="980"{% endif %} loading="lazy"></a><figcaption>{{ job.photo.caption }}</figcaption></figure>{% endif %}
+    </div>
   </article>
   {% endfor %}
 </div>

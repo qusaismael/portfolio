@@ -95,7 +95,6 @@ test('every job story is visible without tabs on About; Home links to the longer
         const photo = $('.memory-strip img[src="/pics/qusaiatzain.webp"]');
         assert.deepEqual([photo.attr('width'), photo.attr('height')], ['655', '376']);
         assert.equal(entry.find('img').length, 0, 'do not repeat the memory-strip photo');
-        assert.equal(entry.find('a[data-view-photo]').attr('href'), job.photo.src);
       }
       if (job.id === 'freelance-devops') assert.deepEqual([entry.find('img').attr('width'), entry.find('img').attr('height')], ['2584', '980']);
     });
@@ -109,7 +108,7 @@ test('every job story is visible without tabs on About; Home links to the longer
 test('About keeps the personal story but drops generic throat-clearing', () => {
   const $ = load('/portfolio/');
   assert.equal($('.about-heading .eyebrow').length, 0);
-  assert.match(norm($('#about > p').first().text()), /privacy and GRC.*security tools.*AI models locally/);
+  assert.match(norm($('.about-heading .about-intro').text()), /privacy and GRC.*security tools.*AI models locally/);
   assert.match(norm($('#about').text()), /My dad is a computer engineer/);
   assert.match(norm($('#about').text()), /I'm based in Jordan/);
   assert.equal($('#projects .section-heading-row p').length, 0);
