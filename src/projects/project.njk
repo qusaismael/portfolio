@@ -18,5 +18,7 @@ bodyClass: "project-page"
     {% set evidenceAlt = project.evidenceAlt or project.imageAlt %}
     <figure class="project-evidence"><a href="{{ evidenceSrc }}" data-view-photo data-photo-caption="{{ evidenceAlt }}" aria-label="Enlarge {{ evidenceAlt }}"><img src="{{ evidenceSrc }}" alt="{{ evidenceAlt }}" width="960" height="600" loading="lazy" decoding="async"></a><figcaption>{{ evidenceAlt }}</figcaption></figure>
     {% endif %}
+    {% set nextProject = featuredProjects[(pagination.pageNumber + 1) % featuredProjects.length] %}
+    <nav class="onward onward-inline" aria-label="Keep going"><p class="onward-label">Keep going</p><div class="onward-links"><a href="/projects/{{ nextProject.slug }}/"><span>Next project · {{ nextProject.type }}</span><strong>{{ nextProject.name }} <i aria-hidden="true">→</i></strong></a><a href="/sites/#sites"><span>Smaller things</span><strong>Tools you can try now <i aria-hidden="true">→</i></strong></a><a href="/sites/"><span>Work</span><strong>Everything I've built <i aria-hidden="true">→</i></strong></a></div></nav>
     <section class="project-end"><h2>Questions about {{ project.name }}?</h2><a class="button button-primary" href="mailto:{{ site.email }}?subject={{ project.name | urlencode }}">Email me about {{ project.name }} ↗</a></section>
 </main>

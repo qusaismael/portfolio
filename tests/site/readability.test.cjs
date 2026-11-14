@@ -15,7 +15,7 @@ test('home introduces a person and shows the current role directly', () => {
   assert.equal($('.hero-current a').attr('href'), '/portfolio/#experience');
   assert.equal($('.hero-copy [data-note-toggle]').length, 2);
   assert.equal($('.hero-copy a[href="/portfolio/"]').length, 1);
-  assert.equal($('.hero-copy a[href="/connect/"]').length, 1);
+  assert.equal($('.hero-copy a[href="/sites/"]').length, 1);
 });
 
 test('home removes redundant preambles and keeps the useful invitations', () => {

@@ -45,9 +45,9 @@ test('Work page gives all ten named sites active HTTPS links with safe external 
     ['Textify', 'textify.qusai.pro'],
     ['GRC Check', 'grc.qusai.pro'],
     ['30 Days From Today', '30daysfromtoday.qusai.pro'],
-    ['Local LLM', 'localllm.qusai.pro'],
+    ['LocalLLM', 'localllm.qusai.pro'],
     ['ClipGuard', 'clipguard.qusai.pro'],
-    ['RSS + AI', 'rss.qusai.pro'],
+    ['RSS AI', 'rss.qusai.pro'],
     ['Privacy Check', 'privacy.qusai.pro'],
     ['SecureChat', 'securebot.qusai.pro'],
     ['Token Speed', 'token.qusai.pro']
@@ -82,5 +82,5 @@ test('Work page gives all ten named sites active HTTPS links with safe external 
 test('homepage retains its human-first section order', () => {
   const $ = cheerio.load(fs.readFileSync(fileFor('/'), 'utf8'));
   assert.deepEqual($('main > section').toArray().map(el => $(el).attr('id')),
-    ['about', 'life-teasers', 'blog', 'github-pulse', 'projects', 'contact']);
+    ['about', 'projects', 'blog', 'github-pulse', 'life-teasers', 'contact']);
 });

@@ -50,7 +50,7 @@ test('navigation, footer, and project actions retain distinct links', () => {
   for (const route of routes) {
     const $ = cheerio.load(fs.readFileSync(fileFor(route), 'utf8'));
     assert.deepEqual($('#main-nav a').toArray().map(el => $(el).attr('href')),
-      ['/portfolio/', '/life/', '/photos/', '/blog/', '/sites/', '/connect/'], route);
+      ['/sites/', '/blog/', '/portfolio/', '/life/', '/connect/'], route);
     assert.deepEqual($('.site-footer a').toArray().map(el => $(el).attr('href')),
       ['/', `mailto:${site.email}`, '/explore/', '/photos/', site.github, '/connect/', '/colophon/'], route);
   }
