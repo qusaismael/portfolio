@@ -44,6 +44,10 @@
   icon.append(fallback, avatar);
   return icon;
  }
+ document.querySelectorAll('[data-credit-owner]').forEach(row => {
+  const current = row.querySelector('.contribution-icon');
+  if (current) current.replaceWith(repoIcon(row.dataset.creditOwner, row.dataset.creditRepo));
+ });
  function note(text) {
   if (!status) return;
   status.textContent = text;

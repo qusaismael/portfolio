@@ -22,6 +22,9 @@
 .contribution-item h3 a:hover{text-decoration:underline;text-underline-offset:4px;color:var(--accent-color)}
 .contribution-date{grid-area:date;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 12px;color:var(--muted-text);font:.75rem/1.6 var(--font-mono);margin:0}
 .contribution-date>span{color:var(--accent-color)}
+.contribution-credit-pr{color:inherit;text-decoration:none}
+.contribution-credit-pr:hover{color:var(--accent-color);text-decoration:underline;text-underline-offset:4px}
+.contribution-list--credit{border-top:1px solid var(--border-color)}
 .contribution-verification{padding:13px 24px;margin:0;border-top:1px solid var(--border-color);color:var(--muted-text);font:.75rem/1.7 var(--font-mono)}
 .contribution-empty{padding:28px 24px;color:var(--muted-text)}
 .contribution-empty p{font-size:1rem;line-height:1.8;margin:0 0 12px}
