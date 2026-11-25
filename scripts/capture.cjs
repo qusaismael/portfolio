@@ -54,7 +54,7 @@ const fullRoutes = ['/', '/portfolio/', '/sites/', '/projects/localllm/', '/blog
               verifyCaptureResponse(response, marker);
               if (!response.ok()) throw new Error(`${route}: HTTP ${response.status()}`);
               if (route === '/photos/') {
-                await page.locator('#photo-gallery[data-feed-ready="true"]').waitFor({ timeout: 15000 });
+                await page.locator('#photo-gallery[data-gallery-ready="true"]').waitFor({ timeout: 15000 });
               }
               await page.evaluate(async () => {
                 await document.fonts.ready;

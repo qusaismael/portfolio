@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="SecureChat request validation pipeline schematic">
+  <rect width="800" height="500" fill="#1a0f0a"/>
+  <rect x="28" y="28" width="744" height="444" rx="8" fill="#23160f" stroke="#4f382a" stroke-width="2"/>
+  <line x1="28" y1="84" x2="772" y2="84" stroke="#4f382a" stroke-width="1.5"/>
+  <text x="54" y="62" fill="#faf0e6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="600">securebot.qusai.pro</text>
+  <text x="746" y="62" text-anchor="end" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">EDUCATIONAL SECURITY DEMO</text>
+
+  <!-- Pipeline header -->
+  <text x="54" y="130" fill="#f0a36b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="1.5">REQUEST INSPECTION PIPELINE</text>
+
+  <!-- Row 1: 4 defense stages -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="54" y="156" width="150" height="96" rx="4" fill="#1a0f0a" stroke="#4f382a" stroke-width="1.5"/>
+    <text x="70" y="186" fill="#bfb09b" font-size="12">01 · GATEWAY</text>
+    <text x="70" y="214" fill="#faf0e6" font-size="15" font-weight="600">Request ID</text>
+    <text x="70" y="236" fill="#bfb09b" font-size="12">Trace &amp; route</text>
+
+    <line x1="204" y1="204" x2="230" y2="204" stroke="#ff8a4c" stroke-width="2"/>
+    <polyline points="222,197 231,204 222,211" fill="none" stroke="#ff8a4c" stroke-width="2"/>
+
+    <rect x="234" y="156" width="150" height="96" rx="4" fill="#1a0f0a" stroke="#4f382a" stroke-width="1.5"/>
+    <text x="250" y="186" fill="#bfb09b" font-size="12">02 · QUOTA</text>
+    <text x="250" y="214" fill="#faf0e6" font-size="15" font-weight="600">Rate Limit</text>
+    <text x="250" y="236" fill="#bfb09b" font-size="12">30 req / min</text>
+
+    <line x1="384" y1="204" x2="410" y2="204" stroke="#ff8a4c" stroke-width="2"/>
+    <polyline points="402,197 411,204 402,211" fill="none" stroke="#ff8a4c" stroke-width="2"/>
+
+    <rect x="414" y="156" width="156" height="96" rx="4" fill="#1a0f0a" stroke="#ff8a4c" stroke-width="2"/>
+    <text x="430" y="186" fill="#ff8a4c" font-size="12">03 · VALIDATE</text>
+    <text x="430" y="214" fill="#faf0e6" font-size="15" font-weight="600">Input Guard</text>
+    <text x="430" y="236" fill="#e8dfd0" font-size="12">XSS / SQLi / SSTI</text>
+
+    <line x1="570" y1="204" x2="596" y2="204" stroke="#ff8a4c" stroke-width="2"/>
+    <polyline points="588,197 597,204 588,211" fill="none" stroke="#ff8a4c" stroke-width="2"/>
+
+    <rect x="600" y="156" width="146" height="96" rx="4" fill="#1a0f0a" stroke="#4f382a" stroke-width="1.5"/>
+    <text x="616" y="186" fill="#bfb09b" font-size="12">04 · MODEL</text>
+    <text x="616" y="214" fill="#faf0e6" font-size="15" font-weight="600">Simulated</text>
+    <text x="616" y="236" fill="#bfb09b" font-size="12">Safe response</text>
+  </g>
+
+  <!-- Inspection log card -->
+  <rect x="54" y="286" width="692" height="122" rx="4" fill="#140b07" stroke="#4f382a" stroke-width="1.5"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">
+    <text x="74" y="320" fill="#bfb09b">TRACE  req_8f21c · POST /api/chat</text>
+    <text x="74" y="348" fill="#ff8a4c">BLOCK  failedAt: "validation" · rule: template-injection</text>
+    <text x="74" y="376" fill="#e8dfd0">NOTE   Simulated browser backend · visualizes where attacks stop</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="54" y="446" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">Sanitization · Audit logging · Layer-by-layer failure inspection</text>
+</svg>

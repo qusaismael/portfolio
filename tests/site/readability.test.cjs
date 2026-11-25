@@ -179,16 +179,16 @@ test('Life stories and setup notes keep their substance without numbered decorat
   ]);
 });
 
-test('changed assets keep distinct cache versions through the polish pass', () => {
+test('changed assets keep distinct cache versions through the editorial pass', () => {
   const home = load('/');
   for (const [asset, version] of [
-    ['/css/style.css', '20261108-photos'], ['/css/life-preview.css', '20260926-readability'],
-    ['/css/print.css', '20261023-polish']
+    ['/css/style.css', '20261125-editorial'], ['/css/life-preview.css', '20260926-readability'],
+    ['/css/print.css', '20261023-polish'], ['/css/edition.css', '20261125-editorial']
   ]) {
     assert.equal(home(`link[href="${asset}?v=${version}"]`).length, 1, asset);
   }
-  assert.equal(home('script[src="/script.js?v=20261023-polish"]').length, 1);
-  assert.equal(load('/life/')('link[href="/css/life.css?v=20260926-readability"]').length, 1);
+  assert.equal(home('script[src="/script.js?v=20261125-editorial"]').length, 1);
+  assert.equal(load('/life/')('link[href="/css/life.css?v=20261125-editorial"]').length, 1);
   const photos = load('/photos/');
   assert.equal(photos('link[href="/css/gallery.css?v=20261108-photos"]').length, 1);
   assert.equal(photos('script[src="/gallery.js?v=20261108-photos"]').length, 1);

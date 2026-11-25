@@ -31,10 +31,12 @@
   matchMedia('(min-width: 768px)').addEventListener('change', closeMenu);
 
   const theme = $('#theme-toggle');
+  const themeColor = $('#theme-color-meta');
   function labelTheme() {
     const dark = document.documentElement.dataset.theme !== 'light';
     theme?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
     theme?.setAttribute('aria-pressed', String(!dark));
+    if (themeColor) themeColor.content = dark ? '#1A0F0A' : '#faf7f1';
   }
   theme?.addEventListener('click', () => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';

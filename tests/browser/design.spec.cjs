@@ -230,7 +230,7 @@ test('all work previews are open entries with complete, loaded evidence', async 
     await page.goto('/sites/');
     const images = page.locator('.project-preview > img');
     await expect(images).toHaveCount(4);
-    await expect(page.locator('.tool-row > img')).toHaveCount(5);
+    await expect(page.locator('.tool-row > img')).toHaveCount(projects.filter(project => !project.featured).length);
     for (const image of await images.all()) {
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate(el => el.complete && el.naturalWidth > 0)).toBe(true);

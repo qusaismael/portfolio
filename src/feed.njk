@@ -1,0 +1,29 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US">
+  <title>{{ site.name | xmlEscape | safe }} — Writing</title>
+  <subtitle>Notes on security, software, and the questions that send me down a rabbit hole.</subtitle>
+  <link href="{{ site.url }}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.url }}/blog/" rel="alternate" type="text/html"/>
+  <id>{{ site.url }}/blog/</id>
+  <updated>{{ (writing[0].date if writing.length else '2026-01-01') | isoDate }}</updated>
+  <author>
+    <name>{{ site.name | xmlEscape | safe }}</name>
+    <uri>{{ site.url }}/</uri>
+  </author>
+{% for post in writing %}
+  <entry>
+    <title>{{ post.title | xmlEscape | safe }}</title>
+    <link href="{{ site.url }}/writing/{{ post.slug }}/" rel="alternate" type="text/html"/>
+    <id>{{ site.url }}/writing/{{ post.slug }}/</id>
+    <published>{{ post.date | isoDate }}</published>
+    <updated>{{ post.date | isoDate }}</updated>
+    {% if writingTopics[post.slug] %}<category term="{{ writingTopics[post.slug] | xmlEscape | safe }}"/>{% endif %}
+    <summary>{{ post.excerpt | xmlEscape | safe }}</summary>
+    <content type="html">{{ post.body | xmlEscape | safe }}</content>
+  </entry>
+{% endfor %}
+</feed>

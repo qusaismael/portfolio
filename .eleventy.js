@@ -20,8 +20,22 @@ module.exports = function(eleventyConfig) {
     const other = rest.filter(post => topics[post.slug] !== topics[slug]);
     return [...same.slice(0, 1), ...other.slice(0, 1)];
   });
+  const {
+    isoDate,
+    xmlEscape,
+    topicSlug,
+    jsonLd,
+    blogPostingLd,
+    creativeWorkLd
+  } = require('./scripts/filters.cjs');
   eleventyConfig.addFilter('readingTime', html => Math.max(1, Math.round(String(html || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length / 220)));
   eleventyConfig.addFilter('articleOutline', require('./scripts/article-outline.cjs'));
+  eleventyConfig.addFilter('isoDate', isoDate);
+  eleventyConfig.addFilter('xmlEscape', xmlEscape);
+  eleventyConfig.addFilter('topicSlug', topicSlug);
+  eleventyConfig.addFilter('jsonLd', jsonLd);
+  eleventyConfig.addFilter('blogPostingLd', blogPostingLd);
+  eleventyConfig.addFilter('creativeWorkLd', creativeWorkLd);
 
   // Country wall: visited places grouped by country, one typeface each.
   eleventyConfig.addGlobalData('wallCountries', () => {

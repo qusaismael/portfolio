@@ -8,10 +8,12 @@ eleventyComputed:
   title: "{{ project.name }} — Qusai Ismael"
   description: "{{ project.description }}"
   permalink: "/projects/{{ project.slug }}/"
+  ogImage: "{{ project.evidenceImage or project.image }}"
+  ogImageAlt: "{{ project.evidenceAlt or project.imageAlt or project.name }}"
 bodyClass: "project-page"
 ---
 <main class="container reading-width" id="main-content">
-    <header class="page-heading"><a class="text-link back-link" href="/sites/">← All work</a><p class="eyebrow">{{ project.type }}</p><h1>{{ project.name }}<span class="accent-dot">.</span></h1><p class="page-lede">{{ project.description }}</p><aside class="project-status" aria-label="Project status and limitations"><h2>Status and limits</h2><p>{{ project.status }}</p></aside><div class="tags">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div><div class="button-row">{% if project.live %}<a class="button button-primary" href="{{ project.live }}" target="_blank" rel="noopener noreferrer">Try {{ project.name }} ↗</a>{% endif %}{% if project.source %}<a class="button button-secondary" href="{{ project.source }}" target="_blank" rel="noopener noreferrer">Read the source ↗</a>{% endif %}</div></header>
+    <header class="page-heading"><a class="text-link back-link" href="/sites/">← All work</a><p class="eyebrow">{{ project.type }}</p><h1>{{ project.name }}<span class="accent-dot">.</span></h1><p class="page-lede">{{ project.description }}</p><aside class="project-status" aria-label="Project status and limitations"><h2>Status and limits</h2><p>{{ project.status }}</p></aside><div class="tags">{% for tag in project.tags %}<span>{{ tag }}</span>{% endfor %}</div><div class="button-row">{% if project.live %}<a class="button button-primary" href="{{ project.live }}" target="_blank" rel="noopener noreferrer">Try {{ project.name }} ↗<span class="sr-only"> (opens in a new tab)</span></a>{% endif %}{% if project.source %}<a class="button button-secondary" href="{{ project.source }}" target="_blank" rel="noopener noreferrer">Read the source ↗<span class="sr-only"> (opens in a new tab)</span></a>{% endif %}</div></header>
     <div class="project-story"><section><h2>Why I made it</h2><p>{{ project.problem }}</p></section><section><h2>What I built</h2><p>{{ project.built }}</p></section><section><h2>What I learned</h2><p>{{ project.learned }}</p></section></div>
     {% if project.evidenceImage or project.image %}
     {% set evidenceSrc = project.evidenceImage or project.image %}

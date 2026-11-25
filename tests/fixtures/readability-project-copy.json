@@ -29,5 +29,11 @@
   },
   "clipguard": {
     "description": "A clipboard utility built around a simple rule: what you copy should stay on your device."
+  },
+  "textify": {
+    "description": "Convert photos into ASCII, binary, or emoji text art entirely on your device, with English and Arabic UI support."
+  },
+  "securechat": {
+    "description": "An educational chatbot security demo visualizing rate limiting and input validation on a simulated in-browser backend."
   }
 }

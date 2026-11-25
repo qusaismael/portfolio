@@ -95,6 +95,7 @@ customScripts: "/js/globe.js"
           </div>
           {% endfor %}
         </div>
+        <p class="someday-footnote">* Riyadh is on the someday list.</p>
 
         <div class="travel-stories" aria-labelledby="visited-stories-title">
           <h3 id="visited-stories-title">Places I've been</h3>
@@ -115,10 +116,11 @@ customScripts: "/js/globe.js"
 
           <div class="country-wall someday-wall" aria-label="Countries I want to visit">
             <div class="country-block country-big-shoulders">
-              <button type="button" class="country-name globe-bucket-trigger" data-country-id="usa" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
-                data-city="SF" data-country="USA"
-                data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">USA</button>
+              <button type="button" class="country-name" data-country-id="usa">USA</button>
               <ul class="country-cities">
+                <li><button type="button" class="globe-bucket-trigger" data-id="sf" data-lat="37.7749" data-lon="-122.4194"
+                  data-city="San Francisco" data-country="USA"
+                  data-desc="I spend enough time reading about Silicon Valley. I want to see it in person.">San Francisco</button></li>
                 <li><button type="button" class="globe-bucket-trigger" data-id="texas" data-lat="30.2672" data-lon="-97.7431"
                   data-city="Texas" data-country="USA"
                   data-desc="There is a friend I really want to visit here.">Texas</button></li>
