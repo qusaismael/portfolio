@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Textify local ASCII and binary art generator preview">
+  <rect width="800" height="500" fill="#1a0f0a"/>
+  <rect x="28" y="28" width="744" height="444" rx="8" fill="#23160f" stroke="#4f382a" stroke-width="2"/>
+  <line x1="28" y1="84" x2="772" y2="84" stroke="#4f382a" stroke-width="1.5"/>
+  <text x="54" y="62" fill="#faf0e6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="600">textify.qusai.pro</text>
+  <text x="746" y="62" text-anchor="end" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">ON-DEVICE · ASCII / BINARY / EMOJI</text>
+
+  <!-- Left panel: source geometric motif -->
+  <rect x="54" y="112" width="272" height="296" rx="4" fill="#1a0f0a" stroke="#4f382a" stroke-width="1.5"/>
+  <circle cx="190" cy="236" r="76" fill="none" stroke="#f0a36b" stroke-width="2" opacity="0.5"/>
+  <circle cx="190" cy="236" r="46" fill="#ff8a4c" opacity="0.22"/>
+  <circle cx="190" cy="236" r="22" fill="#ff8a4c" opacity="0.85"/>
+  <line x1="88" y1="348" x2="292" y2="348" stroke="#4f382a" stroke-width="1.5"/>
+  <text x="190" y="380" text-anchor="middle" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">INPUT IMAGE (LOCAL)</text>
+
+  <!-- Conversion arrow -->
+  <line x1="342" y1="260" x2="394" y2="260" stroke="#ff8a4c" stroke-width="2.5"/>
+  <polyline points="382,250 395,260 382,270" fill="none" stroke="#ff8a4c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right panel: ASCII & binary output matrix -->
+  <rect x="412" y="112" width="334" height="296" rx="4" fill="#140b07" stroke="#4f382a" stroke-width="1.5"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="1.5">
+    <text x="434" y="152" fill="#7c6352">..::--==++**##@@##**++==--::..</text>
+    <text x="434" y="176" fill="#a88c74">.:-=+*#%@@@@@@@@@@@@@@%#*+=-:.</text>
+    <text x="434" y="200" fill="#d2b48c">:-+*#@@01011001011001@@#*+-:</text>
+    <text x="434" y="224" fill="#f0a36b">-+*#@@0110TEXTIFY0110@@#*+-</text>
+    <text x="434" y="248" fill="#ff8a4c">+*#%@@100101100101101@@%#*+</text>
+    <text x="434" y="272" fill="#ff8a4c">+*#%@@010100110110100@@%#*+</text>
+    <text x="434" y="296" fill="#f0a36b">-+*#@@101101001011010@@#*+-</text>
+    <text x="434" y="320" fill="#d2b48c">:-+*#@@01101001010110@@#*+-:</text>
+    <text x="434" y="344" fill="#a88c74">.:-=+*#%@@@@@@@@@@@@@@%#*+=-:.</text>
+    <text x="434" y="368" fill="#7c6352">..::--==++**##@@##**++==--::..</text>
+  </g>
+  <text x="579" y="394" text-anchor="middle" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">EXPORT TXT · PNG · EN / AR</text>
+
+  <!-- Footer bar -->
+  <text x="54" y="446" fill="#bfb09b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">Zero uploads · Web Worker processing · Undo / Redo</text>
+</svg>

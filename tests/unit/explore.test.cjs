@@ -4,13 +4,21 @@ const projects = require('../../src/_data/projects.json');
 const writing = require('../../src/_data/writing.json');
 const entries = require('../../src/_data/explore.js');
 
-test('explore covers all writing and featured project stories exactly once', () => {
-  assert.equal(entries.length, writing.length + projects.filter(p => p.featured).length);
+test('explore covers all writing, featured project stories, and web tools exactly once', () => {
+  const featured = projects.filter(p => p.featured);
+  const tools = projects.filter(p => !p.featured && p.live);
+  assert.equal(entries.length, writing.length + featured.length + tools.length);
   assert.equal(new Set(entries.map(e => e.href)).size, entries.length);
   for (const entry of entries) {
-    assert.match(entry.href, /^\/(writing|projects)\/[a-z0-9-]+\/$/);
     assert.ok(entry.title && entry.summary && entry.search);
-    assert.ok(['writing', 'projects'].includes(entry.kind));
+    assert.ok(['writing', 'projects', 'tools'].includes(entry.kind));
+    if (entry.kind === 'tools') {
+      assert.equal(entry.external, true);
+      assert.match(entry.href, /^https:\/\/[a-z0-9.-]+\/$/);
+    } else {
+      assert.equal(entry.external, false);
+      assert.match(entry.href, /^\/(writing|projects)\/[a-z0-9-]+\/$/);
+    }
   }
 });
 

@@ -11,8 +11,8 @@
  .terminal-caret{animation:qi-caret-blink 1.15s steps(2,start) infinite}
 }
 @keyframes qi-caret-blink{0%,100%{opacity:1}50%{opacity:0}}
-.hero-aside .portrait-button{width:218px;height:218px;border:3px solid var(--border-color);outline:1px solid var(--accent-color);outline-offset:7px;transition:transform .25s ease}
-.hero-aside .portrait-button:hover{transform:rotate(-3deg)}
+.hero-aside .portrait-button{width:218px;height:218px;border:1px solid var(--border-color);outline:1px solid var(--accent-color);outline-offset:6px;transition:outline-color var(--duration-fast) var(--ease-ui),border-color var(--duration-fast) var(--ease-ui)}
+.hero-aside .portrait-button:hover{border-color:var(--accent-color);outline-color:var(--signal)}
 .hero-aside .portrait-caption{font-size:.8125rem;line-height:1.65;margin-top:26px;color:var(--heading-color)}
 .hero-aside .portrait-caption span{color:var(--muted-text);font-size:.75rem}
 .portrait-annotation{font:italic .8125rem/1.6 var(--font-mono);color:var(--accent-color);margin-top:12px;transform:rotate(-4deg)}
@@ -25,7 +25,7 @@
 /* The same ASCII frames as the old site, now with a safe space to wander. */
 .cat-habitat{grid-column:1/-1;min-width:0;width:100%;margin:0}
 .cat-track{height:92px;position:relative;min-width:0;border-bottom:1px dashed var(--border-color)}
-.wandering-cat{position:absolute;left:12px;bottom:0;width:88px;height:66px;padding:8px;background:transparent;border:0;color:var(--text-color);border-radius:6px;transform:translate3d(var(--cat-x,0px),var(--cat-y,0px),0)}
+.wandering-cat{position:absolute;left:12px;bottom:0;width:88px;height:66px;padding:8px;background:transparent;border:0;color:var(--text-color);border-radius:var(--radius-frame);transform:translate3d(var(--cat-x,0px),var(--cat-y,0px),0)}
 .wandering-cat:hover,.wandering-cat:focus-visible{color:var(--accent-color)}
 .cat-frame{display:block;white-space:pre;font:15px/1.05 var(--font-mono);text-align:left}
 .cat-speech{position:absolute;left:16px;bottom:62px;white-space:nowrap;font:12px/1.6 var(--font-mono);color:var(--accent-color)}
@@ -51,10 +51,10 @@ html:not(.js) .wandering-cat{pointer-events:none}
 .memory-strip figure:nth-child(2){transform:rotate(1deg)}
 .memory-strip figure:nth-child(2) img{object-position:50% 32%}
 .memory-strip figure>a:hover{border-color:var(--accent-color)}
-.exp-photo{margin:24px 0 0;max-width:540px}.exp-photo a{display:block}.exp-photo img{width:100%;height:auto;border-radius:6px}
+.exp-photo{margin:24px 0 0;max-width:540px}.exp-photo a{display:block}.exp-photo img{width:100%;height:auto;border-radius:var(--radius-frame)}
 .exp-photo figcaption{font:.75rem/1.6 var(--font-mono)}
-.memory-dialog{padding:12px;border:1px solid var(--border-color);border-radius:10px;background:var(--card-background);color:var(--text-color);width:max-content;max-width:min(980px,calc(100vw - 32px))}
-.memory-dialog::backdrop{background:rgba(0,0,0,.83)}
+.memory-dialog{padding:12px;border:1px solid var(--border-color);border-radius:var(--radius-frame);background:var(--card-background);color:var(--text-color);width:max-content;max-width:min(980px,calc(100vw - 32px))}
+.memory-dialog::backdrop{background:rgba(20,12,8,.85)}
 .memory-dialog img{max-height:75dvh;max-width:100%;width:auto;margin:auto;object-fit:contain}
 .memory-dialog p{margin:12px 6px 4px;font:.8125rem/1.6 var(--font-mono);max-width:760px}
 .about-prose .cat-habitat{max-width:none}

@@ -218,9 +218,9 @@
             devicePixelRatio: dpr, width: width * dpr, height: width * dpr,
             phi, theta, dark: isLight ? 0 : 1, diffuse: 1.3,
             mapSamples: 14000, mapBrightness: isLight ? 4.0 : 5.5,
-            baseColor: isLight ? [0.88, 0.84, 0.78] : [0.18, 0.09, 0.07],
-            markerColor: isLight ? [0.42, 0.27, 0.14] : [0.29, 0.87, 0.50],
-            glowColor: isLight ? [0.92, 0.88, 0.82] : [0.45, 0.35, 0.22],
+            baseColor: isLight ? [0.90, 0.86, 0.80] : [0.16, 0.09, 0.06],
+            markerColor: isLight ? [0.78, 0.27, 0.11] : [1.0, 0.54, 0.30],
+            glowColor: isLight ? [0.95, 0.92, 0.86] : [0.38, 0.23, 0.14],
             markers,
             onRender: (state) => {
               if (isFocusing && motion.matches) { phi = targetPhi; theta = targetTheta; isFocusing = false; }
@@ -235,7 +235,10 @@
               state.phi = phi; state.theta = theta;
               const light = document.documentElement.dataset.theme === 'light';
               state.dark = light ? 0 : 1;
-              state.baseColor = light ? [0.88,0.84,0.78] : [0.18,0.09,0.07];
+              state.mapBrightness = light ? 4.0 : 5.5;
+              state.baseColor = light ? [0.90, 0.86, 0.80] : [0.16, 0.09, 0.06];
+              state.markerColor = light ? [0.78, 0.27, 0.11] : [1.0, 0.54, 0.30];
+              state.glowColor = light ? [0.95, 0.92, 0.86] : [0.38, 0.23, 0.14];
               const size = canvas.parentElement.clientWidth * dpr;
               state.width = size; state.height = size;
             }
@@ -271,27 +274,27 @@
       function getColors() {
         const isLight = document.documentElement.dataset.theme === 'light';
         return isLight ? {
-          ocean: ['#E6E0D6', '#D0C8BB', '#B5AC9D'],
-          grid: 'rgba(90, 70, 50, 0.14)',
-          border: 'rgba(60, 50, 40, 0.35)',
-          pin: '#16A34A',
-          pinGlow: 'rgba(22, 163, 74, 0.45)',
-          bucketPin: '#0284C7',
-          bucketGlow: 'rgba(2, 132, 199, 0.45)',
-          activePin: '#D97706',
-          activePinGlow: 'rgba(217, 119, 6, 0.75)',
-          rim: 'rgba(90, 70, 50, 0.30)'
+          ocean: ['#F4EFE6', '#E8DFD0', '#D9C9B6'],
+          grid: 'rgba(108, 90, 73, 0.14)',
+          border: 'rgba(51, 37, 27, 0.38)',
+          pin: '#B0401C',
+          pinGlow: 'rgba(176, 64, 28, 0.38)',
+          bucketPin: '#6C5A49',
+          bucketGlow: 'rgba(108, 90, 73, 0.34)',
+          activePin: '#C8451B',
+          activePinGlow: 'rgba(200, 69, 27, 0.72)',
+          rim: 'rgba(108, 90, 73, 0.28)'
         } : {
-          ocean: ['#0A192F', '#060D1A', '#020617'],
-          grid: 'rgba(0, 229, 255, 0.12)',
-          border: 'rgba(0, 255, 157, 0.38)',
-          pin: '#00FF9D',
-          pinGlow: 'rgba(0, 255, 157, 0.55)',
-          bucketPin: '#00E5FF',
-          bucketGlow: 'rgba(0, 229, 255, 0.55)',
-          activePin: '#FFB703',
-          activePinGlow: 'rgba(255, 183, 3, 0.85)',
-          rim: 'rgba(0, 255, 157, 0.25)'
+          ocean: ['#2B1B13', '#1E120C', '#120A06'],
+          grid: 'rgba(240, 163, 107, 0.12)',
+          border: 'rgba(232, 223, 208, 0.40)',
+          pin: '#F0A36B',
+          pinGlow: 'rgba(240, 163, 107, 0.45)',
+          bucketPin: '#BFB09B',
+          bucketGlow: 'rgba(191, 176, 155, 0.38)',
+          activePin: '#FF8A4C',
+          activePinGlow: 'rgba(255, 138, 76, 0.80)',
+          rim: 'rgba(240, 163, 107, 0.24)'
         };
       }
 
@@ -584,7 +587,7 @@
         const hc = document.getElementById('hud-city');
         const hco = document.getElementById('hud-country'), hcr = document.getElementById('hud-coords');
         const hd = document.getElementById('hud-description'), hb = document.getElementById('hud-category-label');
-        if (hc && hc.firstChild) hc.firstChild.nodeValue = `${city} `;
+        if (hc) hc.textContent = city;
         if (hco) hco.textContent = country;
         if (hcr) hcr.textContent = `${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}, ${Math.abs(lon).toFixed(4)}° ${lon >= 0 ? 'E' : 'W'}`;
         if (hd) hd.textContent = desc;

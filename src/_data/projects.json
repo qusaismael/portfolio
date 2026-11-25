@@ -60,6 +60,7 @@
       "Ollama"
     ],
     "visual": "local",
+    "live": "https://localllm.qusai.pro/",
     "source": "https://github.com/qusaismael/localllm",
     "problem": "I wanted a straightforward way to use local language models without making every conversation someone else's data.",
     "built": "I made a Flask web interface for running Ollama models locally. Once a model is downloaded, the application can run offline.",
@@ -67,6 +68,7 @@
     "status": "Open-source project. Hardware requirements and behavior depend on the model you choose.",
     "evidenceImage": "/pics/locallm.webp",
     "evidenceAlt": "The merged pull request adding LocalLLM to Ollama's community integrations",
+    "photoPosition": "50% 50%",
     "image": "/pics/locallm.webp",
     "imageAlt": "The LocalLLM community integration pull request on Ollama"
   },
@@ -81,11 +83,11 @@
       "Compliance",
       "Privacy"
     ],
-    "image": "/pics/grc-check.webp",
+    "image": "/pics/grc-check.png",
     "imageAlt": "GRC Check self-assessment interface",
     "live": "https://grc.qusai.pro/",
     "problem": "Compliance frameworks can be difficult to work through, especially when the answers describe how an organization handles sensitive data.",
-    "built": "I built a local-first self-assessment around Jordan's data protection law and ISO 27001. The tool keeps the answers on the device.",
+    "built": "I built a local-first self-assessment covering Saudi PDPL, NCA ECC, ISO 27001, and Jordan's data protection law. The tool keeps the answers on the device.",
     "learned": "The challenge was turning long requirements into questions someone could actually work through, while keeping their answers private.",
     "status": "A self-assessment tool to help organize your thinking. It does not certify compliance or replace a professional assessment."
   },
@@ -100,7 +102,8 @@
       "Browser security"
     ],
     "live": "https://privacy.qusai.pro/",
-    "image": "/pics/privacy-check.webp"
+    "image": "/pics/privacy-check.png",
+    "imageAlt": "Privacy Check browser exposure scorecard"
   },
   {
     "slug": "30-days",
@@ -152,5 +155,32 @@
       "Clipboard"
     ],
     "live": "https://clipguard.qusai.pro/"
+  },
+  {
+    "slug": "textify",
+    "name": "Textify",
+    "type": "Web tool",
+    "image": "/pics/textify.svg",
+    "imageAlt": "Textify local ASCII and binary art generator preview",
+    "description": "Convert photos into ASCII, binary, or emoji text art entirely on your device, with English and Arabic UI support.",
+    "tags": [
+      "Privacy",
+      "Local-first",
+      "Arabic & English"
+    ],
+    "live": "https://textify.qusai.pro/"
+  },
+  {
+    "slug": "securechat",
+    "name": "SecureChat",
+    "type": "Web tool",
+    "image": "/pics/securechat.svg",
+    "imageAlt": "SecureChat request validation pipeline schematic",
+    "description": "An educational chatbot security demo visualizing rate limiting and input validation on a simulated in-browser backend.",
+    "tags": [
+      "AI Security",
+      "Validation"
+    ],
+    "live": "https://securebot.qusai.pro/"
   }
 ]

@@ -9,6 +9,7 @@ eleventyComputed:
   description: "{{ post.excerpt }}"
   permalink: "/writing/{{ post.slug }}/"
 ogType: article
+customScripts: "/js/article-outline.js"
 ---
 <main class="container" id="main-content">
   {% set article = post.body | articleOutline %}
@@ -17,7 +18,7 @@ ogType: article
     <p class="eyebrow"><time datetime="{{ post.date }}">{{ post.dateLabel }}</time> · {{ writingTopics[post.slug] }} · {{ post.body | readingTime }} min read</p>
     <h1>{{ post.title }}</h1>
     <p class="article-summary page-lede">{{ post.excerpt }}</p>
-    <p class="article-meta">Originally published on <a href="{{ post.url }}" rel="noopener noreferrer">Medium ↗</a>.</p>
+    <p class="article-meta">Originally published on <a href="{{ post.url }}" target="_blank" rel="noopener noreferrer">Medium ↗<span class="sr-only"> (opens in a new tab)</span></a>.</p>
   </header>
   <div class="article-layout{% if article.items.length >= 3 %} has-outline{% endif %}">
     {% if article.items.length >= 3 %}

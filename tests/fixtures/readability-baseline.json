@@ -4,12 +4,12 @@
     "src/_data/site.json": "205047a1742a8189c0a7706ac257157c6dcfa0f54c0ed65d833c8dca717c8a8e",
     "src/_data/experience.json": "dd89685ec9364d3109d4bcc8bc4d676395aa4fb17098e3eb896ae6b812385a0e",
     "src/_data/games.json": "bcac923b8defadd3e0dfa1b763c370a300fc1549eef226657a9ecce85fda6ed1",
-    "src/_data/writing.json": "2e7c3a0dff341f7b2d62d9cbc52ab8bceae44d1e2e79bde415e91c200b126068",
+    "src/_data/writing.json": "5ac9153c624f97f243fb1f9a824f2075fd9434e1b3ebaff866af62b12ac58521",
     "src/_includes/cat.njk": "abf18bce21217335eee251784a816586ee81d1b9ae5969b5e7dffa5dfeb3d9c5",
     "src/_includes/terminal.njk": "268594da3ef92849b4b829b80279a84b7fda53e557fda3f966cae1086c9431a8",
-    "src/js/terminal.js": "a71b63176f1137965d0b8d58d4b665ab56f8d022e10e64748bcc3481159df32d",
+    "src/js/terminal.js": "297f1e33c06f03867fdeb6beff2f0251f8a2897c14958935e8a4f94bc411e17f",
     "src/js/personality.js": "24772909bd59dfc7b7c9cebb56978287ad7da340be8de28d16ed8102e8ec09de",
-    "src/css/terminal.css": "59ba8f734da17d1e3c52e9a03e16b0bcccfcd416b091d9a4290c46e60e517689"
+    "src/css/terminal.css": "e6c22d4ca0ee2b44a4db7d0afed8a6761d7b1319daf4a8165036e421d2efb46e"
   },
   "projects": [
     {
@@ -17,7 +17,8 @@
       "name": "TamperLog",
       "type": "Graduation research",
       "featured": true,
-      "description": "If someone edits the audit trail, the audit trail should tell you. That was the idea behind my graduation project.",
+      "description": "My graduation project: a prototype for detecting changes to audit logs.",
+      "cardNote": "Research prototype; not a production security guarantee.",
       "tags": [
         "Cryptography",
         "Python",
@@ -40,7 +41,8 @@
       "name": "GRC AI",
       "type": "Hackathon prototype",
       "featured": true,
-      "description": "A team project exploring whether local AI can make policy reviews less painful.",
+      "description": "I led a team building a local-AI prototype for reviewing policies against compliance frameworks.",
+      "cardNote": "Hackathon prototype; national top five. AI output still needs human review.",
       "tags": [
         "Local AI",
         "GRC",
@@ -63,13 +65,15 @@
       "name": "LocalLLM",
       "type": "Open source",
       "featured": true,
-      "description": "A small Flask interface for Ollama. Run a model on your own machine, open your browser, and start talking.",
+      "description": "A Flask interface for running Ollama models on your own machine.",
+      "cardNote": "Runs offline after model download. Hardware needs depend on the model.",
       "tags": [
         "Local AI",
         "Flask",
         "Ollama"
       ],
       "visual": "local",
+      "live": "https://localllm.qusai.pro/",
       "source": "https://github.com/qusaismael/localllm",
       "problem": "I wanted a straightforward way to use local language models without making every conversation someone else's data.",
       "built": "I made a Flask web interface for running Ollama models locally. Once a model is downloaded, the application can run offline.",
@@ -77,6 +81,7 @@
       "status": "Open-source project. Hardware requirements and behavior depend on the model you choose.",
       "evidenceImage": "/pics/locallm.webp",
       "evidenceAlt": "The merged pull request adding LocalLLM to Ollama's community integrations",
+      "photoPosition": "50% 50%",
       "image": "/pics/locallm.webp",
       "imageAlt": "The LocalLLM community integration pull request on Ollama"
     },
@@ -85,16 +90,17 @@
       "name": "GRC Check",
       "type": "Web tool",
       "featured": true,
-      "description": "Work through a privacy and security self-assessment without sending your answers to a server.",
+      "description": "A privacy and security self-assessment that keeps your answers on your device.",
+      "cardNote": "Self-assessment only; not a compliance certification or professional assessment.",
       "tags": [
         "Compliance",
         "Privacy"
       ],
-      "image": "/pics/grc-check.webp",
+      "image": "/pics/grc-check.png",
       "imageAlt": "GRC Check self-assessment interface",
       "live": "https://grc.qusai.pro/",
       "problem": "Compliance frameworks can be difficult to work through, especially when the answers describe how an organization handles sensitive data.",
-      "built": "I built a local-first self-assessment around Jordan's data protection law and ISO 27001. The tool keeps the answers on the device.",
+      "built": "I built a local-first self-assessment covering Saudi PDPL, NCA ECC, ISO 27001, and Jordan's data protection law. The tool keeps the answers on the device.",
       "learned": "The challenge was turning long requirements into questions someone could actually work through, while keeping their answers private.",
       "status": "A self-assessment tool to help organize your thinking. It does not certify compliance or replace a professional assessment."
     },
@@ -103,13 +109,14 @@
       "name": "Privacy Check",
       "type": "Web tool",
       "visual": "privacy",
-      "description": "A look at what your browser can reveal about you, and what you can do about it.",
+      "description": "See what your browser reveals about you and what you can change.",
       "tags": [
         "Privacy",
         "Browser security"
       ],
       "live": "https://privacy.qusai.pro/",
-      "image": "/pics/privacy-check.webp"
+      "image": "/pics/privacy-check.png",
+      "imageAlt": "Privacy Check browser exposure scorecard"
     },
     {
       "slug": "30-days",
@@ -161,6 +168,33 @@
         "Clipboard"
       ],
       "live": "https://clipguard.qusai.pro/"
+    },
+    {
+      "slug": "textify",
+      "name": "Textify",
+      "type": "Web tool",
+      "image": "/pics/textify.svg",
+      "imageAlt": "Textify local ASCII and binary art generator preview",
+      "description": "Convert photos into ASCII, binary, or emoji text art entirely on your device, with English and Arabic UI support.",
+      "tags": [
+        "Privacy",
+        "Local-first",
+        "Arabic & English"
+      ],
+      "live": "https://textify.qusai.pro/"
+    },
+    {
+      "slug": "securechat",
+      "name": "SecureChat",
+      "type": "Web tool",
+      "image": "/pics/securechat.svg",
+      "imageAlt": "SecureChat request validation pipeline schematic",
+      "description": "An educational chatbot security demo visualizing rate limiting and input validation on a simulated in-browser backend.",
+      "tags": [
+        "AI Security",
+        "Validation"
+      ],
+      "live": "https://securebot.qusai.pro/"
     }
   ],
   "pages": {
@@ -441,7 +475,7 @@
     },
     "/projects/grc-check/": {
       "hrefs": [
-        "/pics/grc-check.webp",
+        "/pics/grc-check.png",
         "/sites/",
         "https://grc.qusai.pro/",
         "mailto:hi@qusai.pro?subject=GRC%20Check"

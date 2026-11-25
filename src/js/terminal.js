@@ -11,6 +11,7 @@
   home: '/', work: '/sites/', projects: '/#projects', sites: '/sites/',
   portfolio: '/portfolio/', writing: '/blog/', blog: '/blog/', life: '/life/',
   games: '/games/', photos: '/photos/', contact: '/connect/', resume: '/resume/',
+  explore: '/explore/', search: '/explore/', colophon: '/colophon/', feed: '/feed.xml',
   recommendations: '/life/#tech-stack', recs: '/life/#tech-stack'
  };
  const commands = [...Object.keys(routes), 'help', 'ls', 'cd', 'about', 'whoami', 'skills', 'stack',
@@ -58,8 +59,13 @@
   response.textContent = message;
   links.forEach(([label, href]) => {
    const link = document.createElement('a');
-   link.textContent = label + ' →';
+   const isExternal = /^https?:\/\//.test(href);
+   link.textContent = label + (isExternal ? ' ↗' : ' →');
    link.href = href;
+   if (isExternal) {
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+   }
    response.append(link);
   });
   entry.append(response);
@@ -82,7 +88,7 @@
   }
   switch (command) {
    case 'help':
-    message = 'Look around: ls · home · work · projects · portfolio · writing · life · games · photos · contact · resume\n' +
+    message = 'Look around: ls · home · work · projects · portfolio · writing · explore · life · games · photos · contact · resume · colophon · feed\n' +
      'Get to know me: whoami · skills · quasi · iq · cat\n' +
      'Useful things: time · email · github · pgp · theme [light|dark]\n' +
      'Shell-ish things: cd <page> · pwd · clear · exit\n\n' +
@@ -90,7 +96,7 @@
     break;
    case 'ls':
     message = 'A few places to go:\n';
-    links = Object.entries(routes).filter(([name]) => !['sites','blog','recommendations','recs'].includes(name));
+    links = Object.entries(routes).filter(([name]) => !['sites','blog','recommendations','recs','search'].includes(name));
     break;
    case 'cd': {
     const target = args.join(' ').replace(/^\.?\//, '').replace(/\/$/, '');
